@@ -40,3 +40,6 @@ repo/
 
 # python
 *.egg-info
+
+# website
+website/public/
