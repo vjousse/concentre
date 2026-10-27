@@ -374,12 +374,12 @@ fn manage_autostart(app_handle: &AppHandle, system_startup_auto_start: bool) -> 
         // Get the autostart manager
         let autostart_manager = app_handle.autolaunch();
 
-        if system_startup_auto_start != autostart_manager.is_enabled()? {
-            if system_startup_auto_start {
-                autostart_manager.enable()?;
-            } else {
-                autostart_manager.disable()?;
-            }
+        if system_startup_auto_start {
+            // Always (re)register: the binary path may have changed
+            // prepare move from pomodorolm to concentre
+            autostart_manager.enable()?;
+        } else if autostart_manager.is_enabled()? {
+            autostart_manager.disable()?;
         }
     }
     Ok(())
