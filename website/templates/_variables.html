@@ -1,0 +1,45 @@
+<style>
+    /* Colors taken from the app's default theme (src-tauri/themes/pomodorolm.json) */
+    :root {
+        --primary-color: #2f384b;
+        --primary-text-color: #2f384b;
+        --header-text-color: #f6f2eb;
+        --primary-text-color-over: #ffffff;
+        /* Darker than the app's #05ec8c, for readable links on the light background */
+        --primary-link-color: #0a8a5a;
+        --secondary-color: #f6f2eb;
+        --secondary-text-color: #2f384b;
+        --toc-highlight-text-color: #ff4e4d;
+        --toc-background-color: #ffffff;
+        --code-color: #3d4457;
+        --code-background-color: #ffffff;
+
+        --shadow-color: #dbe1ef;
+
+        --header-font-family: "Fira Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --text-font-family: "Fira Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+        /* App round colors, used by the download buttons */
+        --pomo-focus: #05ec8c;
+        --pomo-short-break: #ff4e4d;
+        --pomo-long-break: #0bbddb;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --primary-color: #2f384b;
+            --primary-text-color: #f6f2eb;
+            --header-text-color: #f6f2eb;
+            --primary-text-color-over: #ffffff;
+            --primary-link-color: #05ec8c;
+            --secondary-color: #232a39;
+            --secondary-text-color: #f6f2eb;
+            --toc-highlight-text-color: #05ec8c;
+            --toc-background-color: #3d4457;
+            --code-color: #f6f2eb;
+            --code-background-color: #3d4457;
+
+            --shadow-color: #1b2130;
+        }
+    }
+</style>

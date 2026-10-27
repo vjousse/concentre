@@ -1,0 +1,130 @@
+{% extends "juice/templates/index.html" %}
+
+{% block title %}{{ config.title }}{% endblock title %}
+
+{% block favicon %}
+<link rel="icon" type="image/png" href="{{ get_url(path="favicon.png") }}">
+<meta property="og:title" content="Concentré">
+<meta property="og:description" content="{{ config.description }}">
+<meta property="og:image" content="{{ get_url(path="og.png") }}">
+<meta name="twitter:card" content="summary_large_image">
+{% endblock favicon %}
+
+{% block head %}
+<script src="https://s.jousse.org/js/pl.js" defer="true" data-domain="concentre.org" data-turbolinks-track="reload" ></script>
+<style>
+    .download {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        margin: 2rem 0 1rem;
+    }
+
+    .download a {
+        display: inline-block;
+        padding: 0.8rem 1.4rem;
+        border-radius: 999px;
+        font-family: var(--text-font-family);
+        font-weight: 600;
+        text-decoration: none;
+        color: #2f384b;
+        background: var(--pomo-focus);
+    }
+
+    .download a.secondary {
+        background: transparent;
+        color: var(--primary-text-color);
+        border: 2px solid var(--primary-text-color);
+    }
+
+    .download-hint {
+        font-family: var(--text-font-family);
+        font-size: 0.9rem;
+        color: var(--primary-text-color);
+        opacity: 0.8;
+    }
+
+    .download-hint a {
+        color: var(--primary-text-color);
+    }
+</style>
+{% endblock head %}
+
+{% block hero %}
+{% set v = config.extra.version %}
+{% set dl = config.extra.repository_url ~ "/releases/download/app-v" ~ v %}
+<section class="text-center">
+    <h1 class="heading-text" style="font-size: 50px">Concentré</h1>
+    <h3 class="title-text">
+        A simple yet powerful focus timer.<br>
+        Free, open source, and under 4&nbsp;MB.
+    </h3>
+
+    {# Default buttons, shown without JavaScript. The script below highlights the visitor's OS. #}
+    <div class="download" id="download">
+        <a data-os="linux" href="https://flathub.org/apps/org.jousse.vincent.Pomodorolm">Linux (Flathub)</a>
+        <a data-os="windows" href="{{ dl }}/pomodorolm_{{ v }}_x64-setup.exe">Windows</a>
+        <a data-os="mac" href="{{ dl }}/pomodorolm_{{ v }}_aarch64.dmg">macOS (Apple Silicon)</a>
+        <a data-os="mac" class="secondary" href="{{ dl }}/pomodorolm_{{ v }}_x64.dmg">macOS (Intel)</a>
+    </div>
+    <p class="download-hint">
+        Version {{ v }} ·
+        <a href="{{ get_url(path="@/installation.md") }}">All installation options</a>
+    </p>
+</section>
+<img class="hero-image" style="width: 40%" src="{{ get_url(path="screenshot.png") }}" alt="Concentré screenshot">
+
+<div class="explore-more text"
+    onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
+    Features ⇩
+</div>
+
+<script>
+    // Put the visitor's OS first and mark the other platforms as secondary.
+    (function () {
+        const platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+        const p = platform.toLowerCase();
+        const os = p.includes("win") ? "windows" : p.includes("mac") ? "mac" : p.includes("linux") ? "linux" : null;
+        if (!os) return;
+        const container = document.getElementById("download");
+        const links = Array.from(container.querySelectorAll("a"));
+        links
+            .filter((a) => a.dataset.os === os)
+            .reverse()
+            .forEach((a) => container.prepend(a));
+        links
+            .filter((a) => a.dataset.os !== os)
+            .forEach((a) => a.classList.add("secondary"));
+    })();
+</script>
+<style>
+    .hero section {
+        padding: 0 5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        .hero section {
+            padding: 0 2rem;
+        }
+
+        .hero-image {
+            display: none
+        }
+    }
+</style>
+{% endblock hero %}
+
+{% block footer %}
+<footer>
+    <small class="subtext">
+        Concentré (formerly Pomodorolm) is free software by <a href="https://vincent.jousse.org">Vincent Jousse</a> ·
+        <a href="https://ko-fi.com/vjousse">Support it on Ko-fi</a> ·
+        Site built with <a href="https://www.getzola.org">Zola</a> and the
+        <a href="https://github.com/huhu/juice">Juice</a> theme
+        <br>
+        Pomodoro® and Pomodoro Technique® are registered trademarks of Francesco Cirillo.
+        Concentré is not affiliated with, associated with, or endorsed by the Pomodoro Technique® or Francesco Cirillo.
+    </small>
+</footer>
+{% endblock footer %}

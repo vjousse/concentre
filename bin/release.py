@@ -25,6 +25,7 @@ TAURI_CONF = "src-tauri/tauri.conf.json"
 CARGO_TOML = "src-tauri/Cargo.toml"
 CARGO_LOCK = "src-tauri/Cargo.lock"
 AUR_PKGBUILD = "aur/PKGBUILD"
+WEBSITE_CONFIG = "website/config.toml"
 
 metainfo_first_version = Semver("0.1.8")
 
@@ -112,6 +113,11 @@ def get_version_state() -> VersionState:
         state.aur_sha256 = aur_sha256
         state.aur_source = aur_source
 
+    with open(WEBSITE_CONFIG, "rb") as f:
+        website_config = tomllib.load(f)
+        website_version = website_config["extra"]["version"]
+        state.versions.append(Version(source=WEBSITE_CONFIG, number=website_version))
+
     tree = ET.parse(METAINFO)
     root = tree.getroot()
 
@@ -153,6 +159,12 @@ def update_files(version_number: str, version_date: str):
         elif line.startswith("pkgrel"):
             # Reset pkgrel version to 1
             print("pkgrel=1")
+        else:
+            print(line, end="")
+
+    for line in fileinput.input(WEBSITE_CONFIG, inplace=True):
+        if line.startswith("version ="):
+            print(f'version = "{version_number}"')
         else:
             print(line, end="")
 

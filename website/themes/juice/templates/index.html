@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% if config.description %}
+    <meta name="description" content="{{ config.description }}">
+    {% endif %}
+    {% block favicon %}
+    <link rel="icon" type="image/png" href="{{ get_url(path="favicon.ico") }}">
+    {% endblock favicon %}
+    {% include "_variables.html" %}
+    {# No remote fonts by default: the font variables fall back to system fonts.
+       Override this block to load your own (preferably self-hosted) fonts. #}
+    {% block fonts %}
+    {% endblock fonts %}
+    <link rel="stylesheet" href="{{ get_url(path="normalize.css") }}">
+    <link rel="stylesheet" href="{{ get_url(path="juice.css") }}">
+    {% block head %}
+    {% endblock head %}
+</head>
+
+<body>
+    {% block header %}
+
+    <header class="pos-absolute" style="background-color: transparent">
+        {{ <render_header /> }}
+    </header>
+
+    <div class="hero">
+        {% block hero %}
+        <section class="text-center">
+            <h1 class="heading-text" style="font-size: 50px">
+                {{ config.title }}
+            </h1>
+            {% if config.description %}
+            <h3 class="title-text">
+                {{ config.description }}
+            </h3>
+            {% endif %}
+        </section>
+        {% if config.extra.juice_hero_image %}
+        <img class="hero-image" style="width: 50%" src="{{ get_url(path=config.extra.juice_hero_image) }}" alt="">
+        {% endif %}
+
+        <div class="explore-more text"
+            onclick="document.getElementById('features').scrollIntoView({behavior: 'smooth'})">
+            Explore More ⇩
+        </div>
+        <style>
+            .hero section {
+                padding: 0 5rem;
+            }
+
+            @media screen and (max-width: 768px) {
+                .hero section {
+                    padding: 0 2rem;
+                }
+
+                .hero-image {
+                    display: none
+                }
+            }
+        </style>
+        {% endblock hero %}
+    </div>
+
+    {% endblock header %}
+
+    <main>
+        {% block toc %}
+        {% endblock toc %}
+
+        <div class="content text">
+            {% block content %}
+            <div id="features" class="heading-text">Overview</div>
+            {{ section.content | safe }}
+            {% endblock content %}
+        </div>
+
+        {% block sidebar %}
+        {% endblock sidebar %}
+    </main>
+
+    {% block footer %}
+    <footer>
+        <small class="subtext">
+            {{ config.title }} © {{ now() | date(format="%Y") }} ·
+            Built with <a href="https://www.getzola.org">Zola</a> and the <a href="https://github.com/huhu/juice">Juice</a> theme
+        </small>
+    </footer>
+    {% endblock footer %}
+</body>
+<script>
+    const scrollHandler = entries => {
+        // Find the first entry which intersecting and ratio > 0.9 to highlight.
+        let entry = entries.find(entry => {
+            return entry.isIntersecting && entry.intersectionRatio > 0.9;
+        });
+        if (!entry) return;
+
+        document.querySelectorAll(".toc a").forEach((item) => {
+            item.classList.remove("active");
+        });
+
+        let link = document.querySelector(`.toc a[href$="${decodeURIComponent(`#${entry.target.id}`)}"]`)
+        if (link) {
+            link.classList.add("active");
+            link.scrollIntoView({ behavior: "auto", block: "nearest" });
+        }
+    };
+    // Set -100px root margin to improve highlight experience.
+    const observer = new IntersectionObserver(scrollHandler, { threshold: 1 });
+    let items = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    items.forEach(item => observer.observe(item));
+</script>
+
+</html>
