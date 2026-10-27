@@ -37,6 +37,9 @@ apps:
     environment:
       LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/lapack:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/samba:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/vdpau:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/dri
       ALWAYS_USE_PULSEAUDIO: "1"
+      # WebKitGTK's MemoryPressureMonitor retries reading /proc/zoneinfo every 1-5 s.
+      # Strict confinement denies it and AppArmor logs every attempt (#266).
+      WEBKIT_DISABLE_MEMORY_PRESSURE_MONITOR: "1"
     plugs:
       - home
       - browser-support
