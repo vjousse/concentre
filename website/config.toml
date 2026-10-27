@@ -19,11 +19,11 @@ dark_theme = "github-dark"
 juice_logo_name = "Concentré"
 juice_logo_path = "logo.png"
 juice_extra_menu = [
-    { title = "GitHub", link = "https://github.com/vjousse/pomodorolm" },
+    { title = "GitHub", link = "https://github.com/vjousse/concentre" },
     { title = "Support ❤", link = "https://ko-fi.com/vjousse" },
 ]
 juice_exclude_menu = []
-repository_url = "https://github.com/vjousse/pomodorolm"
+repository_url = "https://github.com/vjousse/concentre"
 
 # Bump on each release: used to build direct download links.
 version = "0.9.3"
