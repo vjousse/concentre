@@ -30,7 +30,7 @@ Concentré is built with [Tauri](https://tauri.app), [Rust](https://www.rust-lan
 
 # Free and open source
 
-Concentré is free software, developed in the open on [GitHub](https://github.com/vjousse/pomodorolm). If it helps you stay focused, you can [support its development on Ko-fi](https://ko-fi.com/vjousse).
+Concentré is free software, developed in the open on [GitHub](https://github.com/vjousse/concentre). If it helps you stay focused, you can [support its development on Ko-fi](https://ko-fi.com/vjousse).
 
 # Formerly Pomodorolm
 

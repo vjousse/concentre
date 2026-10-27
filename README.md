@@ -46,7 +46,7 @@ Concentré is free and open source. If it helps you stay focused, consider suppo
 
 ## Windows
 
-Installer: Download the .exe or .msi file from the latest release on https://github.com/vjousse/pomodorolm/releases/
+Installer: Download the .exe or .msi file from the latest release on https://github.com/vjousse/concentre/releases/
 
 winget: `winget install pomodorolm`
 
@@ -56,7 +56,7 @@ winget: `winget install pomodorolm`
 
 ## Mac OS X, Debian, AppImage
 
-Download the install file for your OS from the latest release on https://github.com/vjousse/pomodorolm/releases/
+Download the install file for your OS from the latest release on https://github.com/vjousse/concentre/releases/
 
 ## Flatpak
 
@@ -183,7 +183,7 @@ Build files will be placed in the `target/` directory.
   <img style="width: 25%" src="docs/macOS-damaged-error.png">
 </p>
 
-Check the following issue: https://github.com/vjousse/pomodorolm/issues/149
+Check the following issue: https://github.com/vjousse/concentre/issues/149
 
 TLDR, in a terminal: `sudo xattr -cr /Applications/pomodorolm.app`.
 
@@ -197,7 +197,7 @@ You can try to run `pomodorolm` using this command:
 
     WEBKIT_DISABLE_DMABUF_RENDERER=1 pomodorolm
 
-Thanks to [@Bad3r](https://github.com/Bad3r) for the [bug report](https://github.com/vjousse/pomodorolm/issues/62)!
+Thanks to [@Bad3r](https://github.com/Bad3r) for the [bug report](https://github.com/vjousse/concentre/issues/62)!
 
 ### `Error 71 (Protocol error) dispatching to Wayland display.`
 

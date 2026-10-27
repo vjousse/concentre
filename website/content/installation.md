@@ -22,7 +22,7 @@ flatpak install flathub org.jousse.vincent.Pomodorolm
 
 ## AppImage, .deb, .rpm
 
-Download the file for your distribution from the [latest release](https://github.com/vjousse/pomodorolm/releases/latest).
+Download the file for your distribution from the [latest release](https://github.com/vjousse/concentre/releases/latest).
 
 # Windows
 
@@ -34,10 +34,10 @@ winget install pomodorolm
 
 ## Installer
 
-Download the `.exe` or `.msi` installer from the [latest release](https://github.com/vjousse/pomodorolm/releases/latest).
+Download the `.exe` or `.msi` installer from the [latest release](https://github.com/vjousse/concentre/releases/latest).
 
 # macOS
 
-Download the `.dmg` for your Mac from the [latest release](https://github.com/vjousse/pomodorolm/releases/latest): `aarch64` for Apple Silicon (M1 and later), `x64` for Intel.
+Download the `.dmg` for your Mac from the [latest release](https://github.com/vjousse/concentre/releases/latest): `aarch64` for Apple Silicon (M1 and later), `x64` for Intel.
 
-The app is not signed by Apple yet. If macOS says the app is damaged, see [this issue](https://github.com/vjousse/pomodorolm/issues/149) for the workaround.
+The app is not signed by Apple yet. If macOS says the app is damaged, see [this issue](https://github.com/vjousse/concentre/issues/149) for the workaround.

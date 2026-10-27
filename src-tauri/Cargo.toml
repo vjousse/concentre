@@ -60,7 +60,7 @@ tauri-plugin-single-instance = "2"
 
 [target.'cfg(target_os = "linux")'.dependencies]
 # Enable KSNI backend for tray-icon (instead of libappindicator) to handle clicks on Linux
-# See https://github.com/vjousse/pomodorolm/issues/170
+# See https://github.com/vjousse/concentre/issues/170
 tray-icon = { version = "0.25", default-features = false, features = ["ksni"] }
 
 # Backport of two KSNI fixes released in tray-icon 0.26 onto 0.25.1:

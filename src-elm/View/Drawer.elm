@@ -718,7 +718,7 @@ aboutSettingView appVersion =
             , p [ class "label" ]
                 [ text <| "Version: " ++ appVersion ++ " "
                 , a
-                    [ href <| "https://github.com/vjousse/pomodorolm/releases/tag/app-v" ++ appVersion
+                    [ href <| "https://github.com/vjousse/concentre/releases/tag/app-v" ++ appVersion
                     , class "label"
                     , class "link"
                     , target "_blank"
@@ -727,7 +727,7 @@ aboutSettingView appVersion =
                 ]
             , p [ class "label" ]
                 [ a
-                    [ href "https://github.com/vjousse/pomodorolm"
+                    [ href "https://github.com/vjousse/concentre"
                     , class "label"
                     , class "link"
                     , target "_blank"

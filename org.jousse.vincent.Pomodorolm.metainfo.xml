@@ -6,8 +6,9 @@
   <developer_name>Vincent Jousse</developer_name>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>AGPL-3.0-only</project_license>
-  <url type="homepage">https://github.com/vjousse/pomodorolm</url>
-  <url type="bugtracker">https://github.com/vjousse/pomodorolm/issues</url>
+  <url type="homepage">https://concentre.org</url>
+  <url type="vcs-browser">https://github.com/vjousse/concentre</url>
+  <url type="bugtracker">https://github.com/vjousse/concentre/issues</url>
   <description>
     <p>
       Concentré (formerly Pomodorolm) is a simple, good looking and configurable focus timer. Work in focused rounds, take short breaks between them, and a longer break every few rounds.
@@ -27,86 +28,86 @@
   <launchable type="desktop-id">org.jousse.vincent.Pomodorolm.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/vjousse/pomodorolm/main/screenshot.png</image>
+      <image>https://raw.githubusercontent.com/vjousse/concentre/main/screenshot.png</image>
       <caption>Multiple screens of Concentré with the default theme</caption>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
     <release version="0.9.3" date="2026-10-21">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.3</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.9.3</url>
     </release>
     <release version="0.9.2" date="2026-10-15">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.2</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.9.2</url>
     </release>
     <release version="0.9.1" date="2026-04-20">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.1</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.9.1</url>
     </release>
     <release version="0.9.0" date="2026-04-07">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.9.0</url>
     </release>
     <release version="0.8.0" date="2026-01-23">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.8.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.8.0</url>
     </release>
     <release version="0.7.0" date="2025-11-28">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.7.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.7.0</url>
     </release>
     <release version="0.6.2" date="2025-11-21">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.6.2</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.6.2</url>
     </release>
     <release version="0.6.1" date="2025-10-01">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.6.1</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.6.1</url>
     </release>
     <release version="0.6.0" date="2025-08-08">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.6.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.6.0</url>
     </release>
     <release version="0.5.0" date="2025-05-23">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.5.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.5.0</url>
     </release>
     <release version="0.4.0" date="2025-05-11">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.4.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.4.0</url>
     </release>
     <release version="0.3.6" date="2025-04-18">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.6</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.3.6</url>
     </release>
     <release version="0.3.5" date="2025-03-14">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.5</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.3.5</url>
     </release>
     <release version="0.3.4" date="2025-01-22">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.4</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.3.4</url>
     </release>
     <release version="0.3.3" date="2025-01-11">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.3</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.3.3</url>
     </release>
     <release version="0.3.2" date="2025-01-11">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.2</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.3.2</url>
     </release>
     <release version="0.3.1" date="2024-11-07">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.1</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.3.1</url>
     </release>
     <release version="0.3.0" date="2024-11-06">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.3.0</url>
     </release>
     <release version="0.2.2" date="2024-10-16">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.2.2</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.2.2</url>
     </release>
     <release version="0.2.1" date="2024-09-29">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.2.1</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.2.1</url>
     </release>
     <release version="0.2.0" date="2024-09-27">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.2.0</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.2.0</url>
     </release>
     <release version="0.1.11" date="2024-09-13">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.11</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.1.11</url>
     </release>
     <release version="0.1.10" date="2024-09-11">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.10</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.1.10</url>
     </release>
     <release version="0.1.9" date="2024-09-09">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.9</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.1.9</url>
     </release>
     <release version="0.1.8" date="2024-09-06">
-      <url type="details">https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.8</url>
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.1.8</url>
     </release>
   </releases>
 </component>
