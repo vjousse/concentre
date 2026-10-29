@@ -52,7 +52,7 @@ winget: `winget install pomodorolm`
 
 ## Archlinux
 
-    yay -S pomodorolm-bin
+    yay -S concentre-bin
 
 ## Mac OS X, Debian, AppImage
 
