@@ -4,7 +4,8 @@
 </p>
 
 <!-- tag line -->
-<h2 align='center'>Pomodorolm<br />simple yet powerful time tracker</h3>
+<h2 align='center'>Concentré<br />simple yet powerful focus timer</h2>
+<p align='center'><em>Formerly Pomodorolm</em></p>
 <br/>
 <br/>
 
@@ -12,9 +13,9 @@
 
 ![Screenshot of the app](screenshot.png?)
 
-# ❤️ Support Pomodorolm
+# ❤️ Support Concentré
 
-Pomodorolm is free and open source. If it helps you stay focused, consider supporting its development.
+Concentré is free and open source. If it helps you stay focused, consider supporting its development.
 
 [Support development on Ko-fi →](https://ko-fi.com/vjousse)
 
@@ -45,17 +46,17 @@ Pomodorolm is free and open source. If it helps you stay focused, consider suppo
 
 ## Windows
 
-Installer: Download the .exe or .msi file from the latest release on https://github.com/vjousse/pomodorolm/releases/
+Installer: Download the .exe or .msi file from the latest release on https://github.com/vjousse/concentre/releases/
 
 winget: `winget install pomodorolm`
 
 ## Archlinux
 
-    yay -S pomodorolm-bin
+    yay -S concentre-bin
 
 ## Mac OS X, Debian, AppImage
 
-Download the install file for your OS from the latest release on https://github.com/vjousse/pomodorolm/releases/
+Download the install file for your OS from the latest release on https://github.com/vjousse/concentre/releases/
 
 ## Flatpak
 
@@ -72,7 +73,7 @@ Download the install file for your OS from the latest release on https://github.
 
 # 🎨 Themes
 
-Pomodorolm provides many themes. It's also theme-able, allowing you to customize its appearance.
+Concentré provides many themes. It's also theme-able, allowing you to customize its appearance.
 
 ![Screenshots of Pomotroid using various themes](./.github/images/pomotroid_themes-preview--914x219.png)
 
@@ -89,7 +90,7 @@ I write software because **I like creating things by myself for people** to use 
 > [!WARNING]
 > This is still a huge Work In Progress and only supports Pomodoro creation/reset/stop. Nothing else is handled for now (no breaks, no sound, no config change, …).
 
-By default, Pomodorolm will start the GUI version, but there is a CLI interface available if you want (mainly a proof of concept for now). To get the available commands you can run the help:
+By default, Concentré will start the GUI version, but there is a CLI interface available if you want (mainly a proof of concept for now). To get the available commands you can run the help:
 
     pomodorolm --help
 
@@ -124,6 +125,12 @@ You can add a Waybar/i3bar module if you want to:
 ```
 
 And add keybindings in your Sway/i3 config to touch and/or remove the session file.
+
+# 🏷️ About the name
+
+Concentré was called Pomodorolm until version 0.9. Package names and identifiers (`pomodorolm` on winget, AUR and Snap, `org.jousse.vincent.Pomodorolm` on Flathub) are unchanged for now, so existing installs keep updating normally.
+
+Pomodoro® and Pomodoro Technique® are registered trademarks of Francesco Cirillo. Concentré is not affiliated with, associated with, or endorsed by the Pomodoro Technique® or Francesco Cirillo.
 
 # 💻 Dev
 
@@ -176,7 +183,7 @@ Build files will be placed in the `target/` directory.
   <img style="width: 25%" src="docs/macOS-damaged-error.png">
 </p>
 
-Check the following issue: https://github.com/vjousse/pomodorolm/issues/149
+Check the following issue: https://github.com/vjousse/concentre/issues/149
 
 TLDR, in a terminal: `sudo xattr -cr /Applications/pomodorolm.app`.
 
@@ -190,7 +197,7 @@ You can try to run `pomodorolm` using this command:
 
     WEBKIT_DISABLE_DMABUF_RENDERER=1 pomodorolm
 
-Thanks to [@Bad3r](https://github.com/Bad3r) for the [bug report](https://github.com/vjousse/pomodorolm/issues/62)!
+Thanks to [@Bad3r](https://github.com/Bad3r) for the [bug report](https://github.com/vjousse/concentre/issues/62)!
 
 ### `Error 71 (Protocol error) dispatching to Wayland display.`
 

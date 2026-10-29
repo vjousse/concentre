@@ -1,7 +1,7 @@
 {
   "name": "pomodorolm",
   "private": true,
-  "version": "0.9.3",
+  "version": "0.10.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,7 +18,7 @@
     "elm-review": "^2.13.5",
     "elm-tooling": "^1.17.0",
     "typescript": "^7.0.2",
-    "vite": "^8.2.1",
+    "vite": "^8.3.5",
     "vite-plugin-elm": "^3.0.1"
   },
   "dependencies": {

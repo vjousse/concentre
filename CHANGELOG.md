@@ -2,63 +2,87 @@
 
 All notable changes to this project will be documented in this file.
 
-## [[app-v0.9.3](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.3)] - 2026-10-21
+## [[app-v0.10.0](https://github.com/vjousse/concentre/releases/tag/app-v0.10.0)] - 2026-10-29
+
+### 🚀 Features
+
+- Rename the app to Concentré (formerly Pomodorolm)
 
 ### 🐛 Bug Fixes
 
-- Slider gap in settings ([#342](https://github.com/vjousse/pomodorolm/issues/342))
-- Handle left click on Linux ([#343](https://github.com/vjousse/pomodorolm/issues/343))
+- Snap AppArmor errors logs ([#354](https://github.com/vjousse/concentre/issues/354))
+
+### 📚 Documentation
+
+- Add website ([#352](https://github.com/vjousse/concentre/issues/352))
+
+### ⚙️ Miscellaneous Tasks
+
+- Fix winget action ([#344](https://github.com/vjousse/concentre/issues/344))
+- Rename to Concentré ([#345](https://github.com/vjousse/concentre/issues/345))
+- Change urls to concentre ([#353](https://github.com/vjousse/concentre/issues/353))
+- Update deps ([#355](https://github.com/vjousse/concentre/issues/355))
+- Always register binary name ([#356](https://github.com/vjousse/concentre/issues/356))
+- Rename AUR package name ([#357](https://github.com/vjousse/concentre/issues/357))
+
+## [[app-v0.9.3](https://github.com/vjousse/concentre/releases/tag/app-v0.9.3)] - 2026-10-21
+
+### 🐛 Bug Fixes
+
+- Slider gap in settings ([#342](https://github.com/vjousse/concentre/issues/342))
+- Handle left click on Linux ([#343](https://github.com/vjousse/concentre/issues/343))
 
 ### 🚜 Refactor
 
-- Elm code re-organization and best practices ([#338](https://github.com/vjousse/pomodorolm/issues/338))
-- Enhance rust error handling ([#340](https://github.com/vjousse/pomodorolm/issues/340))
+- Elm code re-organization and best practices ([#338](https://github.com/vjousse/concentre/issues/338))
+- Enhance rust error handling ([#340](https://github.com/vjousse/concentre/issues/340))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Fix python import
 - Update AUR checksum
-- Update flatpak runtime to 51 ([#337](https://github.com/vjousse/pomodorolm/issues/337))
+- Update flatpak runtime to 51 ([#337](https://github.com/vjousse/concentre/issues/337))
+- Bump to 0.9.3
 
-## [[app-v0.9.2](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.2)] - 2026-10-15
+## [[app-v0.9.2](https://github.com/vjousse/concentre/releases/tag/app-v0.9.2)] - 2026-10-15
 
 ### 🐛 Bug Fixes
 
-- Minor typo in About tab ([#291](https://github.com/vjousse/pomodorolm/issues/291))
+- Minor typo in About tab ([#291](https://github.com/vjousse/concentre/issues/291))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update AUR checksum
-- Update deps ([#249](https://github.com/vjousse/pomodorolm/issues/249))
-- Update deps ([#265](https://github.com/vjousse/pomodorolm/issues/265))
-- Update node and cargo deps ([#292](https://github.com/vjousse/pomodorolm/issues/292))
-- Upgrade node deps ([#293](https://github.com/vjousse/pomodorolm/issues/293))
-- Update to latest rodio 0.22.2 ([#295](https://github.com/vjousse/pomodorolm/issues/295))
-- Update rust versions to 1.97.1 and 2024 edition ([#296](https://github.com/vjousse/pomodorolm/issues/296))
-- Update node & cargo deps ([#303](https://github.com/vjousse/pomodorolm/issues/303))
-- Add ko-fi link ([#329](https://github.com/vjousse/pomodorolm/issues/329))
-- Add ko-fi to funding ([#330](https://github.com/vjousse/pomodorolm/issues/330))
-- Add donation links ([#334](https://github.com/vjousse/pomodorolm/issues/334))
-- Update deps ([#336](https://github.com/vjousse/pomodorolm/issues/336))
+- Update deps ([#249](https://github.com/vjousse/concentre/issues/249))
+- Update deps ([#265](https://github.com/vjousse/concentre/issues/265))
+- Update node and cargo deps ([#292](https://github.com/vjousse/concentre/issues/292))
+- Upgrade node deps ([#293](https://github.com/vjousse/concentre/issues/293))
+- Update to latest rodio 0.22.2 ([#295](https://github.com/vjousse/concentre/issues/295))
+- Update rust versions to 1.97.1 and 2024 edition ([#296](https://github.com/vjousse/concentre/issues/296))
+- Update node & cargo deps ([#303](https://github.com/vjousse/concentre/issues/303))
+- Add ko-fi link ([#329](https://github.com/vjousse/concentre/issues/329))
+- Add ko-fi to funding ([#330](https://github.com/vjousse/concentre/issues/330))
+- Add donation links ([#334](https://github.com/vjousse/concentre/issues/334))
+- Update deps ([#336](https://github.com/vjousse/concentre/issues/336))
 - Bump to 0.9.2
 
-## [[app-v0.9.1](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.1)] - 2026-04-19
+## [[app-v0.9.1](https://github.com/vjousse/concentre/releases/tag/app-v0.9.1)] - 2026-04-19
 
 ### 🐛 Bug Fixes
 
-- Volume setting should be optional for backward compat ([#246](https://github.com/vjousse/pomodorolm/issues/246))
-- Hide volume slider on mouse leave ([#247](https://github.com/vjousse/pomodorolm/issues/247))
+- Volume setting should be optional for backward compat ([#246](https://github.com/vjousse/concentre/issues/246))
+- Hide volume slider on mouse leave ([#247](https://github.com/vjousse/concentre/issues/247))
 
 ### ⚙️ Miscellaneous Tasks
 
-- Create dependabot.yml ([#232](https://github.com/vjousse/pomodorolm/issues/232))
+- Create dependabot.yml ([#232](https://github.com/vjousse/concentre/issues/232))
 - Bump to 0.9.1
 
-## [[app-v0.9.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.9.0)] - 2026-04-07
+## [[app-v0.9.0](https://github.com/vjousse/concentre/releases/tag/app-v0.9.0)] - 2026-04-07
 
 ### 🚀 Features
 
-- Add volume option ([#224](https://github.com/vjousse/pomodorolm/issues/224))
+- Add volume option ([#224](https://github.com/vjousse/concentre/issues/224))
 
 ### 📚 Documentation
 
@@ -66,223 +90,223 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Not spawn play_sound_file if playing is muted ([#217](https://github.com/vjousse/pomodorolm/issues/217))
-- Small optimization and refactor of create_icon  ([#221](https://github.com/vjousse/pomodorolm/issues/221))
+- Not spawn play_sound_file if playing is muted ([#217](https://github.com/vjousse/concentre/issues/217))
+- Small optimization and refactor of create_icon  ([#221](https://github.com/vjousse/concentre/issues/221))
 - Bump to 0.9.0
 
-## [[app-v0.8.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.8.0)] - 2026-01-23
+## [[app-v0.8.0](https://github.com/vjousse/concentre/releases/tag/app-v0.8.0)] - 2026-01-23
 
 ### 🚀 Features
 
-- *(win,mac)* Show app on tray double click ([#210](https://github.com/vjousse/pomodorolm/issues/210))
+- *(win,mac)* Show app on tray double click ([#210](https://github.com/vjousse/concentre/issues/210))
 
 ### 🐛 Bug Fixes
 
-- Use exe for winget ([#213](https://github.com/vjousse/pomodorolm/issues/213))
-- Reset session should go back to focus ([#214](https://github.com/vjousse/pomodorolm/issues/214))
+- Use exe for winget ([#213](https://github.com/vjousse/concentre/issues/213))
+- Reset session should go back to focus ([#214](https://github.com/vjousse/concentre/issues/214))
 
 ### 📚 Documentation
 
-- Add winget instructions ([#208](https://github.com/vjousse/pomodorolm/issues/208))
+- Add winget instructions ([#208](https://github.com/vjousse/concentre/issues/208))
 
 ### ⚙️ Miscellaneous Tasks
 
-- Add winget release action ([#211](https://github.com/vjousse/pomodorolm/issues/211))
+- Add winget release action ([#211](https://github.com/vjousse/concentre/issues/211))
 - Update bump script to avoid parsing warnings
 - Bump to 0.8.0
 
-## [[app-v0.7.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.7.0)] - 2025-11-28
+## [[app-v0.7.0](https://github.com/vjousse/concentre/releases/tag/app-v0.7.0)] - 2025-11-28
 
 ### 🚀 Features
 
-- Configure max session length ([#203](https://github.com/vjousse/pomodorolm/issues/203))
-- Add reset session button ([#204](https://github.com/vjousse/pomodorolm/issues/204))
+- Configure max session length ([#203](https://github.com/vjousse/concentre/issues/203))
+- Add reset session button ([#204](https://github.com/vjousse/concentre/issues/204))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update AUR checksum
-- Update deps ([#201](https://github.com/vjousse/pomodorolm/issues/201))
+- Update deps ([#201](https://github.com/vjousse/concentre/issues/201))
 - Bump to 0.7.0
 
-## [[app-v0.6.2](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.6.2)] - 2025-11-21
+## [[app-v0.6.2](https://github.com/vjousse/concentre/releases/tag/app-v0.6.2)] - 2025-11-21
 
 ### 🐛 Bug Fixes
 
-- Handle play status correctly in tray menu ([#199](https://github.com/vjousse/pomodorolm/issues/199))
-- Handle always on top config ([#200](https://github.com/vjousse/pomodorolm/issues/200))
+- Handle play status correctly in tray menu ([#199](https://github.com/vjousse/concentre/issues/199))
+- Handle always on top config ([#200](https://github.com/vjousse/concentre/issues/200))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update aur package
-- Update to latest deps and tauri 2.8 ([#191](https://github.com/vjousse/pomodorolm/issues/191))
+- Update to latest deps and tauri 2.8 ([#191](https://github.com/vjousse/concentre/issues/191))
 - Bump to 0.6.2
 
-## [[app-v0.6.1](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.6.1)] - 2025-10-01
+## [[app-v0.6.1](https://github.com/vjousse/concentre/releases/tag/app-v0.6.1)] - 2025-10-01
 
 ### 🐛 Bug Fixes
 
-- App crash if duration is 0 ([#188](https://github.com/vjousse/pomodorolm/issues/188))
-- No icon on windows 11 ([#189](https://github.com/vjousse/pomodorolm/issues/189))
+- App crash if duration is 0 ([#188](https://github.com/vjousse/concentre/issues/188))
+- No icon on windows 11 ([#189](https://github.com/vjousse/concentre/issues/189))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump to 0.6.1
 
-## [[app-v0.6.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.6.0)] - 2025-08-08
+## [[app-v0.6.0](https://github.com/vjousse/concentre/releases/tag/app-v0.6.0)] - 2025-08-08
 
 ### 🚀 Features
 
-- Edit current and default session labels ([#174](https://github.com/vjousse/pomodorolm/issues/174))
-- Add autostart and autoquit ([#178](https://github.com/vjousse/pomodorolm/issues/178))
+- Edit current and default session labels ([#174](https://github.com/vjousse/concentre/issues/174))
+- Add autostart and autoquit ([#178](https://github.com/vjousse/concentre/issues/178))
 
 ### 🐛 Bug Fixes
 
-- Play all custom sounds ([#183](https://github.com/vjousse/pomodorolm/issues/183))
+- Play all custom sounds ([#183](https://github.com/vjousse/concentre/issues/183))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump to 0.6.0
 
-## [[app-v0.5.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.5.0)] - 2025-05-23
+## [[app-v0.5.0](https://github.com/vjousse/concentre/releases/tag/app-v0.5.0)] - 2025-05-23
 
 ### 🚀 Features
 
-- Ensure only one instance is running ([#171](https://github.com/vjousse/pomodorolm/issues/171))
-- Add minimal CLI version ([#146](https://github.com/vjousse/pomodorolm/issues/146))
+- Ensure only one instance is running ([#171](https://github.com/vjousse/concentre/issues/171))
+- Add minimal CLI version ([#146](https://github.com/vjousse/concentre/issues/146))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update AUR checksum for 0.4.0
 - Bump to 0.5.0
 
-## [[app-v0.4.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.4.0)] - 2025-05-11
+## [[app-v0.4.0](https://github.com/vjousse/concentre/releases/tag/app-v0.4.0)] - 2025-05-11
 
 ### 🚀 Features
 
-- Add system auto start ([#168](https://github.com/vjousse/pomodorolm/issues/168))
-- Add start minimized to tray option ([#169](https://github.com/vjousse/pomodorolm/issues/169))
+- Add system auto start ([#168](https://github.com/vjousse/concentre/issues/168))
+- Add start minimized to tray option ([#169](https://github.com/vjousse/concentre/issues/169))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump to 0.4.0
 
-## [[app-v0.3.6](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.6)] - 2025-04-18
+## [[app-v0.3.6](https://github.com/vjousse/concentre/releases/tag/app-v0.3.6)] - 2025-04-18
 
 ### ⚙️ Miscellaneous Tasks
 
-- Update deps ([#164](https://github.com/vjousse/pomodorolm/issues/164))
+- Update deps ([#164](https://github.com/vjousse/concentre/issues/164))
 - Bump to 0.3.6
 
-## [[app-v0.3.5](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.5)] - 2025-03-14
+## [[app-v0.3.5](https://github.com/vjousse/concentre/releases/tag/app-v0.3.5)] - 2025-03-14
 
 ### 🐛 Bug Fixes
 
-- Update pomodoro config on config change ([#152](https://github.com/vjousse/pomodorolm/issues/152))
-- Notification settings ([#161](https://github.com/vjousse/pomodorolm/issues/161))
+- Update pomodoro config on config change ([#152](https://github.com/vjousse/concentre/issues/152))
+- Notification settings ([#161](https://github.com/vjousse/concentre/issues/161))
 
 ### 📚 Documentation
 
-- Add macOS troubleshooting section ([#153](https://github.com/vjousse/pomodorolm/issues/153))
+- Add macOS troubleshooting section ([#153](https://github.com/vjousse/concentre/issues/153))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump 0.3.5
 
-## [[app-v0.3.4](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.4)] - 2025-01-22
+## [[app-v0.3.4](https://github.com/vjousse/concentre/releases/tag/app-v0.3.4)] - 2025-01-22
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update AUR checksum
-- Update to latest Tauri ([#150](https://github.com/vjousse/pomodorolm/issues/150))
+- Update to latest Tauri ([#150](https://github.com/vjousse/concentre/issues/150))
 - Bump version to 0.3.4
 
-## [[app-v0.3.3](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.3)] - 2025-01-11
+## [[app-v0.3.3](https://github.com/vjousse/concentre/releases/tag/app-v0.3.3)] - 2025-01-11
 
 ### 🐛 Bug Fixes
 
-- Bad pause icon rendering ([#144](https://github.com/vjousse/pomodorolm/issues/144))
+- Bad pause icon rendering ([#144](https://github.com/vjousse/concentre/issues/144))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump version to 0.3.3
 
-## [[app-v0.3.2](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.2)] - 2025-01-11
+## [[app-v0.3.2](https://github.com/vjousse/concentre/releases/tag/app-v0.3.2)] - 2025-01-11
 
 ### 🐛 Bug Fixes
 
-- *(Arch Linux)* Add `libayatana-appindicator` as dependency in PKGBUILD ([#137](https://github.com/vjousse/pomodorolm/issues/137)) ([#138](https://github.com/vjousse/pomodorolm/issues/138))
-- Move PKGBUILD in its own directory ([#139](https://github.com/vjousse/pomodorolm/issues/139))
-- Sound on ubuntu with snapcraft ([#143](https://github.com/vjousse/pomodorolm/issues/143))
+- *(Arch Linux)* Add `libayatana-appindicator` as dependency in PKGBUILD ([#137](https://github.com/vjousse/concentre/issues/137)) ([#138](https://github.com/vjousse/concentre/issues/138))
+- Move PKGBUILD in its own directory ([#139](https://github.com/vjousse/concentre/issues/139))
+- Sound on ubuntu with snapcraft ([#143](https://github.com/vjousse/concentre/issues/143))
 
 ### 🎨 Styling
 
-- Add catppuccin latte and mocha ([#140](https://github.com/vjousse/pomodorolm/issues/140))
-- Implement all catppuccin themes ([#141](https://github.com/vjousse/pomodorolm/issues/141))
+- Add catppuccin latte and mocha ([#140](https://github.com/vjousse/concentre/issues/140))
+- Implement all catppuccin themes ([#141](https://github.com/vjousse/concentre/issues/141))
 
 ### ⚙️ Miscellaneous Tasks
 
-- Upgrade gh workflow ([#142](https://github.com/vjousse/pomodorolm/issues/142))
+- Upgrade gh workflow ([#142](https://github.com/vjousse/concentre/issues/142))
 - Bump version number to 0.3.2
 
-## [[app-v0.3.1](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.1)] - 2024-11-07
+## [[app-v0.3.1](https://github.com/vjousse/concentre/releases/tag/app-v0.3.1)] - 2024-11-07
 
 ### 🐛 Bug Fixes
 
-- LibOSSlib.so not found in snap ([#130](https://github.com/vjousse/pomodorolm/issues/130))
-- Mac osx hide behavior ([#132](https://github.com/vjousse/pomodorolm/issues/132))
+- LibOSSlib.so not found in snap ([#130](https://github.com/vjousse/concentre/issues/130))
+- Mac osx hide behavior ([#132](https://github.com/vjousse/concentre/issues/132))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update AUR checksum
 - Bump version to 0.3.1
 
-## [[app-v0.3.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.3.0)] - 2024-11-06
+## [[app-v0.3.0](https://github.com/vjousse/concentre/releases/tag/app-v0.3.0)] - 2024-11-06
 
 ### 🚀 Features
 
-- Customize notification sounds ([#127](https://github.com/vjousse/pomodorolm/issues/127))
+- Customize notification sounds ([#127](https://github.com/vjousse/concentre/issues/127))
 
 ### 🚜 Refactor
 
-- Manage state on the rust side ([#112](https://github.com/vjousse/pomodorolm/issues/112))
-- Simplify resource resolving ([#120](https://github.com/vjousse/pomodorolm/issues/120))
+- Manage state on the rust side ([#112](https://github.com/vjousse/concentre/issues/112))
+- Simplify resource resolving ([#120](https://github.com/vjousse/concentre/issues/120))
 
 ### 📚 Documentation
 
-- Add a workaround for flatpak and nvidia ([#118](https://github.com/vjousse/pomodorolm/issues/118))
+- Add a workaround for flatpak and nvidia ([#118](https://github.com/vjousse/concentre/issues/118))
 - Add instructions for flatpak
 
 ### ⚙️ Miscellaneous Tasks
 
-- Update to stable Tauri v2 ([#116](https://github.com/vjousse/pomodorolm/issues/116))
-- Create issue template ([#124](https://github.com/vjousse/pomodorolm/issues/124))
-- Update to Tauri stable ([#128](https://github.com/vjousse/pomodorolm/issues/128))
+- Update to stable Tauri v2 ([#116](https://github.com/vjousse/concentre/issues/116))
+- Create issue template ([#124](https://github.com/vjousse/concentre/issues/124))
+- Update to Tauri stable ([#128](https://github.com/vjousse/concentre/issues/128))
 - Bump to 0.3.0
 
-## [[app-v0.2.2](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.2.2)] - 2024-10-16
+## [[app-v0.2.2](https://github.com/vjousse/concentre/releases/tag/app-v0.2.2)] - 2024-10-16
 
 ### 🐛 Bug Fixes
 
-- Focus notification time ([#126](https://github.com/vjousse/pomodorolm/issues/126))
+- Focus notification time ([#126](https://github.com/vjousse/concentre/issues/126))
 
-## [[app-v0.2.1](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.2.1)] - 2024-09-29
+## [[app-v0.2.1](https://github.com/vjousse/concentre/releases/tag/app-v0.2.1)] - 2024-09-29
 
 ### 🐛 Bug Fixes
 
-- Load themes and config synchronously ([#110](https://github.com/vjousse/pomodorolm/issues/110))
+- Load themes and config synchronously ([#110](https://github.com/vjousse/concentre/issues/110))
 - Aur sha computation
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump version to 0.2.1
 
-## [[app-v0.2.0](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.2.0)] - 2024-09-27
+## [[app-v0.2.0](https://github.com/vjousse/concentre/releases/tag/app-v0.2.0)] - 2024-09-27
 
 ### 🚀 Features
 
 - Add script to update PKGBUILD
-- Add toggle-play and skip ([#107](https://github.com/vjousse/pomodorolm/issues/107))
-- Use git-cliff in release script ([#108](https://github.com/vjousse/pomodorolm/issues/108))
+- Add toggle-play and skip ([#107](https://github.com/vjousse/concentre/issues/107))
+- Use git-cliff in release script ([#108](https://github.com/vjousse/concentre/issues/108))
 
 ### 🐛 Bug Fixes
 
@@ -299,31 +323,31 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Add version 0.1.11
-- Add snapcraft build ([#77](https://github.com/vjousse/pomodorolm/issues/77))
+- Add snapcraft build ([#77](https://github.com/vjousse/concentre/issues/77))
 - Update version in snapcraft
 - Update flatpak build
 - Add screenshots
-- Check versions consistency when releasing ([#89](https://github.com/vjousse/pomodorolm/issues/89))
-- Add flatpak build to github actions ([#91](https://github.com/vjousse/pomodorolm/issues/91))
-- Add snapcraft build ([#93](https://github.com/vjousse/pomodorolm/issues/93))
+- Check versions consistency when releasing ([#89](https://github.com/vjousse/concentre/issues/89))
+- Add flatpak build to github actions ([#91](https://github.com/vjousse/concentre/issues/91))
+- Add snapcraft build ([#93](https://github.com/vjousse/concentre/issues/93))
 - Rename flatpak workflow
 - Add AUR PKGBUILD
 - Check Cargo.toml version
-- Upgrade to latest Tauri RC 15 ([#95](https://github.com/vjousse/pomodorolm/issues/95))
+- Upgrade to latest Tauri RC 15 ([#95](https://github.com/vjousse/concentre/issues/95))
 - Update pkgrel
-- Add pre-commit ([#102](https://github.com/vjousse/pomodorolm/issues/102))
-- Add elm-review ([#104](https://github.com/vjousse/pomodorolm/issues/104))
-- Fix snapcraft build ([#105](https://github.com/vjousse/pomodorolm/issues/105))
+- Add pre-commit ([#102](https://github.com/vjousse/concentre/issues/102))
+- Add elm-review ([#104](https://github.com/vjousse/concentre/issues/104))
+- Fix snapcraft build ([#105](https://github.com/vjousse/concentre/issues/105))
 - Bump version to 0.2.0
 - Fix check-versions workflow
 - Add missing git-cliff
 - Install git-cliff using cargo
 
-## [[app-v0.1.11](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.11)] - 2024-09-13
+## [[app-v0.1.11](https://github.com/vjousse/concentre/releases/tag/app-v0.1.11)] - 2024-09-13
 
 ### 🐛 Bug Fixes
 
-- Windows icon and launching issue ([#85](https://github.com/vjousse/pomodorolm/issues/85))
+- Windows icon and launching issue ([#85](https://github.com/vjousse/concentre/issues/85))
 
 ### 📚 Documentation
 
@@ -331,17 +355,17 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Flathub build on aarch64 ([#86](https://github.com/vjousse/pomodorolm/issues/86))
+- Flathub build on aarch64 ([#86](https://github.com/vjousse/concentre/issues/86))
 - Bump version number to 0.1.11
 
-## [[app-v0.1.10](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.10)] - 2024-09-11
+## [[app-v0.1.10](https://github.com/vjousse/concentre/releases/tag/app-v0.1.10)] - 2024-09-11
 
 ### ⚙️ Miscellaneous Tasks
 
-- Offline flatpak build ([#84](https://github.com/vjousse/pomodorolm/issues/84))
+- Offline flatpak build ([#84](https://github.com/vjousse/concentre/issues/84))
 - Bump version number to 0.1.10
 
-## [[app-v0.1.9](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.9)] - 2024-09-09
+## [[app-v0.1.9](https://github.com/vjousse/concentre/releases/tag/app-v0.1.9)] - 2024-09-09
 
 ### 🐛 Bug Fixes
 
@@ -353,10 +377,10 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Build app directly in flatpak ([#83](https://github.com/vjousse/pomodorolm/issues/83))
+- Build app directly in flatpak ([#83](https://github.com/vjousse/concentre/issues/83))
 - Bump version to 0.1.9
 
-## [[app-v0.1.8](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.8)] - 2024-09-06
+## [[app-v0.1.8](https://github.com/vjousse/concentre/releases/tag/app-v0.1.8)] - 2024-09-06
 
 ### 🐛 Bug Fixes
 
@@ -369,14 +393,14 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Change LICENSE to AGPL
-- Add flatpak build ([#78](https://github.com/vjousse/pomodorolm/issues/78))
+- Add flatpak build ([#78](https://github.com/vjousse/concentre/issues/78))
 - Bump version to 0.1.8
 
-## [[app-v0.1.7](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.7)] - 2024-08-30
+## [[app-v0.1.7](https://github.com/vjousse/concentre/releases/tag/app-v0.1.7)] - 2024-08-30
 
 ### 🐛 Bug Fixes
 
-- Change theme only on config load ([#81](https://github.com/vjousse/pomodorolm/issues/81))
+- Change theme only on config load ([#81](https://github.com/vjousse/concentre/issues/81))
 - Change theme on config load
 - Remove debug
 - Flatpak sound
@@ -385,11 +409,11 @@ All notable changes to this project will be documented in this file.
 
 - Update version to 0.1.7
 
-## [[app-v0.1.6](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.6)] - 2024-08-30
+## [[app-v0.1.6](https://github.com/vjousse/concentre/releases/tag/app-v0.1.6)] - 2024-08-30
 
 ### 🚜 Refactor
 
-- Better error management ([#72](https://github.com/vjousse/pomodorolm/issues/72))
+- Better error management ([#72](https://github.com/vjousse/concentre/issues/72))
 
 ### 📚 Documentation
 
@@ -397,15 +421,15 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Upgrade to tauri-rc.7 ([#73](https://github.com/vjousse/pomodorolm/issues/73))
-- Upgrade to tauri rc 8 ([#79](https://github.com/vjousse/pomodorolm/issues/79))
+- Upgrade to tauri-rc.7 ([#73](https://github.com/vjousse/concentre/issues/73))
+- Upgrade to tauri rc 8 ([#79](https://github.com/vjousse/concentre/issues/79))
 - Version 0.1.6
 
-## [[app-v0.1.5](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.5)] - 2024-08-20
+## [[app-v0.1.5](https://github.com/vjousse/concentre/releases/tag/app-v0.1.5)] - 2024-08-20
 
 ### 🚀 Features
 
-- Add theming support ([#69](https://github.com/vjousse/pomodorolm/issues/69))
+- Add theming support ([#69](https://github.com/vjousse/concentre/issues/69))
 
 ### 🐛 Bug Fixes
 
@@ -414,46 +438,46 @@ All notable changes to this project will be documented in this file.
 ### 📚 Documentation
 
 - Npm ci
-- Add troubleshooting section ([#64](https://github.com/vjousse/pomodorolm/issues/64))
+- Add troubleshooting section ([#64](https://github.com/vjousse/concentre/issues/64))
 - Remove useless backticks
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump version number
 
-## [[app-v0.1.4](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.1.4)] - 2024-07-26
+## [[app-v0.1.4](https://github.com/vjousse/concentre/releases/tag/app-v0.1.4)] - 2024-07-26
 
 ### ⚙️ Miscellaneous Tasks
 
-- Split code into separate files ([#61](https://github.com/vjousse/pomodorolm/issues/61))
-- Update to latest tauri beta-24 ([#63](https://github.com/vjousse/pomodorolm/issues/63))
+- Split code into separate files ([#61](https://github.com/vjousse/concentre/issues/61))
+- Update to latest tauri beta-24 ([#63](https://github.com/vjousse/concentre/issues/63))
 - Bump version number
 
-## [[app-v0.0.6](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.0.6)] - 2024-05-23
+## [[app-v0.0.6](https://github.com/vjousse/concentre/releases/tag/app-v0.0.6)] - 2024-05-23
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update version number to 0.0.6
 
-## [[app-v0.0.5](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.0.5)] - 2024-05-21
+## [[app-v0.0.5](https://github.com/vjousse/concentre/releases/tag/app-v0.0.5)] - 2024-05-21
 
 ### 🐛 Bug Fixes
 
-- Play notification at the end of the round ([#34](https://github.com/vjousse/pomodorolm/issues/34))
+- Play notification at the end of the round ([#34](https://github.com/vjousse/concentre/issues/34))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Bump version to 0.0.5
 
-## [[app-v0.0.4](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.0.4)] - 2024-05-21
+## [[app-v0.0.4](https://github.com/vjousse/concentre/releases/tag/app-v0.0.4)] - 2024-05-21
 
 ### 🚀 Features
 
-- Add version number ([#33](https://github.com/vjousse/pomodorolm/issues/33))
+- Add version number ([#33](https://github.com/vjousse/concentre/issues/33))
 
 ### 🐛 Bug Fixes
 
-- Minimize to tray on close ([#32](https://github.com/vjousse/pomodorolm/issues/32))
+- Minimize to tray on close ([#32](https://github.com/vjousse/concentre/issues/32))
 - Formatting
 
 ### ⚙️ Miscellaneous Tasks
@@ -461,7 +485,7 @@ All notable changes to this project will be documented in this file.
 - Update arch PKGBUILD
 - Bump version number
 
-## [[app-v0.0.3](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.0.3)] - 2024-05-16
+## [[app-v0.0.3](https://github.com/vjousse/concentre/releases/tag/app-v0.0.3)] - 2024-05-16
 
 ### 🚀 Features
 
@@ -469,33 +493,33 @@ All notable changes to this project will be documented in this file.
 
 ### 🐛 Bug Fixes
 
-- Manage tick on the rust side ([#28](https://github.com/vjousse/pomodorolm/issues/28))
+- Manage tick on the rust side ([#28](https://github.com/vjousse/concentre/issues/28))
 
-## [[app-v0.0.2](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.0.2)] - 2024-04-30
+## [[app-v0.0.2](https://github.com/vjousse/concentre/releases/tag/app-v0.0.2)] - 2024-04-30
 
 ### 🚀 Features
 
-- Add Archlinux PKGBUILD ([#20](https://github.com/vjousse/pomodorolm/issues/20))
+- Add Archlinux PKGBUILD ([#20](https://github.com/vjousse/concentre/issues/20))
 
 ### 🐛 Bug Fixes
 
-- Binary name ([#16](https://github.com/vjousse/pomodorolm/issues/16))
-- Binary name ([#17](https://github.com/vjousse/pomodorolm/issues/17))
+- Binary name ([#16](https://github.com/vjousse/concentre/issues/16))
+- Binary name ([#17](https://github.com/vjousse/concentre/issues/17))
 - Archlinux package name
-- Specify draggable region ([#22](https://github.com/vjousse/pomodorolm/issues/22))
+- Specify draggable region ([#22](https://github.com/vjousse/concentre/issues/22))
 
 ### ⚙️ Miscellaneous Tasks
 
-- Clippy all the things 🎉 ([#18](https://github.com/vjousse/pomodorolm/issues/18))
-- Update README with releases ([#21](https://github.com/vjousse/pomodorolm/issues/21))
+- Clippy all the things 🎉 ([#18](https://github.com/vjousse/concentre/issues/18))
+- Update README with releases ([#21](https://github.com/vjousse/concentre/issues/21))
 
-## [[app-v0.0.1](https://github.com/vjousse/pomodorolm/releases/tag/app-v0.0.1)] - 2024-04-26
+## [[app-v0.0.1](https://github.com/vjousse/concentre/releases/tag/app-v0.0.1)] - 2024-04-26
 
 ### 🐛 Bug Fixes
 
-- Windows build doesn't support alpha version ([#14](https://github.com/vjousse/pomodorolm/issues/14))
+- Windows build doesn't support alpha version ([#14](https://github.com/vjousse/concentre/issues/14))
 
-## [[0.0.1-alpha](https://github.com/vjousse/pomodorolm/releases/tag/0.0.1-alpha)] - 2024-04-26
+## [[0.0.1-alpha](https://github.com/vjousse/concentre/releases/tag/0.0.1-alpha)] - 2024-04-26
 
 ### 🚀 Features
 
@@ -503,6 +527,6 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Specify alpha version ([#13](https://github.com/vjousse/pomodorolm/issues/13))
+- Specify alpha version ([#13](https://github.com/vjousse/concentre/issues/13))
 
 <!-- generated by git-cliff -->

@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+
+{% block title %}{{ page.title }} | {{ super() }} {% endblock title %}
+
+{% block header %}
+<header class="box-shadow">
+    {{ <render_header /> }}
+</header>
+{% endblock header %}
+
+{% block content %}
+<div class="heading-text">{{ page.description }}</div>
+{{ page.content | safe }}
+{% endblock content %}
+
+{# Only the current page's own table of contents (upstream Juice showed the
+   home page's one on every page whenever the home page had headings). #}
+{% block toc %}
+{% if page.toc %}
+<div class="toc">
+    <div class="toc-sticky">
+        {% for h in page.toc %}
+        <div class="toc-item">
+            <a class="subtext" href="{{ h.permalink | safe }}">{{ h.title }}</a>
+        </div>
+        {% if h.children %}
+        {% for h2 in h.children %}
+        <div class="toc-item-child">
+            <a class="subtext" href="{{ h2.permalink | safe }}"><small>- {{ h2.title }}</small></a>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock toc %}

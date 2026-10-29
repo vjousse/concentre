@@ -1,0 +1,29 @@
+base_url = "https://concentre.org"
+
+title = "Concentré, a simple yet powerful focus timer for Linux, Windows and macOS"
+description = "Free and open source focus timer. Customizable rounds, themes, tray icon, notifications. Under 4 MB, no Electron."
+default_language = "en"
+
+theme = "juice"
+
+compile_sass = true
+build_search_index = false
+
+[markdown.highlighting]
+# Dual themes: Zola emits CSS `light-dark()` colors, which follow the visitor's
+# color scheme (requires `color-scheme: light dark`, set in templates/_variables.html).
+light_theme = "github-light"
+dark_theme = "github-dark"
+
+[extra]
+juice_logo_name = "Concentré"
+juice_logo_path = "logo.png"
+juice_extra_menu = [
+    { title = "GitHub", link = "https://github.com/vjousse/concentre" },
+    { title = "Support ❤", link = "https://ko-fi.com/vjousse" },
+]
+juice_exclude_menu = []
+repository_url = "https://github.com/vjousse/concentre"
+
+# Bump on each release: used to build direct download links.
+version = "0.10.0"

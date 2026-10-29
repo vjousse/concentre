@@ -713,11 +713,12 @@ aboutSettingView appVersion =
     div [ class "container", id "about" ]
         [ p [ class "drawer-heading" ] [ text "About" ]
         , section []
-            [ h2 [] [ text "Pomodorolm" ]
+            [ h2 [] [ text "Concentré" ]
+            , p [ class "label" ] [ text "Formerly Pomodorolm" ]
             , p [ class "label" ]
                 [ text <| "Version: " ++ appVersion ++ " "
                 , a
-                    [ href <| "https://github.com/vjousse/pomodorolm/releases/tag/app-v" ++ appVersion
+                    [ href <| "https://github.com/vjousse/concentre/releases/tag/app-v" ++ appVersion
                     , class "label"
                     , class "link"
                     , target "_blank"
@@ -726,7 +727,7 @@ aboutSettingView appVersion =
                 ]
             , p [ class "label" ]
                 [ a
-                    [ href "https://github.com/vjousse/pomodorolm"
+                    [ href "https://github.com/vjousse/concentre"
                     , class "label"
                     , class "link"
                     , target "_blank"
@@ -734,7 +735,7 @@ aboutSettingView appVersion =
                     [ text "Licence, Documentation and Source Code" ]
                 ]
             , p [ class "label", style "padding-top" "2em" ]
-                [ text "❤️ Support Pomodorolm"
+                [ text "❤️ Support Concentré"
                 ]
             , p [ class "label" ]
                 [ a
