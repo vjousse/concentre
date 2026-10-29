@@ -26,4 +26,4 @@ juice_exclude_menu = []
 repository_url = "https://github.com/vjousse/concentre"
 
 # Bump on each release: used to build direct download links.
-version = "0.9.3"
+version = "0.10.0"

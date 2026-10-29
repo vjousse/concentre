@@ -34,6 +34,9 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="0.10.0" date="2026-10-29">
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.10.0</url>
+    </release>
     <release version="0.9.3" date="2026-10-21">
       <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.9.3</url>
     </release>

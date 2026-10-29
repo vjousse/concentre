@@ -7,7 +7,7 @@ platforms:
   amd64:
   arm64:
 
-version: "0.9.3"
+version: "0.10.0"
 summary: Focus timer with a visual countdown and tray icon
 description: |
   Concentré (formerly Pomodorolm) is a simple and configurable focus timer. Work in focused rounds, take short breaks between them, and a longer break every few rounds. The timer circle and the tray icon change color as time runs out, so the remaining time is always visible.
