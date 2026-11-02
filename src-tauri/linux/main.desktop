@@ -1,6 +1,6 @@
 [Desktop Entry]
 Categories={{categories}}
-Comment=Focus timer with a visual countdown and tray icon
+Comment=Focus timer with rounds and breaks
 Exec={{exec}}
 StartupWMClass={{exec}}
 Icon={{icon}}
