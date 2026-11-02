@@ -2,7 +2,7 @@
 Type=Application
 
 Name=Concentré
-Comment=Focus timer with a visual countdown and tray icon
+Comment=Focus timer with rounds and breaks
 Icon=org.jousse.vincent.Pomodorolm
 Exec=pomodorolm
 Terminal=false

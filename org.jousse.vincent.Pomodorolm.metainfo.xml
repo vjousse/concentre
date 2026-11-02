@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>org.jousse.vincent.Pomodorolm</id>
   <name>Concentré</name>
-  <summary>Focus timer with a visual countdown and tray icon</summary>
+  <summary>Focus timer with rounds and breaks</summary>
   <developer_name>Vincent Jousse</developer_name>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>AGPL-3.0-only</project_license>
@@ -28,12 +28,31 @@
   <launchable type="desktop-id">org.jousse.vincent.Pomodorolm.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/vjousse/concentre/main/screenshot.png</image>
-      <caption>Multiple screens of Concentré with the default theme</caption>
+      <image>https://concentre.org/screenshots/1-timer.png</image>
+      <caption>Ready to start a focus round</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://concentre.org/screenshots/2-running.png</image>
+      <caption>The timer changes color as time runs out</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://concentre.org/screenshots/3-settings-timer.png</image>
+      <caption>Set the length of focus rounds and breaks</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://concentre.org/screenshots/4-settings-general.png</image>
+      <caption>Choose how the timer starts and stops</caption>
     </screenshot>
   </screenshots>
+  <branding>
+    <color type="primary" scheme_preference="light">#9ff5d0</color>
+    <color type="primary" scheme_preference="dark">#127a55</color>
+  </branding>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="0.10.1" date="2026-11-02">
+      <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.10.1</url>
+    </release>
     <release version="0.10.0" date="2026-10-29">
       <url type="details">https://github.com/vjousse/concentre/releases/tag/app-v0.10.0</url>
     </release>

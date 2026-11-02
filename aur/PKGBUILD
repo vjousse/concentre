@@ -1,8 +1,8 @@
 # Maintainer: Vincent Jousse <vincent@jousse.org> - https://vincent.jousse.org
 pkgname=concentre-bin
-pkgver=0.10.0
+pkgver=0.10.1
 pkgrel=1
-pkgdesc="Focus timer with a visual countdown and tray icon (formerly Pomodorolm)"
+pkgdesc="Focus timer with rounds and breaks (formerly Pomodorolm)"
 arch=('x86_64')
 url="https://github.com/vjousse/concentre"
 license=('AGPL-3.0-only')
@@ -16,4 +16,8 @@ sha256sums=('9e41e9b27b90656a58b22e1d3ae3e31b056fa43a54f9c93b9314c7aa05219917')
 
 package() {
   bsdtar -xf "$srcdir/data.tar.gz" -C "$pkgdir"
+
+  # The binary is still named `pomodorolm`
+  # also make it available as `concentre`
+  ln -s pomodorolm "$pkgdir/usr/bin/concentre"
 }

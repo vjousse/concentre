@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[app-v0.10.1](https://github.com/vjousse/concentre/releases/tag/app-v0.10.1)] - 2026-11-02
+
+### 📚 Documentation
+
+- *(website)* Add more Linux links
+- *(website)* Fix typo
+
+### ⚙️ Miscellaneous Tasks
+
+- Add symlink to aur
+- Update deps ([#361](https://github.com/vjousse/concentre/issues/361))
+- Update screens with Concentré ([#362](https://github.com/vjousse/concentre/issues/362))
+- Update icons and flatpak ([#363](https://github.com/vjousse/concentre/issues/363))
+
 ## [[app-v0.10.0](https://github.com/vjousse/concentre/releases/tag/app-v0.10.0)] - 2026-10-29
 
 ### 🚀 Features
@@ -24,6 +38,8 @@ All notable changes to this project will be documented in this file.
 - Update deps ([#355](https://github.com/vjousse/concentre/issues/355))
 - Always register binary name ([#356](https://github.com/vjousse/concentre/issues/356))
 - Rename AUR package name ([#357](https://github.com/vjousse/concentre/issues/357))
+- Bump to 0.10.0
+- Update AUR checksum
 
 ## [[app-v0.9.3](https://github.com/vjousse/concentre/releases/tag/app-v0.9.3)] - 2026-10-21
 
