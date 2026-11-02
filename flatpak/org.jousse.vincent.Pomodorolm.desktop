@@ -1,11 +1,10 @@
 [Desktop Entry]
-Version=0.1.7
 Type=Application
 
-Name=pomodorolm
-Comment=A simple, good looking and configurable pomodoro tracker with tray icon.
+Name=Concentré
+Comment=Focus timer with rounds and breaks
 Icon=org.jousse.vincent.Pomodorolm
 Exec=pomodorolm
 Terminal=false
 Categories=Utility;
-Keywords=pomodoro;time;tracker;
+Keywords=focus;timer;concentration;productivity;pomodoro;concentre;pomodorolm;
