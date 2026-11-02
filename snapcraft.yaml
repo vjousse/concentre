@@ -8,9 +8,11 @@ platforms:
   arm64:
 
 version: "0.10.0"
-summary: Focus timer with a visual countdown and tray icon
+summary: Focus timer with rounds and breaks
 description: |
   Concentré (formerly Pomodorolm) is a simple and configurable focus timer. Work in focused rounds, take short breaks between them, and a longer break every few rounds. The timer circle and the tray icon change color as time runs out, so the remaining time is always visible.
+
+icon: src-tauri/icons/icon.png
 
 grade: stable
 confinement: strict
@@ -92,7 +94,7 @@ parts:
       rustup default stable
       npm run tauri build -- --bundles deb
       dpkg -x src-tauri/target/release/bundle/deb/*.deb $SNAPCRAFT_PART_INSTALL/
-      sed -i -e "s|Icon=pomodorolm|Icon=/usr/share/icons/hicolor/32x32/apps/pomodorolm.png|g" $SNAPCRAFT_PART_INSTALL/usr/share/applications/pomodorolm.desktop
+      sed -i -e "s|Icon=pomodorolm|Icon=/usr/share/icons/hicolor/256x256@2/apps/pomodorolm.png|g" $SNAPCRAFT_PART_INSTALL/usr/share/applications/pomodorolm.desktop
 
   alsa-mixin:
     plugin: dump
