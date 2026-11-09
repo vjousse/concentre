@@ -6716,14 +6716,14 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/toml/toml-1.1.8+spec-1.1.0.crate",
-        "sha256": "20489e00e4d8741d6be680764cc12e270655e375a20d1011e844a9c3379e678d",
-        "dest": "cargo/vendor/toml-1.1.8+spec-1.1.0"
+        "url": "https://static.crates.io/crates/toml/toml-1.2.0+spec-1.1.0.crate",
+        "sha256": "c5ffcdf8f50436dbbfd675c1fe1b8e0854f42b7defea8584bdebe1aee900e561",
+        "dest": "cargo/vendor/toml-1.2.0+spec-1.1.0"
     },
     {
         "type": "inline",
-        "contents": "{\"package\": \"20489e00e4d8741d6be680764cc12e270655e375a20d1011e844a9c3379e678d\", \"files\": {}}",
-        "dest": "cargo/vendor/toml-1.1.8+spec-1.1.0",
+        "contents": "{\"package\": \"c5ffcdf8f50436dbbfd675c1fe1b8e0854f42b7defea8584bdebe1aee900e561\", \"files\": {}}",
+        "dest": "cargo/vendor/toml-1.2.0+spec-1.1.0",
         "dest-filename": ".cargo-checksum.json"
     },
     {
@@ -6807,14 +6807,14 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/toml_writer/toml_writer-1.1.3+spec-1.1.0.crate",
-        "sha256": "06bdbd8cfc056b8d2e2e85f29b56a3bdbecb527cef81eb39e3e7b98af4652770",
-        "dest": "cargo/vendor/toml_writer-1.1.3+spec-1.1.0"
+        "url": "https://static.crates.io/crates/toml_writer/toml_writer-1.2.0+spec-1.1.0.crate",
+        "sha256": "009dbb7700f11c55ef83aebbe4c0e9cf1f1ac0844bd8d6f00dc38f302026e13a",
+        "dest": "cargo/vendor/toml_writer-1.2.0+spec-1.1.0"
     },
     {
         "type": "inline",
-        "contents": "{\"package\": \"06bdbd8cfc056b8d2e2e85f29b56a3bdbecb527cef81eb39e3e7b98af4652770\", \"files\": {}}",
-        "dest": "cargo/vendor/toml_writer-1.1.3+spec-1.1.0",
+        "contents": "{\"package\": \"009dbb7700f11c55ef83aebbe4c0e9cf1f1ac0844bd8d6f00dc38f302026e13a\", \"files\": {}}",
+        "dest": "cargo/vendor/toml_writer-1.2.0+spec-1.1.0",
         "dest-filename": ".cargo-checksum.json"
     },
     {
