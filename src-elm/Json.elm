@@ -285,8 +285,9 @@ rustSessionDecoder =
 
 
 type ExternalMessage
-    = RustStateMsg Pomodoro.State
+    = ErrorMsg String
     | InitDataMsg InitData
+    | RustStateMsg Pomodoro.State
     | SoundFilePath SessionType String
 
 

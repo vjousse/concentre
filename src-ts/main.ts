@@ -2,7 +2,7 @@ import "../main.css";
 
 import { Elm } from "../src-elm/Main.elm";
 
-import { invoke } from "@tauri-apps/api/core";
+import { invoke, type InvokeArgs } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 
 import { attachConsole } from "@tauri-apps/plugin-log";
@@ -161,9 +161,7 @@ let rustConfig: RustConfig = {
   volume: 100,
 };
 
-let app;
-
-app = Elm.Main.init({
+let app = Elm.Main.init({
   node: root,
   flags: {
     alwaysOnTop: rustConfig.always_on_top,
@@ -193,6 +191,20 @@ app = Elm.Main.init({
     volume: rustConfig.volume,
   },
 });
+
+async function safeInvoke<T>(
+  cmd: string,
+  args?: InvokeArgs
+): Promise<T | undefined> {
+  try {
+    return await invoke<T>(cmd, args);
+  } catch (err) {
+    const message = typeof err === "string" ? err : String(err);
+    console.error(`${cmd} failed:`, message);
+    app.ports.sendMessageToElm.send({ error: `${cmd}: ${message}` });
+    return undefined;
+  }
+}
 
 app.ports.hideWindow.subscribe(function () {
   invoke("hide_window");
@@ -264,12 +276,12 @@ app.ports.sendMessageFromElm.subscribe(async function (message: Message) {
     case "get_init_data":
       console.log("Getting init data from Rust");
 
-      invoke("load_init_data").then((init_data) => {
-        const [config, themes, pomodoroState] = init_data as [
-          RustConfig,
-          Array<RustThemeColors>,
-          any
-        ];
+      const initData = await safeInvoke<
+        [RustConfig, Array<RustThemeColors>, any]
+      >("load_init_data_utrutr");
+
+      if (initData) {
+        const [config, themes, pomodoroState] = initData;
         console.log("Got init data from Rust");
         console.log({ config, themes, pomodoroState });
         app.ports.sendMessageToElm.send({
@@ -277,7 +289,7 @@ app.ports.sendMessageFromElm.subscribe(async function (message: Message) {
           themes,
           pomodoro_state: pomodoroState,
         });
-      });
+      }
 
       break;
 

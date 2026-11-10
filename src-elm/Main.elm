@@ -3,8 +3,9 @@ port module Main exposing (Flags, Model, Msg, main)
 import Browser
 import Color exposing (RGB(..), colorForSessionType, computeCurrentColor)
 import Config exposing (Config)
-import Html exposing (Html, div)
-import Html.Attributes exposing (id)
+import Html exposing (Html, button, div, p, text)
+import Html.Attributes exposing (attribute, class, id)
+import Html.Events exposing (onClick)
 import Json exposing (ExternalMessage(..), configEncoder, currentStateEncoder, elmMessageBuilder, elmMessageEncoder, externalMessageDecoder, sessionTypeDecoder, soundMessageEncoder)
 import Json.Decode as Decode
 import Json.Encode as Encode
@@ -36,6 +37,7 @@ type alias Model =
     , currentColor : RGB
     , currentState : CurrentState
     , drawerOpen : Bool
+    , error : Maybe String
     , focusLabel : String
     , longBreakLabel : String
     , pomodoroState : Maybe Pomodoro.State
@@ -144,6 +146,7 @@ init flags =
       , currentColor = theme.colors.focusRound
       , currentState = currentState
       , drawerOpen = False
+      , error = Nothing
       , focusLabel = flags.defaultFocusLabel
       , longBreakLabel = flags.defaultLongBreakLabel
       , pomodoroState = Nothing
@@ -167,6 +170,7 @@ type Msg
     | CloseWindow
     | ChangeSettingTab SettingTab
     | ChangeTheme Theme
+    | DismissError
     | SetVolumeBarVisibility Bool
     | ProcessExternalMessage Decode.Value
     | MinimizeWindow
@@ -210,6 +214,9 @@ update msg ({ config } as model) =
                 closeWindow ()
             )
 
+        DismissError ->
+            ( { model | error = Nothing }, Cmd.none )
+
         SetVolumeBarVisibility visible ->
             ( { model | volumeSliderHidden = not visible }, Cmd.none )
 
@@ -224,6 +231,9 @@ update msg ({ config } as model) =
 
         ProcessExternalMessage externalMessage ->
             case Decode.decodeValue externalMessageDecoder externalMessage of
+                Ok (ErrorMsg errorMessage) ->
+                    ( { model | error = Just errorMessage }, Cmd.none )
+
                 Ok (InitDataMsg c) ->
                     processExternalInitMessage c model
 
@@ -795,6 +805,19 @@ find predicate list =
                 find predicate xs
 
 
+errorView : Maybe String -> Html Msg
+errorView maybeError =
+    case maybeError of
+        Just message ->
+            div [ class "error-banner", attribute "role" "alert" ]
+                [ p [ class "error-banner__message" ] [ text message ]
+                , button [ class "error-banner__close", onClick DismissError ] [ text "×" ]
+                ]
+
+        Nothing ->
+            text ""
+
+
 view : Model -> Html Msg
 view model =
     div [ id "app" ]
@@ -826,6 +849,7 @@ view model =
                 , onTogglePlayStatus = TogglePlayStatus
                 }
                 model
+        , errorView model.error
         ]
 
 
