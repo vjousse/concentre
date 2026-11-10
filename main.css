@@ -669,7 +669,7 @@ select {
   padding: 3vw 4vw;
   background-color: var(--color-background-light, #2f384b);
   color: var(--color-foreground, #f6f2eb);
-  border-left: 1.1vw solid var(--color-focus-round, #ff4e4d);
+  border-left: 1.1vw solid #e74c3c;
   border-radius: 1.1vw;
   box-shadow: 0 1vw 3vw rgba(0, 0, 0, 0.3);
   font-size: 0.7rem;

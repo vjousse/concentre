@@ -249,9 +249,8 @@ update msg ({ config } as model) =
                     , cmd
                     )
 
-                Err _ ->
-                    --@FIX: don't fail silently
-                    ( model, Cmd.none )
+                Err e ->
+                    ( { model | error = Just <| Decode.errorToString e }, Cmd.none )
 
         Reset resetType ->
             let
