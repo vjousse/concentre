@@ -502,7 +502,7 @@ async fn change_icon<R: tauri::Runtime>(
     blue: u8,
     fill_percentage: f32,
     paused: bool,
-) -> Result<(), ()> {
+) -> CommandResult<()> {
     // Image dimensions
     let width = 512;
     let height = 512;
@@ -532,8 +532,7 @@ async fn change_icon<R: tauri::Runtime>(
                         // so the path needs to be the same between the host and the sandboxed env
                         let local_data_path = app_handle
                             .path()
-                            .resolve("tray-icon", BaseDirectory::AppLocalData)
-                            .unwrap();
+                            .resolve("tray-icon", BaseDirectory::AppLocalData)?;
 
                         let _ = tray.set_temp_dir_path(Some(local_data_path));
                         let _ = tray.set_icon(icon_img);
@@ -553,25 +552,13 @@ async fn update_session_status<R: tauri::Runtime>(
     _app: tauri::AppHandle<R>,
     state: tauri::State<'_, AppMenuStates<R>>,
     status: String,
-) -> Result<(), ()> {
-    let state_guard = state.0.lock();
+) -> CommandResult<()> {
+    let guard = state.0.lock().unwrap_or_else(|e| e.into_inner());
 
-    match state_guard {
-        Ok(guard) => {
-            if status == "running" {
-                let set_text_result = guard.toggle_play_menu.set_text("Pause");
-                if let Err(e) = set_text_result {
-                    eprintln!("Error setting MenuItem title: {e:?}.");
-                }
-            } else {
-                let set_text_result = guard.toggle_play_menu.set_text("Play");
-                if let Err(e) = set_text_result {
-                    eprintln!("Error setting MenuItem title: {e:?}.");
-                }
-            }
-        }
-        Err(e) => eprintln!("Error getting state lock: {e:?}."),
-    };
+    let label = if status == "running" { "Pause" } else { "Play" };
+    if let Err(e) = guard.toggle_play_menu.set_text(label) {
+        eprintln!("Error setting MenuItem title: {e:?}.");
+    }
 
     Ok(())
 }
@@ -663,7 +650,10 @@ async fn load_init_data(
 }
 
 #[tauri::command]
-async fn play_sound_command(app_handle: tauri::AppHandle, play_sound_message: PlaySoundMessage) {
+async fn play_sound_command(
+    app_handle: tauri::AppHandle,
+    play_sound_message: PlaySoundMessage,
+) -> CommandResult<()> {
     let app = app_handle.clone();
     let state: tauri::State<AppState> = app.state();
     let state_guard = state.0.lock().await;
@@ -700,56 +690,43 @@ async fn play_sound_command(app_handle: tauri::AppHandle, play_sound_message: Pl
             "Impossible to get sound file with id {}",
             play_sound_message.sound_id
         ),
-    }
+    };
+
+    Ok(())
 }
 #[tauri::command]
-async fn quit(app_handle: tauri::AppHandle) {
+async fn quit(app_handle: tauri::AppHandle) -> CommandResult<()> {
     app_handle.exit(0);
+    Ok(())
 }
 
 #[tauri::command]
 fn minimize_window<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     app_menu: tauri::State<'_, AppMenuStates<R>>,
-) -> Result<(), ()> {
-    let state_guard = app_menu.0.lock();
-    match state_guard {
-        Ok(guard) => {
-            if let Some(window) = app.get_webview_window("main") {
-                let _ = window.minimize();
-                let _ = guard.toggle_visibility_menu.set_text("Show");
-            }
-            Ok(())
-        }
-        Err(e) => {
-            eprintln!("Error getting state lock: {e:?}.");
-            Err(())
-        }
+) -> CommandResult<()> {
+    let guard = app_menu.0.lock().unwrap_or_else(|e| e.into_inner());
+    if let Some(window) = app.get_webview_window("main") {
+        window.minimize()?;
+        guard.toggle_visibility_menu.set_text("Show")?;
     }
+    Ok(())
 }
 
 #[tauri::command]
 fn hide_window<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     app_menu: tauri::State<'_, AppMenuStates<R>>,
-) -> Result<(), ()> {
-    let state_guard = app_menu.0.lock();
-    match state_guard {
-        Ok(guard) => {
-            if let Some(window) = app.get_webview_window("main") {
-                #[cfg(target_os = "macos")]
-                let _ = app.hide();
-                #[cfg(not(target_os = "macos"))]
-                let _ = window.hide();
-                let _ = guard.toggle_visibility_menu.set_text("Show");
-            }
-            Ok(())
-        }
-        Err(e) => {
-            eprintln!("Error getting state lock: {e:?}.");
-            Err(())
-        }
+) -> CommandResult<()> {
+    let guard = app_menu.0.lock().unwrap_or_else(|e| e.into_inner());
+    if let Some(window) = app.get_webview_window("main") {
+        #[cfg(target_os = "macos")]
+        app.hide()?;
+        #[cfg(not(target_os = "macos"))]
+        window.hide()?;
+        guard.toggle_visibility_menu.set_text("Show")?;
     }
+    Ok(())
 }
 
 #[tauri::command]
@@ -764,8 +741,8 @@ async fn close_window(app_handle: tauri::AppHandle) -> CommandResult<()> {
 }
 
 #[tauri::command]
-async fn notify(app_handle: tauri::AppHandle, notification: ElmNotification) {
-    let data_dir = app_handle.path().app_data_dir().unwrap();
+async fn notify(app_handle: tauri::AppHandle, notification: ElmNotification) -> CommandResult<()> {
+    let data_dir = app_handle.path().app_data_dir()?;
     match icon::create_icon(
         icon::PomodorolmIcon {
             width: 512,
@@ -780,18 +757,19 @@ async fn notify(app_handle: tauri::AppHandle, notification: ElmNotification) {
     ) {
         Ok(icon_path_buf) => {
             // shows a notification with the given title and body
-            if app_handle.notification().permission_state().unwrap() == PermissionState::Granted {
-                let _ = app_handle
+            if app_handle.notification().permission_state()? == PermissionState::Granted {
+                app_handle
                     .notification()
                     .builder()
                     .title(notification.title)
                     .body(notification.body)
                     .icon(icon_path_buf.to_string_lossy())
-                    .show();
+                    .show()?;
             }
         }
         Err(e) => eprintln!("Unable to get app_data_dir for icon: {e:?}."),
     }
+    Ok(())
 }
 
 #[tauri::command]
@@ -799,7 +777,7 @@ async fn handle_external_message<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     state: tauri::State<'_, AppState>,
     name: String,
-) -> Result<pomodoro::PomodoroUnborrowed, ()> {
+) -> CommandResult<pomodoro::PomodoroUnborrowed> {
     let mut app_state_guard = state.0.lock().await;
 
     match name.as_str() {
@@ -822,7 +800,7 @@ async fn handle_external_message<R: tauri::Runtime>(
         "skip" => {
             app_state_guard.pomodoro = pomodoro::next(&app_state_guard.pomodoro);
         }
-        message => eprintln!("[rust] Got unknown message `{message}`, ignoring."),
+        message => return Err(anyhow::anyhow!("unknown message `{message}`").into()),
     }
 
     // Needed because Tauri doesn't play well with returning references
