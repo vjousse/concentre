@@ -334,9 +334,9 @@ pub fn run_app<R: Runtime>(config_dir_name: &str, _builder: tauri::Builder<R>) {
 
             let sound_file_path = get_sound_file("audio-tick", app.handle(), &config)
                 .expect("Tick sound file not found.");
-            let audio_path = sound_file_path.to_string_lossy();
+            let tick_player = sound::TickPlayer::spawn(sound_file_path);
 
-            tauri::async_runtime::spawn(tick(app.handle().clone(), audio_path.to_string()));
+            tauri::async_runtime::spawn(tick(app.handle().clone(), tick_player));
 
             #[cfg(desktop)]
             {
@@ -453,46 +453,36 @@ fn should_play_tick_sound(config: &Config, pomodoro: &Pomodoro) -> bool {
         _ => false,
     }
 }
-
-async fn tick(app_handle: AppHandle, path: String) {
+async fn tick(app_handle: AppHandle, tick_player: sound::TickPlayer) {
     let mut stream = IntervalStream::new(time::interval(Duration::from_secs(1)));
 
-    match app_handle.get_webview_window("main") {
-        Some(window) => {
-            while let Some(_ts) = stream.next().await {
-                let state: tauri::State<AppState> = app_handle.state();
-                let new_state = state.clone();
-                let mut state_guard = new_state.0.lock().await;
-                //let play_tick: bool = state_guard.play_tick;
-                let play_tick: bool =
-                    should_play_tick_sound(&state_guard.config, &state_guard.pomodoro);
+    let Some(window) = app_handle.get_webview_window("main") else {
+        eprintln!("Impossible to get main window for tick sound");
+        return;
+    };
 
-                state_guard.pomodoro = pomodoro::tick(&state_guard.pomodoro);
+    while let Some(scheduled) = stream.next().await {
+        // A late tick is a catch-up tick (tokio's default `MissedTickBehavior::Burst`):
+        // count it, but don't play the sound, or the ticks would sound bunched together.
+        let is_late = scheduled.elapsed() > Duration::from_millis(250);
 
-                let _ = window.emit("external-message", state_guard.pomodoro.to_unborrowed());
+        let state: tauri::State<AppState> = app_handle.state();
+        let mut state_guard = state.0.lock().await;
 
-                if play_tick {
-                    let new_path = path.clone();
-                    let volume = state_guard
-                        .config
-                        .volume
-                        .map_or(if state_guard.config.muted { 0.0 } else { 1.0 }, |v| {
-                            v as f32 / 100.0
-                        });
-
-                    tauri::async_runtime::spawn_blocking(move || {
-                        // Fail silently if we can't play sound file
-                        let play_sound_file_result = sound::play_sound_file(&new_path, volume);
-                        if play_sound_file_result.is_err() {
-                            eprintln!(
-                                "Unable to play sound file {new_path:?}: {play_sound_file_result:?}"
-                            );
-                        }
-                    });
-                }
-            }
+        // Play the sound first: it's the part where latency is audible
+        if !is_late && should_play_tick_sound(&state_guard.config, &state_guard.pomodoro) {
+            let volume = state_guard
+                .config
+                .volume
+                .map_or(if state_guard.config.muted { 0.0 } else { 1.0 }, |v| {
+                    v as f32 / 100.0
+                });
+            tick_player.play(volume);
         }
-        None => eprintln!("Impossible to get main window for tick sound"),
+
+        state_guard.pomodoro = pomodoro::tick(&state_guard.pomodoro);
+
+        let _ = window.emit("external-message", state_guard.pomodoro.to_unborrowed());
     }
 }
 
