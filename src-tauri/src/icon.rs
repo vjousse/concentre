@@ -1,6 +1,7 @@
-use image::{ImageBuffer, Rgba};
+use image::{ImageBuffer, Rgba, RgbaImage};
 use std::{path::Path, path::PathBuf};
 
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct AppIcon {
     pub width: u32,
     pub height: u32,
@@ -11,7 +12,8 @@ pub struct AppIcon {
     pub paused: bool,
 }
 
-pub fn create_icon(icon: AppIcon, path_name: &str) -> Result<PathBuf, String> {
+/// Draws the icon in memory.
+pub fn render_icon(icon: &AppIcon) -> RgbaImage {
     // Create a new ImageBuffer with RGBA colors
     let mut imgbuf = ImageBuffer::<Rgba<u8>, _>::new(icon.width, icon.height);
 
@@ -101,6 +103,13 @@ pub fn create_icon(icon: AppIcon, path_name: &str) -> Result<PathBuf, String> {
             }
         }
     }
+
+    imgbuf
+}
+
+/// Draws the icon and saves it as a PNG file (needed for notifications).
+pub fn create_icon(icon: AppIcon, path_name: &str) -> Result<PathBuf, String> {
+    let imgbuf = render_icon(&icon);
 
     // Create a temporary file path
     let temp_path = Path::new(path_name);
