@@ -54,6 +54,8 @@ split_commits = false
 commit_preprocessors = [
   # Replace issue numbers
   { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](<REPO>/issues/${2}))"},
+  # Fix commits merged with the wrong type
+  { pattern = '^chore: use relative size in css', replace = "feat: scale the interface with the window size" },
   # Check spelling of the commit with https://github.com/crate-ci/typos
   # If the spelling is incorrect, it will be automatically fixed.
   #{ pattern = '.*', replace_command = 'typos --write-changes -' },

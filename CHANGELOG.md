@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-11
+
+### 🚀 Features
+
+- Add frontend error handling ([#367](https://github.com/vjousse/concentre/issues/367))
+- Scale the interface with the window size ([#369](https://github.com/vjousse/concentre/issues/369))
+
+### 🚜 Refactor
+
+- Add elm-review sort rule ([#368](https://github.com/vjousse/concentre/issues/368))
+
+### 📚 Documentation
+
+- *(website)* Use square screenshot
+
+### ⚙️ Miscellaneous Tasks
+
+- Fix release script ([#371](https://github.com/vjousse/concentre/issues/371))
+- Prepare 1.0 ([#372](https://github.com/vjousse/concentre/issues/372))
+
 ## [[app-v0.10.1](https://github.com/vjousse/concentre/releases/tag/app-v0.10.1)] - 2026-11-02
 
 ### 📚 Documentation
@@ -15,6 +35,8 @@ All notable changes to this project will be documented in this file.
 - Update deps ([#361](https://github.com/vjousse/concentre/issues/361))
 - Update screens with Concentré ([#362](https://github.com/vjousse/concentre/issues/362))
 - Update icons and flatpak ([#363](https://github.com/vjousse/concentre/issues/363))
+- Bump to 0.10.1
+- Update AUR checksum
 
 ## [[app-v0.10.0](https://github.com/vjousse/concentre/releases/tag/app-v0.10.0)] - 2026-10-29
 
