@@ -17,6 +17,8 @@ enum Commands {
     Cli,
 }
 
+// Kept from the Pomodorolm era: changing it would make existing users
+// lose their config (it lives in e.g. `~/.config/pomodorolm/`).
 const CONFIG_DIR_NAME: &str = "pomodorolm";
 
 fn main() -> anyhow::Result<()> {
@@ -26,10 +28,10 @@ fn main() -> anyhow::Result<()> {
     // matches just as you would the top level cmd
     match &cli.command {
         Some(command) => match command {
-            Commands::Cli => pomodorolm_lib::cli::run(CONFIG_DIR_NAME),
+            Commands::Cli => concentre_lib::cli::run(CONFIG_DIR_NAME),
         },
         None => {
-            pomodorolm_lib::run_gui(CONFIG_DIR_NAME);
+            concentre_lib::run_gui(CONFIG_DIR_NAME);
             Ok(())
         }
     }

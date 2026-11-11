@@ -99,7 +99,7 @@ init : Flags -> ( Model, Cmd Msg )
 init flags =
     let
         theme =
-            pomodorolmTheme
+            defaultTheme
 
         currentState =
             { color = theme.colors.focusRound
@@ -852,8 +852,11 @@ view model =
         ]
 
 
-pomodorolmTheme : Theme
-pomodorolmTheme =
+{-| The name is kept from the Pomodorolm era: user configs store the
+selected theme by its lowercased name ("pomodorolm").
+-}
+defaultTheme : Theme
+defaultTheme =
     { colors =
         { accent = Color.fromCSSHex "#05ec8c"
         , background = Color.fromCSSHex "#2f384b"
