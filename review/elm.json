@@ -7,6 +7,7 @@
     "dependencies": {
         "direct": {
             "elm/core": "1.0.5",
+            "fysiweb/elm-review-sorted": "1.0.3",
             "jfmengels/elm-review": "2.16.6",
             "jfmengels/elm-review-code-style": "1.2.0",
             "jfmengels/elm-review-common": "1.3.5",

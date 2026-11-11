@@ -23,6 +23,8 @@ import NoMissingTypeExpose
 import NoPrematureLetComputation
 import NoRecursiveUpdate
 import NoSimpleLetBody
+import NoUnsortedConstructors
+import NoUnsortedRecordFields
 import NoUnused.CustomTypeConstructorArgs
 import NoUnused.CustomTypeConstructors
 import NoUnused.Dependencies
@@ -50,6 +52,10 @@ config =
     , NoMissingTypeExpose.rule
     , NoSimpleLetBody.rule
     , NoPrematureLetComputation.rule
+    , NoUnsortedRecordFields.rule
+        |> Rule.ignoreErrorsForDirectories [ "tests/" ]
+    , NoUnsortedConstructors.rule
+        |> Rule.ignoreErrorsForDirectories [ "tests/" ]
     , NoUnused.CustomTypeConstructors.rule []
     , NoUnused.CustomTypeConstructorArgs.rule
     , NoUnused.Dependencies.rule

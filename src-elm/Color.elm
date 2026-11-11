@@ -65,11 +65,11 @@ colorForSessionType sessionType colors =
         Focus ->
             colors.focusRound
 
-        ShortBreak ->
-            colors.shortRound
-
         LongBreak ->
             colors.longRound
+
+        ShortBreak ->
+            colors.shortRound
 
 
 computeCurrentColor : Seconds -> Seconds -> SessionType -> ThemeColors -> RGB

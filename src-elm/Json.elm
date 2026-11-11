@@ -116,9 +116,7 @@ currentStateEncoder currentState =
 
 
 type alias SoundMessageValue =
-    { soundId : String
-    , quitAfterPlay : Bool
-    }
+    { quitAfterPlay : Bool, soundId : String }
 
 
 soundMessageEncoder : SoundMessageValue -> Encode.Value

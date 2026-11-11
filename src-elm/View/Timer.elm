@@ -17,13 +17,13 @@ import Types exposing (ResetType(..))
 
 
 type alias EventHandlers msg =
-    { onReset : ResetType -> msg
-    , onCurrentRoundSkip : msg
+    { onCurrentRoundSkip : msg
+    , onReset : ResetType -> msg
     , onSetVolumeBarVisibility : Bool -> msg
-    , onVolumeUpdate : String -> msg
     , onToggleMute : Bool -> msg
-    , onUpdateLabel : SessionType -> String -> msg
     , onTogglePlayStatus : msg
+    , onUpdateLabel : SessionType -> (String -> msg)
+    , onVolumeUpdate : String -> msg
     }
 
 
@@ -32,12 +32,12 @@ view :
     ->
         { model
             | config : Config
+            , focusLabel : String
+            , longBreakLabel : String
+            , pomodoroState : Maybe Pomodoro.State
+            , shortBreakLabel : String
             , strokeDasharray : Float
             , theme : Theme
-            , pomodoroState : Maybe Pomodoro.State
-            , focusLabel : String
-            , shortBreakLabel : String
-            , longBreakLabel : String
             , volumeSliderHidden : Bool
         }
     -> Html msg
@@ -101,11 +101,11 @@ dialView eventHandlers sessionType currentTime maxTime maxStrokeDasharray theme 
                         Focus ->
                             focusLabel
 
-                        ShortBreak ->
-                            shortBreakLabel
-
                         LongBreak ->
                             longBreakLabel
+
+                        ShortBreak ->
+                            shortBreakLabel
                     )
                 , style "color" color
                 , onInput <| eventHandlers.onUpdateLabel sessionType
@@ -228,19 +228,8 @@ playPauseView { onTogglePlayStatus } sessionStatus =
 
 
 footerView :
-    { eventHandlers
-        | onReset : ResetType -> msg
-        , onCurrentRoundSkip : msg
-        , onSetVolumeBarVisibility : Bool -> msg
-        , onVolumeUpdate : String -> msg
-        , onToggleMute : Bool -> msg
-    }
-    ->
-        { model
-            | pomodoroState : Maybe Pomodoro.State
-            , config : Config
-            , volumeSliderHidden : Bool
-        }
+    { eventHandlers | onCurrentRoundSkip : msg, onReset : ResetType -> msg, onSetVolumeBarVisibility : Bool -> msg, onToggleMute : Bool -> msg, onVolumeUpdate : String -> msg }
+    -> { model | config : Config, pomodoroState : Maybe Pomodoro.State, volumeSliderHidden : Bool }
     -> Html msg
 footerView eventHandlers model =
     section [ class "container", class "footer" ]
