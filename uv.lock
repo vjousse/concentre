@@ -215,6 +215,31 @@ wheels = [
 ]
 
 [[package]]
+name = "concentre"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "aiohttp" },
+    { name = "flatpak-node-generator" },
+    { name = "packaging" },
+    { name = "pre-commit" },
+    { name = "pyyaml" },
+    { name = "tomlkit" },
+    { name = "typer" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "aiohttp", specifier = ">=3.9.5,<4.0.0" },
+    { name = "flatpak-node-generator", git = "https://github.com/flatpak/flatpak-builder-tools.git?subdirectory=node" },
+    { name = "packaging", specifier = ">=24.1" },
+    { name = "pre-commit", specifier = ">=3.8.0" },
+    { name = "pyyaml", specifier = ">=6.0.2,<7.0.0" },
+    { name = "tomlkit", specifier = ">=0.13.3,<1.0" },
+    { name = "typer", specifier = ">=0.12.5" },
+]
+
+[[package]]
 name = "distlib"
 version = "0.4.4"
 source = { registry = "https://pypi.org/simple" }
@@ -532,31 +557,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/9f/4a/0883b8e3802965322523f0b200ecf33d31f10991d0401162f4b23c698b42/platformdirs-4.9.6.tar.gz", hash = "sha256:3bfa75b0ad0db84096ae777218481852c0ebc6c727b3168c1b9e0118e458cf0a", size = 29400, upload-time = "2026-04-09T00:04:10.812Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/75/a6/a0a304dc33b49145b21f4808d763822111e67d1c3a32b524a1baf947b6e1/platformdirs-4.9.6-py3-none-any.whl", hash = "sha256:e61adb1d5e5cb3441b4b7710bea7e4c12250ca49439228cc1021c00dcfac0917", size = 21348, upload-time = "2026-04-09T00:04:09.463Z" },
-]
-
-[[package]]
-name = "pomodorolm"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "aiohttp" },
-    { name = "flatpak-node-generator" },
-    { name = "packaging" },
-    { name = "pre-commit" },
-    { name = "pyyaml" },
-    { name = "tomlkit" },
-    { name = "typer" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "aiohttp", specifier = ">=3.9.5,<4.0.0" },
-    { name = "flatpak-node-generator", git = "https://github.com/flatpak/flatpak-builder-tools.git?subdirectory=node" },
-    { name = "packaging", specifier = ">=24.1" },
-    { name = "pre-commit", specifier = ">=3.8.0" },
-    { name = "pyyaml", specifier = ">=6.0.2,<7.0.0" },
-    { name = "tomlkit", specifier = ">=0.13.3,<1.0" },
-    { name = "typer", specifier = ">=0.12.5" },
 ]
 
 [[package]]

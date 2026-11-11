@@ -1,4 +1,4 @@
-use pomodorolm_lib::pomodoro::{self, Config, Pomodoro, Session, SessionStatus, SessionType};
+use concentre_lib::pomodoro::{self, Config, Pomodoro, Session, SessionStatus, SessionType};
 
 #[test]
 fn it_defaults_the_way_it_should() {

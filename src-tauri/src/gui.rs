@@ -378,7 +378,7 @@ fn manage_autostart(app_handle: &AppHandle, system_startup_auto_start: bool) -> 
 
         if system_startup_auto_start {
             // Always (re)register: the binary path may have changed
-            // prepare move from pomodorolm to concentre
+            // (e.g. if the binary is renamed from `pomodorolm` to `concentre` one day)
             autostart_manager.enable()?;
         } else if autostart_manager.is_enabled()? {
             autostart_manager.disable()?;
@@ -505,7 +505,7 @@ async fn change_icon<R: tauri::Runtime>(
     fill_percentage: f32,
     paused: bool,
 ) -> CommandResult<()> {
-    let icon = icon::PomodorolmIcon {
+    let icon = icon::AppIcon {
         width: 512,
         height: 512,
         red,
@@ -524,7 +524,7 @@ async fn change_icon<R: tauri::Runtime>(
 
 fn update_tray_icon<R: tauri::Runtime>(
     app_handle: &tauri::AppHandle<R>,
-    icon: icon::PomodorolmIcon,
+    icon: icon::AppIcon,
 ) -> anyhow::Result<()> {
     // No tray is a legit state: tray creation can fail at startup
     // (e.g. GNOME without AppIndicator), and it's already logged in `setup`.
@@ -758,7 +758,7 @@ async fn notify(app_handle: tauri::AppHandle, notification: ElmNotification) -> 
 
     let data_dir = app_handle.path().app_data_dir()?;
     let icon_path = icon::create_icon(
-        icon::PomodorolmIcon {
+        icon::AppIcon {
             width: 512,
             height: 512,
             red: notification.red,

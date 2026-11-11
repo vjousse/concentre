@@ -1,7 +1,7 @@
 use image::{ImageBuffer, Rgba};
 use std::{path::Path, path::PathBuf};
 
-pub struct PomodorolmIcon {
+pub struct AppIcon {
     pub width: u32,
     pub height: u32,
     pub red: u8,
@@ -11,7 +11,7 @@ pub struct PomodorolmIcon {
     pub paused: bool,
 }
 
-pub fn create_icon(icon: PomodorolmIcon, path_name: &str) -> Result<PathBuf, String> {
+pub fn create_icon(icon: AppIcon, path_name: &str) -> Result<PathBuf, String> {
     // Create a new ImageBuffer with RGBA colors
     let mut imgbuf = ImageBuffer::<Rgba<u8>, _>::new(icon.width, icon.height);
 

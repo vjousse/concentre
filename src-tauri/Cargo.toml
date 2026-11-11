@@ -45,7 +45,7 @@ tempfile = "3"
 custom-protocol = [ "tauri/custom-protocol" ]
 
 [lib]
-name = "pomodorolm_lib"
+name = "concentre_lib"
 crate-type = ["staticlib", "cdylib", "lib"]
 
 [profile.dev]
