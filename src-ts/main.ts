@@ -2,7 +2,7 @@ import "../main.css";
 
 import { Elm } from "../src-elm/Main.elm";
 
-import { invoke } from "@tauri-apps/api/core";
+import { invoke, type InvokeArgs } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 
 import { attachConsole } from "@tauri-apps/plugin-log";
@@ -47,8 +47,8 @@ type RustThemeColors = {
   long_round: string;
   short_round: string;
   focus_round: string;
-  focus_roundMiddle: string;
-  focus_roundEnd: string;
+  focus_round_middle: string;
+  focus_round_end: string;
   background: string;
   background_light: string;
   background_lightest: string;
@@ -127,12 +127,12 @@ type RustConfig = {
   theme: string;
   tick_sounds_during_work: boolean;
   tick_sounds_during_break: boolean;
-  volume: number | number;
+  volume: number | null;
 };
 
 const root = document.querySelector("#app div");
 
-let rustConfig: RustConfig = {
+const rustConfig: RustConfig = {
   always_on_top: true,
   auto_quit: null,
   auto_start_break_timer: true,
@@ -161,9 +161,7 @@ let rustConfig: RustConfig = {
   volume: 100,
 };
 
-let app;
-
-app = Elm.Main.init({
+let app = Elm.Main.init({
   node: root,
   flags: {
     alwaysOnTop: rustConfig.always_on_top,
@@ -194,99 +192,132 @@ app = Elm.Main.init({
   },
 });
 
+async function safeInvoke<T = unknown>(
+  cmd: string,
+  args?: InvokeArgs
+): Promise<T | undefined> {
+  try {
+    return await invoke<T>(cmd, args);
+  } catch (err) {
+    const message = typeof err === "string" ? err : String(err);
+    console.error(`${cmd} failed:`, message);
+    app.ports.sendMessageToElm.send({ error: `${cmd}: ${message}` });
+    return undefined;
+  }
+}
+
 app.ports.hideWindow.subscribe(function () {
-  invoke("hide_window");
+  safeInvoke("hide_window");
 });
 
 app.ports.minimizeWindow.subscribe(function () {
-  invoke("minimize_window");
+  safeInvoke("minimize_window");
 });
 
 app.ports.closeWindow.subscribe(function () {
-  invoke("close_window").catch((err) => {
-    console.error("close_window failed:", err);
-  });
+  safeInvoke("close_window");
 });
 
 app.ports.notify.subscribe(function (notification: Notification) {
-  invoke("notify", { notification: notification });
+  safeInvoke("notify", { notification: notification });
 });
 
 app.ports.sendMessageFromElm.subscribe(async function (message: Message) {
-  console.log(`Sending message from Elm ${message} ${message.name}`);
   switch (message.name) {
-    case "choose_sound_file":
-      const file = await open({
-        multiple: false,
-        directory: false,
-        filters: [
-          {
-            name: "audio (mp3, wav, ogg, flac)",
-            extensions: ["mp3", "wav", "ogg", "flac"],
-          },
-        ],
-      });
-      console.log(file);
+    case "get_init_data": {
+      const initData = await safeInvoke<
+        [RustConfig, Array<RustThemeColors>, any]
+      >("load_init_data");
+
+      if (initData !== undefined) {
+        const [config, themes, pomodoroState] = initData;
+        app.ports.sendMessageToElm.send({
+          config,
+          themes,
+          pomodoro_state: pomodoroState,
+        });
+      }
+      break;
+    }
+
+    case "choose_sound_file": {
+      let file: string | null;
+      try {
+        file = await open({
+          multiple: false,
+          directory: false,
+          filters: [
+            {
+              name: "audio (mp3, wav, ogg, flac)",
+              extensions: ["mp3", "wav", "ogg", "flac"],
+            },
+          ],
+        });
+      } catch (err) {
+        app.ports.sendMessageToElm.send({
+          error: `choose_sound_file: ${String(err)}`,
+        });
+        break;
+      }
+
+      if (file === null) {
+        // L’utilisateur a annulé : rien à faire
+        break;
+      }
+
       app.ports.sendMessageToElm.send({
         session_type: message.value,
         file_path: file,
       });
       break;
+    }
 
-    case "play_sound":
-      let soundMessage: SoundMessage = message.value as SoundMessage;
-      invoke("play_sound_command", {
+    case "play_sound": {
+      const soundMessage: SoundMessage = message.value as SoundMessage;
+
+      safeInvoke("play_sound_command", {
         playSoundMessage: {
           sound_id: soundMessage.soundId,
           quit_after_play: soundMessage.quitAfterPlay,
         },
       });
       break;
+    }
 
-    case "quit":
-      invoke("quit");
+    case "quit": {
+      safeInvoke("quit");
       break;
+    }
 
-    case "update_current_state":
-      let state: ElmState = message.value as ElmState;
-      invoke("change_icon", {
-        red: hexToRgb(state.color)?.r,
-        green: hexToRgb(state.color)?.g,
-        blue: hexToRgb(state.color)?.b,
-        fillPercentage: state.percentage,
-        paused: state.paused,
-      });
+    case "update_current_state": {
+      const state: ElmState = message.value as ElmState;
+      const rgb = hexToRgb(state.color);
 
-      invoke("update_session_status", { status: state.sessionStatus });
-
-      break;
-
-    case "get_init_data":
-      console.log("Getting init data from Rust");
-
-      invoke("load_init_data").then((init_data) => {
-        const [config, themes, pomodoroState] = init_data as [
-          RustConfig,
-          Array<RustThemeColors>,
-          any
-        ];
-        console.log("Got init data from Rust");
-        console.log({ config, themes, pomodoroState });
-        app.ports.sendMessageToElm.send({
-          config,
-          themes,
-          pomodoro_state: pomodoroState,
+      if (rgb !== null) {
+        safeInvoke("change_icon", {
+          red: rgb.r,
+          green: rgb.g,
+          blue: rgb.b,
+          fillPercentage: state.percentage,
+          paused: state.paused,
         });
+      } else {
+        console.warn(
+          `change_icon skipped: unsupported color format "${state.color}"`
+        );
+      }
+
+      safeInvoke("update_session_status", {
+        status: state.sessionStatus,
       });
 
       break;
+    }
 
-    case "update_config":
-      let config: ElmConfig = message.value as ElmConfig;
+    case "update_config": {
+      const config: ElmConfig = message.value as ElmConfig;
 
-      console.log(config);
-
-      invoke("update_config", {
+      const newState = await safeInvoke("update_config", {
         config: {
           always_on_top: config.alwaysOnTop,
           auto_quit: config.autoQuit,
@@ -315,25 +346,24 @@ app.ports.sendMessageFromElm.subscribe(async function (message: Message) {
           tick_sounds_during_break: config.tickSoundsDuringBreak,
           volume: config.volume,
         },
-      })
-        .then((newState) => {
-          app.ports.sendMessageToElm.send(newState);
-        })
-        .catch((err) => {
-          console.error("update_config failed:", err);
-        });
-      break;
-
-    default:
-      invoke("handle_external_message", message).then((newState) => {
-        console.log(newState);
-        app.ports.sendMessageToElm.send(newState);
       });
+      if (newState !== undefined) {
+        app.ports.sendMessageToElm.send(newState);
+      }
+      break;
+    }
+
+    default: {
+      const newState = await safeInvoke("handle_external_message", message);
+      if (newState !== undefined) {
+        app.ports.sendMessageToElm.send(newState);
+      }
+    }
   }
 });
 
 app.ports.setThemeColors.subscribe(function (themeColors: ThemeColors) {
-  let mainHtmlElement = document.documentElement;
+  const mainHtmlElement = document.documentElement;
   mainHtmlElement.style.setProperty(
     "--color-long-round",
     themeColors.longRound
@@ -390,7 +420,7 @@ await listen("skip", () => {
 });
 
 function hexToRgb(hex: string) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? {
         r: parseInt(result[1], 16),

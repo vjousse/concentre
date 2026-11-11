@@ -285,15 +285,17 @@ rustSessionDecoder =
 
 
 type ExternalMessage
-    = RustStateMsg Pomodoro.State
+    = ErrorMsg String
     | InitDataMsg InitData
+    | RustStateMsg Pomodoro.State
     | SoundFilePath SessionType String
 
 
 externalMessageDecoder : Decode.Decoder ExternalMessage
 externalMessageDecoder =
     Decode.oneOf
-        [ rustStateDecoder |> Decode.map RustStateMsg
+        [ Decode.field "error" Decode.string |> Decode.map ErrorMsg
+        , rustStateDecoder |> Decode.map RustStateMsg
         , initDataDecoder |> Decode.map InitDataMsg
         , Decode.map2 SoundFilePath (Decode.field "session_type" sessionTypeDecoder) (Decode.field "file_path" Decode.string)
         ]

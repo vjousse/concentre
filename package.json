@@ -1,5 +1,5 @@
 {
-  "name": "pomodorolm",
+  "name": "concentre",
   "private": true,
   "version": "0.10.1",
   "type": "module",
@@ -8,7 +8,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "review": "elm-review",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "setup": "elm-tooling install",
+    "test:elm": "elm-test-rs",
+    "test:rust": "cargo test --manifest-path src-tauri/Cargo.toml",
+    "test": "npm run test:elm && npm run test:rust"
   },
   "devDependencies": {
     "@lydell/elm": "^0.19.1-14",

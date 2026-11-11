@@ -3,8 +3,9 @@ port module Main exposing (Flags, Model, Msg, main)
 import Browser
 import Color exposing (RGB(..), colorForSessionType, computeCurrentColor)
 import Config exposing (Config)
-import Html exposing (Html, div)
-import Html.Attributes exposing (id)
+import Html exposing (Html, button, div, p, text)
+import Html.Attributes exposing (attribute, class, id)
+import Html.Events exposing (onClick)
 import Json exposing (ExternalMessage(..), configEncoder, currentStateEncoder, elmMessageBuilder, elmMessageEncoder, externalMessageDecoder, sessionTypeDecoder, soundMessageEncoder)
 import Json.Decode as Decode
 import Json.Encode as Encode
@@ -36,6 +37,7 @@ type alias Model =
     , currentColor : RGB
     , currentState : CurrentState
     , drawerOpen : Bool
+    , error : Maybe String
     , focusLabel : String
     , longBreakLabel : String
     , pomodoroState : Maybe Pomodoro.State
@@ -144,6 +146,7 @@ init flags =
       , currentColor = theme.colors.focusRound
       , currentState = currentState
       , drawerOpen = False
+      , error = Nothing
       , focusLabel = flags.defaultFocusLabel
       , longBreakLabel = flags.defaultLongBreakLabel
       , pomodoroState = Nothing
@@ -167,6 +170,7 @@ type Msg
     | CloseWindow
     | ChangeSettingTab SettingTab
     | ChangeTheme Theme
+    | DismissError
     | SetVolumeBarVisibility Bool
     | ProcessExternalMessage Decode.Value
     | MinimizeWindow
@@ -210,6 +214,9 @@ update msg ({ config } as model) =
                 closeWindow ()
             )
 
+        DismissError ->
+            ( { model | error = Nothing }, Cmd.none )
+
         SetVolumeBarVisibility visible ->
             ( { model | volumeSliderHidden = not visible }, Cmd.none )
 
@@ -224,6 +231,9 @@ update msg ({ config } as model) =
 
         ProcessExternalMessage externalMessage ->
             case Decode.decodeValue externalMessageDecoder externalMessage of
+                Ok (ErrorMsg errorMessage) ->
+                    ( { model | error = Just errorMessage }, Cmd.none )
+
                 Ok (InitDataMsg c) ->
                     processExternalInitMessage c model
 
@@ -239,9 +249,8 @@ update msg ({ config } as model) =
                     , cmd
                     )
 
-                Err _ ->
-                    --@FIX: don't fail silently
-                    ( model, Cmd.none )
+                Err e ->
+                    ( { model | error = Just <| Decode.errorToString e }, Cmd.none )
 
         Reset resetType ->
             let
@@ -290,7 +299,10 @@ update msg ({ config } as model) =
             ( { model
                 | config = newConfig
               }
-            , sendMessageFromElm (elmMessageEncoder { name = "reset", value = Nothing })
+            , Cmd.batch
+                [ sendMessageFromElm (elmMessageEncoder { name = "reset_session", value = Nothing })
+                , sendMessageFromElm (elmMessageBuilder "update_config" newConfig configEncoder)
+                ]
             )
 
         ResetAudioFile sessionType ->
@@ -392,6 +404,12 @@ update msg ({ config } as model) =
 
         UpdateSetting settingType ->
             let
+                withNoCmd m =
+                    ( m, Cmd.none )
+
+                withReset m =
+                    ( m, sendMessageFromElm (elmMessageEncoder { name = "reset_session", value = Nothing }) )
+
                 toInt value =
                     case String.toInt value of
                         Nothing ->
@@ -400,16 +418,16 @@ update msg ({ config } as model) =
                         Just stringValue ->
                             stringValue
 
-                newConfig =
+                ( newConfig, newCmd ) =
                     case settingType of
                         AutoQuit sessionTypeString ->
-                            { config | autoQuit = SessionType.fromString sessionTypeString }
+                            { config | autoQuit = SessionType.fromString sessionTypeString } |> withNoCmd
 
                         FocusTime value ->
-                            { config | focusDuration = min (config.maxSessionDuration * 60) (toInt value * 60) }
+                            { config | focusDuration = min (config.maxSessionDuration * 60) (toInt value * 60) } |> withReset
 
                         Label sessionType label ->
-                            case sessionType of
+                            (case sessionType of
                                 Focus ->
                                     { config | defaultFocusLabel = label }
 
@@ -418,15 +436,17 @@ update msg ({ config } as model) =
 
                                 LongBreak ->
                                     { config | defaultLongBreakLabel = label }
+                            )
+                                |> withNoCmd
 
                         LongBreakTime value ->
-                            { config | longBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) }
+                            { config | longBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) } |> withReset
 
                         MaxSessionDuration value ->
-                            { config | maxSessionDuration = toInt value * 60 }
+                            { config | maxSessionDuration = toInt value * 60 } |> withNoCmd
 
                         Rounds value ->
-                            { config | maxRoundNumber = min 12 (toInt value) }
+                            { config | maxRoundNumber = min 12 (toInt value) } |> withReset
 
                         SaveMaxSessionDuration ->
                             { config
@@ -434,12 +454,13 @@ update msg ({ config } as model) =
                                 , longBreakDuration = min config.longBreakDuration config.maxSessionDuration
                                 , shortBreakDuration = min config.shortBreakDuration config.maxSessionDuration
                             }
+                                |> withReset
 
                         ShortBreakTime value ->
-                            { config | shortBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) }
+                            { config | shortBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) } |> withReset
 
                         Toggle value ->
-                            case value of
+                            (case value of
                                 AlwaysOnTop ->
                                     { config | alwaysOnTop = not config.alwaysOnTop }
 
@@ -472,11 +493,13 @@ update msg ({ config } as model) =
 
                                 TickSoundsDuringBreak ->
                                     { config | tickSoundsDuringBreak = not config.tickSoundsDuringBreak }
+                            )
+                                |> withNoCmd
             in
             ( { model | config = newConfig }
             , Cmd.batch
                 [ sendMessageFromElm (elmMessageBuilder "update_config" newConfig configEncoder)
-                , sendMessageFromElm (elmMessageEncoder { name = "reset", value = Nothing })
+                , newCmd
                 ]
             )
 
@@ -795,6 +818,19 @@ find predicate list =
                 find predicate xs
 
 
+errorView : Maybe String -> Html Msg
+errorView maybeError =
+    case maybeError of
+        Just message ->
+            div [ class "error-banner", attribute "role" "alert" ]
+                [ p [ class "error-banner__message" ] [ text message ]
+                , button [ class "error-banner__close", onClick DismissError ] [ text "×" ]
+                ]
+
+        Nothing ->
+            text ""
+
+
 view : Model -> Html Msg
 view model =
     div [ id "app" ]
@@ -826,6 +862,7 @@ view model =
                 , onTogglePlayStatus = TogglePlayStatus
                 }
                 model
+        , errorView model.error
         ]
 
 

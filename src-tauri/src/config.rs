@@ -127,3 +127,29 @@ impl Default for Config {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn invalid_toml_returns_a_parsing_error() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = Config::get_config_file_path(dir.path(), None);
+        std::fs::write(&path, "focus_duration = \"abc\"").unwrap();
+
+        let err = Config::get_or_create_from_disk(dir.path(), None).unwrap_err();
+
+        assert!(format!("{err:#}").contains("parsing"));
+    }
+
+    #[test]
+    fn missing_file_creates_default_config() {
+        let dir = tempfile::tempdir().unwrap();
+
+        let config = Config::get_or_create_from_disk(dir.path(), None).unwrap();
+
+        assert_eq!(config.focus_duration, Config::default().focus_duration);
+        assert!(Config::get_config_file_path(dir.path(), None).exists());
+    }
+}

@@ -31,6 +31,8 @@ use tauri::Emitter;
 use tauri_plugin_notification::{NotificationExt, PermissionState};
 use tokio_stream::wrappers::IntervalStream;
 
+const TRAY_ID: &str = "app-tray";
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct App {
     config: Config,
@@ -264,7 +266,7 @@ pub fn run_app<R: Runtime>(config_dir_name: &str, _builder: tauri::Builder<R>) {
                 .item(&quit)
                 .build()?;
 
-            if let Err(e) = TrayIconBuilder::with_id("app-tray")
+            if let Err(e) = TrayIconBuilder::with_id(TRAY_ID)
                 .menu(&tray_menu)
                 // Let me handle the left click
                 .show_menu_on_left_click(false)
@@ -502,48 +504,55 @@ async fn change_icon<R: tauri::Runtime>(
     blue: u8,
     fill_percentage: f32,
     paused: bool,
-) -> Result<(), ()> {
-    // Image dimensions
-    let width = 512;
-    let height = 512;
-
-    match app_handle.path().app_data_dir() {
-        Ok(data_dir) => {
-            match icon::create_icon(
-                icon::PomodorolmIcon {
-                    width,
-                    height,
-                    red,
-                    green,
-                    blue,
-                    fill_percentage,
-                    paused,
-                },
-                format!("{}/temp_icon_tray.png", data_dir.to_string_lossy()).as_str(),
-            ) {
-                Ok(icon_path_buf) => {
-                    if let Some(tray) = app_handle.tray_by_id("app-tray") {
-                        let icon_img = tauri::image::Image::from_path(icon_path_buf.clone()).ok();
-
-                        // Don't let tauri choose where to store the temp icon path as it will by default store it to `/tmp`.
-                        // Setting it manually allows the tray icon to work properly in sandboxes env like Flatpak
-                        // where we can share XDG_DATA_HOME between the host and the sandboxed env
-                        // libappindicator will add the full path of the icon to the dbus message when changing it,
-                        // so the path needs to be the same between the host and the sandboxed env
-                        let local_data_path = app_handle
-                            .path()
-                            .resolve("tray-icon", BaseDirectory::AppLocalData)
-                            .unwrap();
-
-                        let _ = tray.set_temp_dir_path(Some(local_data_path));
-                        let _ = tray.set_icon(icon_img);
-                    }
-                }
-                Err(e) => eprintln!("{e:?}"),
-            }
-        }
-        Err(e) => eprintln!("Unable to get app_data_dir for icon: {e:?}."),
+) -> CommandResult<()> {
+    let icon = icon::PomodorolmIcon {
+        width: 512,
+        height: 512,
+        red,
+        green,
+        blue,
+        fill_percentage,
+        paused,
+    };
+    // Called every second: log errors instead of showing them to the user
+    if let Err(e) = update_tray_icon(&app_handle, icon) {
+        eprintln!("Unable to update tray icon: {e:#}");
     }
+
+    Ok(())
+}
+
+fn update_tray_icon<R: tauri::Runtime>(
+    app_handle: &tauri::AppHandle<R>,
+    icon: icon::PomodorolmIcon,
+) -> anyhow::Result<()> {
+    // No tray is a legit state: tray creation can fail at startup
+    // (e.g. GNOME without AppIndicator), and it's already logged in `setup`.
+    let Some(tray) = app_handle.tray_by_id(TRAY_ID) else {
+        return Ok(());
+    };
+
+    let data_dir = app_handle.path().app_data_dir()?;
+    let icon_path = icon::create_icon(
+        icon,
+        &format!("{}/temp_icon_tray.png", data_dir.to_string_lossy()),
+    )
+    .map_err(anyhow::Error::msg)
+    .context("creating tray icon")?;
+
+    let icon_img = tauri::image::Image::from_path(&icon_path).context("loading tray icon")?;
+
+    // Don't let tauri choose where to store the temp icon path as it will by default store it to `/tmp`.
+    // Setting it manually allows the tray icon to work properly in sandboxes env like Flatpak
+    // where we can share XDG_DATA_HOME between the host and the sandboxed env
+    // libappindicator will add the full path of the icon to the dbus message when changing it,
+    // so the path needs to be the same between the host and the sandboxed env
+    let local_data_path = app_handle
+        .path()
+        .resolve("tray-icon", BaseDirectory::AppLocalData)?;
+
+    tray.set_temp_dir_path(Some(local_data_path))?;
+    tray.set_icon(Some(icon_img))?;
 
     Ok(())
 }
@@ -553,25 +562,13 @@ async fn update_session_status<R: tauri::Runtime>(
     _app: tauri::AppHandle<R>,
     state: tauri::State<'_, AppMenuStates<R>>,
     status: String,
-) -> Result<(), ()> {
-    let state_guard = state.0.lock();
+) -> CommandResult<()> {
+    let guard = state.0.lock().unwrap_or_else(|e| e.into_inner());
 
-    match state_guard {
-        Ok(guard) => {
-            if status == "running" {
-                let set_text_result = guard.toggle_play_menu.set_text("Pause");
-                if let Err(e) = set_text_result {
-                    eprintln!("Error setting MenuItem title: {e:?}.");
-                }
-            } else {
-                let set_text_result = guard.toggle_play_menu.set_text("Play");
-                if let Err(e) = set_text_result {
-                    eprintln!("Error setting MenuItem title: {e:?}.");
-                }
-            }
-        }
-        Err(e) => eprintln!("Error getting state lock: {e:?}."),
-    };
+    let label = if status == "running" { "Pause" } else { "Play" };
+    if let Err(e) = guard.toggle_play_menu.set_text(label) {
+        eprintln!("Error setting MenuItem title: {e:?}.");
+    }
 
     Ok(())
 }
@@ -663,7 +660,10 @@ async fn load_init_data(
 }
 
 #[tauri::command]
-async fn play_sound_command(app_handle: tauri::AppHandle, play_sound_message: PlaySoundMessage) {
+async fn play_sound_command(
+    app_handle: tauri::AppHandle,
+    play_sound_message: PlaySoundMessage,
+) -> CommandResult<()> {
     let app = app_handle.clone();
     let state: tauri::State<AppState> = app.state();
     let state_guard = state.0.lock().await;
@@ -700,56 +700,43 @@ async fn play_sound_command(app_handle: tauri::AppHandle, play_sound_message: Pl
             "Impossible to get sound file with id {}",
             play_sound_message.sound_id
         ),
-    }
+    };
+
+    Ok(())
 }
 #[tauri::command]
-async fn quit(app_handle: tauri::AppHandle) {
+async fn quit(app_handle: tauri::AppHandle) -> CommandResult<()> {
     app_handle.exit(0);
+    Ok(())
 }
 
 #[tauri::command]
 fn minimize_window<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     app_menu: tauri::State<'_, AppMenuStates<R>>,
-) -> Result<(), ()> {
-    let state_guard = app_menu.0.lock();
-    match state_guard {
-        Ok(guard) => {
-            if let Some(window) = app.get_webview_window("main") {
-                let _ = window.minimize();
-                let _ = guard.toggle_visibility_menu.set_text("Show");
-            }
-            Ok(())
-        }
-        Err(e) => {
-            eprintln!("Error getting state lock: {e:?}.");
-            Err(())
-        }
+) -> CommandResult<()> {
+    let guard = app_menu.0.lock().unwrap_or_else(|e| e.into_inner());
+    if let Some(window) = app.get_webview_window("main") {
+        window.minimize()?;
+        guard.toggle_visibility_menu.set_text("Show")?;
     }
+    Ok(())
 }
 
 #[tauri::command]
 fn hide_window<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     app_menu: tauri::State<'_, AppMenuStates<R>>,
-) -> Result<(), ()> {
-    let state_guard = app_menu.0.lock();
-    match state_guard {
-        Ok(guard) => {
-            if let Some(window) = app.get_webview_window("main") {
-                #[cfg(target_os = "macos")]
-                let _ = app.hide();
-                #[cfg(not(target_os = "macos"))]
-                let _ = window.hide();
-                let _ = guard.toggle_visibility_menu.set_text("Show");
-            }
-            Ok(())
-        }
-        Err(e) => {
-            eprintln!("Error getting state lock: {e:?}.");
-            Err(())
-        }
+) -> CommandResult<()> {
+    let guard = app_menu.0.lock().unwrap_or_else(|e| e.into_inner());
+    if let Some(window) = app.get_webview_window("main") {
+        #[cfg(target_os = "macos")]
+        app.hide()?;
+        #[cfg(not(target_os = "macos"))]
+        window.hide()?;
+        guard.toggle_visibility_menu.set_text("Show")?;
     }
+    Ok(())
 }
 
 #[tauri::command]
@@ -764,9 +751,13 @@ async fn close_window(app_handle: tauri::AppHandle) -> CommandResult<()> {
 }
 
 #[tauri::command]
-async fn notify(app_handle: tauri::AppHandle, notification: ElmNotification) {
-    let data_dir = app_handle.path().app_data_dir().unwrap();
-    match icon::create_icon(
+async fn notify(app_handle: tauri::AppHandle, notification: ElmNotification) -> CommandResult<()> {
+    if app_handle.notification().permission_state()? != PermissionState::Granted {
+        return Ok(());
+    }
+
+    let data_dir = app_handle.path().app_data_dir()?;
+    let icon_path = icon::create_icon(
         icon::PomodorolmIcon {
             width: 512,
             height: 512,
@@ -776,22 +767,20 @@ async fn notify(app_handle: tauri::AppHandle, notification: ElmNotification) {
             fill_percentage: 1_f32,
             paused: false,
         },
-        format!("{}/temp_icon_notification.png", data_dir.to_string_lossy()).as_str(),
-    ) {
-        Ok(icon_path_buf) => {
-            // shows a notification with the given title and body
-            if app_handle.notification().permission_state().unwrap() == PermissionState::Granted {
-                let _ = app_handle
-                    .notification()
-                    .builder()
-                    .title(notification.title)
-                    .body(notification.body)
-                    .icon(icon_path_buf.to_string_lossy())
-                    .show();
-            }
-        }
-        Err(e) => eprintln!("Unable to get app_data_dir for icon: {e:?}."),
-    }
+        &format!("{}/temp_icon_notification.png", data_dir.to_string_lossy()),
+    )
+    .map_err(anyhow::Error::msg)
+    .context("creating notification icon")?;
+
+    app_handle
+        .notification()
+        .builder()
+        .title(notification.title)
+        .body(notification.body)
+        .icon(icon_path.to_string_lossy())
+        .show()?;
+
+    Ok(())
 }
 
 #[tauri::command]
@@ -799,7 +788,7 @@ async fn handle_external_message<R: tauri::Runtime>(
     app: tauri::AppHandle<R>,
     state: tauri::State<'_, AppState>,
     name: String,
-) -> Result<pomodoro::PomodoroUnborrowed, ()> {
+) -> CommandResult<pomodoro::PomodoroUnborrowed> {
     let mut app_state_guard = state.0.lock().await;
 
     match name.as_str() {
@@ -822,7 +811,7 @@ async fn handle_external_message<R: tauri::Runtime>(
         "skip" => {
             app_state_guard.pomodoro = pomodoro::next(&app_state_guard.pomodoro);
         }
-        message => eprintln!("[rust] Got unknown message `{message}`, ignoring."),
+        message => return Err(anyhow::anyhow!("unknown message `{message}`").into()),
     }
 
     // Needed because Tauri doesn't play well with returning references
