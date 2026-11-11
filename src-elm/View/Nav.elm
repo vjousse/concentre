@@ -29,14 +29,13 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
             , div [ class "icon-wrapper icon-wrapper--titlebar" ]
                 [ a
                     [ target "_blank"
-                    , style "padding-top" "1vw"
+                    , style "padding-top" "calc(1 * var(--u))"
                     , href "https://ko-fi.com/vjousse"
                     , title "Support development"
                     ]
                     [ svg
-                        [ SvgAttr.width "6vw"
-                        , SvgAttr.height "6vw"
-                        , SvgAttr.viewBox "0 0 24 24"
+                        [ SvgAttr.viewBox "0 0 24 24"
+                        , SvgAttr.class "icon--kofi"
                         , SvgAttr.version "1.1"
                         ]
                         [ Svg.g
@@ -54,7 +53,7 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
             ]
         , h1 [ class "title", attribute "data-tauri-drag-region" "" ] [ text "Concentré" ]
         , div [ class "icon-group" ]
-            [ div [ class "icon-wrapper icon-wrapper--titlebar icon-wrapper--double--left", style "padding-left" "5vw", onClick onWindowMinimize ]
+            [ div [ class "icon-wrapper icon-wrapper--titlebar icon-wrapper--double--left", style "padding-left" "calc(5 * var(--u))", onClick onWindowMinimize ]
                 [ svg
                     [ SvgAttr.version "1.2"
                     , SvgAttr.baseProfile "tiny"
@@ -63,8 +62,6 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
                     , SvgAttr.y "0px"
                     , SvgAttr.viewBox "0 0 14 2"
                     , SvgAttr.xmlSpace "preserve"
-                    , SvgAttr.width "4.2vw"
-                    , SvgAttr.height "5.5vw"
                     , SvgAttr.class "icon icon--minimize"
                     ]
                     [ Svg.line
@@ -83,7 +80,7 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
                 ]
             , div
                 [ class "icon-wrapper icon-wrapper--titlebar icon-wrapper--double--right"
-                , style "padding-right" "4vw"
+                , style "padding-right" "calc(4 * var(--u))"
                 , onClick onWindowClose
                 ]
                 [ svg
@@ -94,7 +91,6 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
                     , SvgAttr.y "0px"
                     , SvgAttr.viewBox "0 0 12.6 12.6"
                     , SvgAttr.xmlSpace "preserve"
-                    , SvgAttr.height "4.2vw"
                     , SvgAttr.class "icon icon--close"
                     ]
                     [ Svg.line
