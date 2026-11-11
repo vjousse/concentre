@@ -32,6 +32,13 @@ use tauri_plugin_notification::{NotificationExt, PermissionState};
 use tokio_stream::wrappers::IntervalStream;
 
 const TRAY_ID: &str = "app-tray";
+// Tray icons are displayed at 16-48 px, 128 px leaves room for HiDPI screens
+const TRAY_ICON_SIZE: u32 = 128;
+// Fill percentage precision of the tray icon: a smaller change wouldn't be visible
+const TRAY_ICON_FILL_STEPS: f32 = 200.0;
+
+/// Last icon drawn in the tray, to avoid redrawing the same one every second.
+struct TrayIconCache(std::sync::Mutex<Option<icon::AppIcon>>);
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct App {
@@ -332,6 +339,8 @@ pub fn run_app<R: Runtime>(config_dir_name: &str, _builder: tauri::Builder<R>) {
                 toggle_play_menu: toggle_play,
             })));
 
+            app.manage(TrayIconCache(std::sync::Mutex::new(None)));
+
             let sound_file_path = get_sound_file("audio-tick", app.handle(), &config)
                 .expect("Tick sound file not found.");
             let tick_player = sound::TickPlayer::spawn(sound_file_path);
@@ -489,6 +498,7 @@ async fn tick(app_handle: AppHandle, tick_player: sound::TickPlayer) {
 #[tauri::command]
 async fn change_icon<R: tauri::Runtime>(
     app_handle: tauri::AppHandle<R>,
+    cache: tauri::State<'_, TrayIconCache>,
     red: u8,
     green: u8,
     blue: u8,
@@ -496,17 +506,25 @@ async fn change_icon<R: tauri::Runtime>(
     paused: bool,
 ) -> CommandResult<()> {
     let icon = icon::AppIcon {
-        width: 512,
-        height: 512,
+        width: TRAY_ICON_SIZE,
+        height: TRAY_ICON_SIZE,
         red,
         green,
         blue,
-        fill_percentage,
+        // Rounded so that the icon is only redrawn when the change is visible
+        fill_percentage: (fill_percentage * TRAY_ICON_FILL_STEPS).round() / TRAY_ICON_FILL_STEPS,
         paused,
     };
+
+    let mut last_icon = cache.0.lock().unwrap_or_else(|e| e.into_inner());
+    if *last_icon == Some(icon) {
+        return Ok(());
+    }
+
     // Called every second: log errors instead of showing them to the user
-    if let Err(e) = update_tray_icon(&app_handle, icon) {
-        eprintln!("Unable to update tray icon: {e:#}");
+    match update_tray_icon(&app_handle, &icon) {
+        Ok(()) => *last_icon = Some(icon),
+        Err(e) => eprintln!("Unable to update tray icon: {e:#}"),
     }
 
     Ok(())
@@ -514,7 +532,7 @@ async fn change_icon<R: tauri::Runtime>(
 
 fn update_tray_icon<R: tauri::Runtime>(
     app_handle: &tauri::AppHandle<R>,
-    icon: icon::AppIcon,
+    icon: &icon::AppIcon,
 ) -> anyhow::Result<()> {
     // No tray is a legit state: tray creation can fail at startup
     // (e.g. GNOME without AppIndicator), and it's already logged in `setup`.
@@ -522,15 +540,10 @@ fn update_tray_icon<R: tauri::Runtime>(
         return Ok(());
     };
 
-    let data_dir = app_handle.path().app_data_dir()?;
-    let icon_path = icon::create_icon(
-        icon,
-        &format!("{}/temp_icon_tray.png", data_dir.to_string_lossy()),
-    )
-    .map_err(anyhow::Error::msg)
-    .context("creating tray icon")?;
-
-    let icon_img = tauri::image::Image::from_path(&icon_path).context("loading tray icon")?;
+    // Build the image in memory
+    let rgba = icon::render_icon(icon);
+    let (width, height) = rgba.dimensions();
+    let icon_img = tauri::image::Image::new_owned(rgba.into_raw(), width, height);
 
     // Don't let tauri choose where to store the temp icon path as it will by default store it to `/tmp`.
     // Setting it manually allows the tray icon to work properly in sandboxes env like Flatpak
