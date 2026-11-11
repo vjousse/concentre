@@ -248,7 +248,7 @@ def bump_version(
         version_date = next_version_date
 
     confirm = typer.confirm(
-        f"--> ❓ I’m about to update the files with the version number `{version_number}` and the date `{version_date}`, should I procede?"
+        f"--> ❓ I’m about to update the files with the version number `{version_number}` and the date `{version_date}`, should I proceed?"
     )
 
     if not confirm:
