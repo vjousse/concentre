@@ -404,6 +404,12 @@ update msg ({ config } as model) =
 
         UpdateSetting settingType ->
             let
+                withNoCmd m =
+                    ( m, Cmd.none )
+
+                withReset m =
+                    ( m, sendMessageFromElm (elmMessageEncoder { name = "reset_session", value = Nothing }) )
+
                 toInt value =
                     case String.toInt value of
                         Nothing ->
@@ -412,16 +418,16 @@ update msg ({ config } as model) =
                         Just stringValue ->
                             stringValue
 
-                newConfig =
+                ( newConfig, newCmd ) =
                     case settingType of
                         AutoQuit sessionTypeString ->
-                            { config | autoQuit = SessionType.fromString sessionTypeString }
+                            { config | autoQuit = SessionType.fromString sessionTypeString } |> withNoCmd
 
                         FocusTime value ->
-                            { config | focusDuration = min (config.maxSessionDuration * 60) (toInt value * 60) }
+                            { config | focusDuration = min (config.maxSessionDuration * 60) (toInt value * 60) } |> withReset
 
                         Label sessionType label ->
-                            case sessionType of
+                            (case sessionType of
                                 Focus ->
                                     { config | defaultFocusLabel = label }
 
@@ -430,15 +436,17 @@ update msg ({ config } as model) =
 
                                 LongBreak ->
                                     { config | defaultLongBreakLabel = label }
+                            )
+                                |> withNoCmd
 
                         LongBreakTime value ->
-                            { config | longBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) }
+                            { config | longBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) } |> withReset
 
                         MaxSessionDuration value ->
-                            { config | maxSessionDuration = toInt value * 60 }
+                            { config | maxSessionDuration = toInt value * 60 } |> withReset
 
                         Rounds value ->
-                            { config | maxRoundNumber = min 12 (toInt value) }
+                            { config | maxRoundNumber = min 12 (toInt value) } |> withReset
 
                         SaveMaxSessionDuration ->
                             { config
@@ -446,12 +454,13 @@ update msg ({ config } as model) =
                                 , longBreakDuration = min config.longBreakDuration config.maxSessionDuration
                                 , shortBreakDuration = min config.shortBreakDuration config.maxSessionDuration
                             }
+                                |> withReset
 
                         ShortBreakTime value ->
-                            { config | shortBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) }
+                            { config | shortBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) } |> withReset
 
                         Toggle value ->
-                            case value of
+                            (case value of
                                 AlwaysOnTop ->
                                     { config | alwaysOnTop = not config.alwaysOnTop }
 
@@ -484,11 +493,13 @@ update msg ({ config } as model) =
 
                                 TickSoundsDuringBreak ->
                                     { config | tickSoundsDuringBreak = not config.tickSoundsDuringBreak }
+                            )
+                                |> withNoCmd
             in
             ( { model | config = newConfig }
             , Cmd.batch
                 [ sendMessageFromElm (elmMessageBuilder "update_config" newConfig configEncoder)
-                , sendMessageFromElm (elmMessageEncoder { name = "reset_session", value = Nothing })
+                , newCmd
                 ]
             )
 
