@@ -13,12 +13,25 @@ import Types exposing (Setting(..), SettingTab(..), SettingType(..))
 
 
 type alias EventHandlers msg =
-    { onAudioFileRequested : SessionType -> msg, onAudioFileReset : SessionType -> msg, onChangeSettingTab : SettingTab -> msg, onSettingUpdate : SettingType -> msg, onSettingsReset : msg, onThemeChange : Theme -> msg }
+    { onAudioFileRequested : SessionType -> msg
+    , onAudioFileReset : SessionType -> msg
+    , onChangeSettingTab : SettingTab -> msg
+    , onSettingUpdate : SettingType -> msg
+    , onSettingsReset : msg
+    , onThemeChange : Theme -> msg
+    }
 
 
 view :
     EventHandlers msg
-    -> { model | appVersion : String, config : Config, settingTab : SettingTab, theme : Theme, themes : List Theme }
+    ->
+        { model
+            | appVersion : String
+            , config : Config
+            , settingTab : SettingTab
+            , theme : Theme
+            , themes : List Theme
+        }
     -> Html msg
 view eventHandlers model =
     div
