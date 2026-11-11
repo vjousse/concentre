@@ -443,7 +443,7 @@ update msg ({ config } as model) =
                             { config | longBreakDuration = min (config.maxSessionDuration * 60) (toInt value * 60) } |> withReset
 
                         MaxSessionDuration value ->
-                            { config | maxSessionDuration = toInt value * 60 } |> withReset
+                            { config | maxSessionDuration = toInt value * 60 } |> withNoCmd
 
                         Rounds value ->
                             { config | maxRoundNumber = min 12 (toInt value) } |> withReset

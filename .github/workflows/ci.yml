@@ -10,7 +10,7 @@ env:
 
 jobs:
   linting:
-    name: Lint python and elm
+    name: Lint and test python and elm
     runs-on: ubuntu-24.04
 
     steps:
@@ -30,13 +30,19 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 26
 
       - name: Install frontend dependencies
         run: npm install
 
       - name: Run elm-review
         run: npm run review
+
+      - name: Install Elm tools
+        run: npm run setup
+
+      - name: Run Elm tests
+        run: npm run test:elm
 
       - name: Run pre-commit hooks on all files
         run: uv run pre-commit run --all-files
