@@ -83,9 +83,8 @@ view eventHandlers model =
                             , SvgAttr.x "0px"
                             , SvgAttr.y "0px"
                             , SvgAttr.viewBox "0 0 20 20"
-                            , SvgAttr.width "5vw"
                             , SvgAttr.xmlSpace "preserve"
-                            , SvgAttr.class "icon"
+                            , SvgAttr.class "icon icon--drawer"
                             ]
                             [ Svg.g []
                                 [ path
@@ -125,9 +124,8 @@ view eventHandlers model =
                         , SvgAttr.x "0px"
                         , SvgAttr.y "0px"
                         , SvgAttr.viewBox "0 0 19.5 20"
-                        , SvgAttr.width "5vw"
                         , SvgAttr.xmlSpace "preserve"
-                        , SvgAttr.class "icon"
+                        , SvgAttr.class "icon icon--drawer"
                         ]
                         [ path
                             [ SvgAttr.fill "var(--color-background-lightest)"
@@ -159,9 +157,8 @@ view eventHandlers model =
                         , SvgAttr.x "0px"
                         , SvgAttr.y "0px"
                         , SvgAttr.viewBox "0 0 19.5 20"
-                        , SvgAttr.width "5vw"
                         , SvgAttr.xmlSpace "preserve"
-                        , SvgAttr.class "icon"
+                        , SvgAttr.class "icon icon--drawer"
                         ]
                         [ path
                             [ SvgAttr.fill "var(--color-background-lightest)"
@@ -196,7 +193,6 @@ view eventHandlers model =
                             , SvgAttr.y "0px"
                             , SvgAttr.viewBox "0 0 12.3 12"
                             , SvgAttr.xmlSpace "preserve"
-                            , SvgAttr.height "4vw"
                             , SvgAttr.class "icon--mute"
                             , SvgAttr.baseProfile "tiny"
                             ]
@@ -228,10 +224,8 @@ view eventHandlers model =
                         [ class "icon-wrapper"
                         ]
                         [ svg
-                            [ SvgAttr.width "6.6vw"
-                            , SvgAttr.height "6.6vw"
-                            , SvgAttr.viewBox "0 0 24 24"
-                            , SvgAttr.class "icon"
+                            [ SvgAttr.viewBox "0 0 24 24"
+                            , SvgAttr.class "icon icon--drawer-large"
                             , SvgAttr.fill "none"
                             ]
                             [ path
@@ -266,10 +260,8 @@ view eventHandlers model =
                         ]
                         [ svg
                             [ SvgAttr.id "about-icon"
-                            , SvgAttr.width "6.6vw"
-                            , SvgAttr.height "6.6vw"
                             , SvgAttr.viewBox "0 0 24 24"
-                            , SvgAttr.class "icon"
+                            , SvgAttr.class "icon icon--drawer-large"
                             ]
                             [ path
                                 [ SvgAttr.fill "none"
@@ -775,7 +767,7 @@ themeSettingView { onThemeChange } themes theme =
                                 , if t == theme then
                                     svg
                                         [ SvgAttr.viewBox "0 0 24 24"
-                                        , SvgAttr.width "5vw"
+                                        , SvgAttr.class "icon--theme-check"
                                         ]
                                         [ path
                                             [ SvgAttr.fill (Color.toCSSHex colors.accent)

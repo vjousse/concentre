@@ -120,8 +120,6 @@ dialView eventHandlers sessionType currentTime maxTime maxStrokeDasharray theme 
             , SvgAttr.y "0px"
             , SvgAttr.viewBox "0 0 230 230"
             , SvgAttr.xmlSpace "preserve"
-            , SvgAttr.width "60vw"
-            , SvgAttr.height "60vw"
             , SvgAttr.class "dial-fill"
             , SvgAttr.style <| "stroke: " ++ color ++ ";"
             ]
@@ -144,8 +142,6 @@ dialView eventHandlers sessionType currentTime maxTime maxStrokeDasharray theme 
             , SvgAttr.y "0px"
             , SvgAttr.viewBox "0 0 230 230"
             , SvgAttr.xmlSpace "preserve"
-            , SvgAttr.width "60vw"
-            , SvgAttr.height "60vw"
             , SvgAttr.class "dial-bg"
             ]
             [ path
@@ -175,7 +171,6 @@ playPauseView { onTogglePlayStatus } sessionStatus =
                             , SvgAttr.y "0px"
                             , SvgAttr.viewBox "0 0 10.9 18"
                             , SvgAttr.xmlSpace "preserve"
-                            , SvgAttr.height "4vw"
                             , SvgAttr.class "icon--pause"
                             ]
                             [ Svg.line
@@ -213,7 +208,6 @@ playPauseView { onTogglePlayStatus } sessionStatus =
                             , SvgAttr.y "0px"
                             , SvgAttr.viewBox "0 0 7.6 15"
                             , SvgAttr.xmlSpace "preserve"
-                            , SvgAttr.height "4vw"
                             , SvgAttr.class "icon--start"
                             ]
                             [ Svg.polygon
@@ -251,7 +245,6 @@ footerView eventHandlers model =
                     , SvgAttr.y "0px"
                     , SvgAttr.viewBox "0 0 8 12"
                     , SvgAttr.xmlSpace "preserve"
-                    , SvgAttr.height "5vw"
                     , SvgAttr.class "icon--skip"
                     ]
                     [ Svg.polygon
@@ -322,7 +315,6 @@ footerView eventHandlers model =
                             , SvgAttr.y "0px"
                             , SvgAttr.viewBox "0 0 12.3 12"
                             , SvgAttr.xmlSpace "preserve"
-                            , SvgAttr.height "4vw"
                             , SvgAttr.class "icon--mute"
                             , SvgAttr.baseProfile "tiny"
                             ]
@@ -341,7 +333,6 @@ footerView eventHandlers model =
                             , SvgAttr.y "0px"
                             , SvgAttr.viewBox "-467 269 24 24"
                             , SvgAttr.xmlSpace "preserve"
-                            , SvgAttr.height "5vw"
                             , SvgAttr.class "icon--muted"
                             ]
                             [ path

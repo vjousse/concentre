@@ -712,3 +712,44 @@ select {
 .error-banner__close:hover {
   opacity: 1;
 }
+
+.dial-bg,
+.dial-fill {
+  width: calc(60 * var(--u));
+  height: calc(60 * var(--u));
+}
+
+.icon--pause,
+.icon--start,
+.icon--mute {
+  height: calc(4 * var(--u));
+}
+
+.icon--skip,
+.icon--muted {
+  height: calc(5 * var(--u));
+}
+
+.icon--drawer,
+.icon--theme-check {
+  width: calc(5 * var(--u));
+}
+
+.icon--drawer-large {
+  width: calc(6.6 * var(--u));
+  height: calc(6.6 * var(--u));
+}
+
+.icon--kofi {
+  width: calc(6 * var(--u));
+  height: calc(6 * var(--u));
+}
+
+.icon--minimize {
+  width: calc(4.2 * var(--u));
+  height: calc(5.5 * var(--u));
+}
+
+.icon--close {
+  height: calc(4.2 * var(--u));
+}
