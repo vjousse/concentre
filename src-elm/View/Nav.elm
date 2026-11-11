@@ -7,8 +7,8 @@ import Svg exposing (svg)
 import Svg.Attributes as SvgAttr
 
 
-navView : { onWindowMinimize : msg, onDrawerToggle : msg, onWindowClose : msg } -> Bool -> Html msg
-navView { onWindowMinimize, onDrawerToggle, onWindowClose } drawerOpen =
+navView : { onDrawerToggle : msg, onWindowClose : msg, onWindowMinimize : msg } -> Bool -> Html msg
+navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
     nav [ class "titlebar" ]
         [ div [ class "icon-group" ]
             [ div [ title "Settings", class "icon-wrapper", class "icon-wrapper--titlebar", class "icon-wrapper--single", onClick onDrawerToggle ]

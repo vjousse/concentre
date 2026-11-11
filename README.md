@@ -141,9 +141,10 @@ You will need to [install rust](https://www.rust-lang.org/tools/install) first a
     uv sync
     uv run pre-commit install
 
-## Install node dependencies
+## Install dependencies
 
     npm ci
+    npm run setup
 
 ## Running the app
 

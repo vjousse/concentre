@@ -25,9 +25,9 @@ main : Program Flags Model Msg
 main =
     Browser.element
         { init = init
-        , view = view
-        , update = update
         , subscriptions = subscriptions
+        , update = update
+        , view = view
         }
 
 
@@ -58,40 +58,40 @@ type alias Flags =
     , autoStartOnAppStartup : Bool
     , autoStartWorkTimer : Bool
     , defaultFocusLabel : String
-    , defaultShortBreakLabel : String
     , defaultLongBreakLabel : String
+    , defaultShortBreakLabel : String
     , desktopNotifications : Bool
+    , focusDuration : Seconds
     , longBreakDuration : Seconds
     , maxRoundNumber : Int
     , maxSessionDuration : Seconds
     , minimizeToTray : Bool
     , minimizeToTrayOnClose : Bool
     , muted : Bool
-    , focusDuration : Seconds
     , shortBreakDuration : Seconds
     , startMinimized : Bool
     , systemStartupAutoStart : Bool
     , theme : String
-    , tickSoundsDuringWork : Bool
     , tickSoundsDuringBreak : Bool
+    , tickSoundsDuringWork : Bool
     , volume : Maybe Int
     }
 
 
 type alias Defaults =
     { longBreakDuration : Seconds
+    , maxRoundNumber : Int
     , pomodoroDuration : Seconds
     , shortBreakDuration : Seconds
-    , maxRoundNumber : Int
     }
 
 
 defaults : Defaults
 defaults =
     { longBreakDuration = 20 * 60
+    , maxRoundNumber = 4
     , pomodoroDuration = 25 * 60
     , shortBreakDuration = 5 * 60
-    , maxRoundNumber = 4
     }
 
 
@@ -103,21 +103,15 @@ init flags =
 
         currentState =
             { color = theme.colors.focusRound
-            , percentage = 1
             , paused = False
+            , percentage = 1
             , sessionStatus = NotStarted
             }
     in
     ( { appVersion = flags.appVersion
       , config =
             { alwaysOnTop = flags.alwaysOnTop
-            , autoQuit =
-                flags.autoQuit
-                    |> Maybe.andThen
-                        (\v ->
-                            Decode.decodeString sessionTypeDecoder v
-                                |> Result.toMaybe
-                        )
+            , autoQuit = flags.autoQuit |> Maybe.andThen (\v -> Decode.decodeString sessionTypeDecoder v |> Result.toMaybe)
             , autoStartBreakTimer = flags.autoStartBreakTimer
             , autoStartOnAppStartup = flags.autoStartOnAppStartup
             , autoStartWorkTimer = flags.autoStartWorkTimer
@@ -139,8 +133,8 @@ init flags =
             , startMinimized = flags.startMinimized
             , systemStartupAutoStart = flags.systemStartupAutoStart
             , theme = flags.theme
-            , tickSoundsDuringWork = flags.tickSoundsDuringWork
             , tickSoundsDuringBreak = flags.tickSoundsDuringBreak
+            , tickSoundsDuringWork = flags.tickSoundsDuringWork
             , volume = flags.volume
             }
       , currentColor = theme.colors.focusRound
@@ -167,16 +161,16 @@ init flags =
 
 type Msg
     = AudioFileRequested SessionType
-    | CloseWindow
     | ChangeSettingTab SettingTab
     | ChangeTheme Theme
+    | CloseWindow
     | DismissError
-    | SetVolumeBarVisibility Bool
-    | ProcessExternalMessage Decode.Value
     | MinimizeWindow
+    | ProcessExternalMessage Decode.Value
     | Reset ResetType
-    | ResetSettings
     | ResetAudioFile SessionType
+    | ResetSettings
+    | SetVolumeBarVisibility Bool
     | SkipCurrentRound
     | ToggleDrawer
     | ToggleMute Bool
@@ -217,9 +211,6 @@ update msg ({ config } as model) =
         DismissError ->
             ( { model | error = Nothing }, Cmd.none )
 
-        SetVolumeBarVisibility visible ->
-            ( { model | volumeSliderHidden = not visible }, Cmd.none )
-
         MinimizeWindow ->
             ( model
             , if model.config.minimizeToTray then
@@ -231,6 +222,9 @@ update msg ({ config } as model) =
 
         ProcessExternalMessage externalMessage ->
             case Decode.decodeValue externalMessageDecoder externalMessage of
+                Err e ->
+                    ( { model | error = Just <| Decode.errorToString e }, Cmd.none )
+
                 Ok (ErrorMsg errorMessage) ->
                     ( { model | error = Just errorMessage }, Cmd.none )
 
@@ -249,9 +243,6 @@ update msg ({ config } as model) =
                     , cmd
                     )
 
-                Err e ->
-                    ( { model | error = Just <| Decode.errorToString e }, Cmd.none )
-
         Reset resetType ->
             let
                 currentState =
@@ -262,9 +253,8 @@ update msg ({ config } as model) =
 
                             Nothing ->
                                 model.theme.colors.focusRound
+                    , paused = model.pomodoroState |> Maybe.map (\state -> state.currentSession.status == Paused) |> Maybe.withDefault False
                     , percentage = 1
-                    , paused =
-                        model.pomodoroState |> Maybe.map (\state -> state.currentSession.status == Paused) |> Maybe.withDefault False
                     , sessionStatus = NotStarted
                     }
             in
@@ -286,25 +276,6 @@ update msg ({ config } as model) =
                 ]
             )
 
-        ResetSettings ->
-            let
-                newConfig =
-                    { config
-                        | focusDuration = defaults.pomodoroDuration
-                        , shortBreakDuration = defaults.shortBreakDuration
-                        , longBreakDuration = defaults.longBreakDuration
-                        , maxRoundNumber = defaults.maxRoundNumber
-                    }
-            in
-            ( { model
-                | config = newConfig
-              }
-            , Cmd.batch
-                [ sendMessageFromElm (elmMessageEncoder { name = "reset_session", value = Nothing })
-                , sendMessageFromElm (elmMessageBuilder "update_config" newConfig configEncoder)
-                ]
-            )
-
         ResetAudioFile sessionType ->
             let
                 newConfig =
@@ -312,17 +283,35 @@ update msg ({ config } as model) =
                         Focus ->
                             { config | focusAudio = Nothing }
 
-                        ShortBreak ->
-                            { config | shortBreakAudio = Nothing }
-
                         LongBreak ->
                             { config | longBreakAudio = Nothing }
+
+                        ShortBreak ->
+                            { config | shortBreakAudio = Nothing }
             in
-            ( { model
-                | config = newConfig
-              }
+            ( { model | config = newConfig }
             , sendMessageFromElm (elmMessageBuilder "update_config" newConfig configEncoder)
             )
+
+        ResetSettings ->
+            let
+                newConfig =
+                    { config
+                        | focusDuration = defaults.pomodoroDuration
+                        , longBreakDuration = defaults.longBreakDuration
+                        , maxRoundNumber = defaults.maxRoundNumber
+                        , shortBreakDuration = defaults.shortBreakDuration
+                    }
+            in
+            ( { model | config = newConfig }
+            , Cmd.batch
+                [ sendMessageFromElm (elmMessageEncoder { name = "reset_session", value = Nothing })
+                , sendMessageFromElm (elmMessageBuilder "update_config" newConfig configEncoder)
+                ]
+            )
+
+        SetVolumeBarVisibility visible ->
+            ( { model | volumeSliderHidden = not visible }, Cmd.none )
 
         SkipCurrentRound ->
             ( model
@@ -333,36 +322,35 @@ update msg ({ config } as model) =
             let
                 newConfig =
                     { config
-                        | -- Avoid having impossible states
-                          maxRoundNumber =
-                            if model.config.maxRoundNumber == 0 then
-                                1
-
-                            else
-                                model.config.maxRoundNumber
-                        , focusDuration =
+                        | focusDuration =
                             if model.config.focusDuration == 0 then
                                 60
 
                             else
                                 model.config.focusDuration
-                        , shortBreakDuration =
-                            if model.config.shortBreakDuration == 0 then
-                                60
-
-                            else
-                                model.config.shortBreakDuration
                         , longBreakDuration =
                             if model.config.longBreakDuration == 0 then
                                 60
 
                             else
                                 model.config.longBreakDuration
+                        , maxRoundNumber =
+                            if model.config.maxRoundNumber == 0 then
+                                1
+
+                            else
+                                model.config.maxRoundNumber
+                        , shortBreakDuration =
+                            if model.config.shortBreakDuration == 0 then
+                                60
+
+                            else
+                                model.config.shortBreakDuration
                     }
             in
             ( { model
-                | drawerOpen = not model.drawerOpen
-                , config = newConfig
+                | config = newConfig
+                , drawerOpen = not model.drawerOpen
               }
             , Cmd.none
             )
@@ -394,11 +382,11 @@ update msg ({ config } as model) =
                 Focus ->
                     { model | focusLabel = label }
 
-                ShortBreak ->
-                    { model | shortBreakLabel = label }
-
                 LongBreak ->
                     { model | longBreakLabel = label }
+
+                ShortBreak ->
+                    { model | shortBreakLabel = label }
             , Cmd.none
             )
 
@@ -412,11 +400,11 @@ update msg ({ config } as model) =
 
                 toInt value =
                     case String.toInt value of
-                        Nothing ->
-                            0
-
                         Just stringValue ->
                             stringValue
+
+                        Nothing ->
+                            0
 
                 ( newConfig, newCmd ) =
                     case settingType of
@@ -431,11 +419,11 @@ update msg ({ config } as model) =
                                 Focus ->
                                     { config | defaultFocusLabel = label }
 
-                                ShortBreak ->
-                                    { config | defaultShortBreakLabel = label }
-
                                 LongBreak ->
                                     { config | defaultLongBreakLabel = label }
+
+                                ShortBreak ->
+                                    { config | defaultShortBreakLabel = label }
                             )
                                 |> withNoCmd
 
@@ -467,11 +455,11 @@ update msg ({ config } as model) =
                                 AutoStartBreakTimer ->
                                     { config | autoStartBreakTimer = not config.autoStartBreakTimer }
 
-                                AutoStartWorkTimer ->
-                                    { config | autoStartWorkTimer = not config.autoStartWorkTimer }
-
                                 AutoStartOnAppStartup ->
                                     { config | autoStartOnAppStartup = not config.autoStartOnAppStartup }
+
+                                AutoStartWorkTimer ->
+                                    { config | autoStartWorkTimer = not config.autoStartWorkTimer }
 
                                 DesktopNotifications ->
                                     { config | desktopNotifications = not config.desktopNotifications }
@@ -488,11 +476,11 @@ update msg ({ config } as model) =
                                 SystemStartupAutoStart ->
                                     { config | systemStartupAutoStart = not config.systemStartupAutoStart }
 
-                                TickSoundsDuringWork ->
-                                    { config | tickSoundsDuringWork = not config.tickSoundsDuringWork }
-
                                 TickSoundsDuringBreak ->
                                     { config | tickSoundsDuringBreak = not config.tickSoundsDuringBreak }
+
+                                TickSoundsDuringWork ->
+                                    { config | tickSoundsDuringWork = not config.tickSoundsDuringWork }
                             )
                                 |> withNoCmd
             in
@@ -507,11 +495,11 @@ update msg ({ config } as model) =
             let
                 newVolume =
                     case String.toInt volumeStr of
-                        Nothing ->
-                            model.config.volume
-
                         Just v ->
                             Just v
+
+                        Nothing ->
+                            model.config.volume
 
                 newConfig =
                     { config | muted = (newVolume |> Maybe.withDefault 0) <= 0, volume = newVolume }
@@ -599,7 +587,7 @@ processExternalRustMessage pomodoroState model =
                 minutes =
                     (duration |> toFloat) / 60 |> round
             in
-            { title = title
+            { blue = b
             , body =
                 "Start a "
                     ++ String.fromInt minutes
@@ -612,10 +600,10 @@ processExternalRustMessage pomodoroState model =
                        )
                     ++ " "
                     ++ body
+            , green = g
             , name = name
             , red = r
-            , green = g
-            , blue = b
+            , title = title
             }
 
         getCmds : Config -> String -> String -> String -> String -> Seconds -> RGB -> Bool -> List (Cmd Msg)
@@ -633,7 +621,7 @@ processExternalRustMessage pomodoroState model =
                     Cmd.none
 
               else
-                sendMessageFromElm (elmMessageBuilder "play_sound" { soundId = soundName, quitAfterPlay = quit } soundMessageEncoder)
+                sendMessageFromElm (elmMessageBuilder "play_sound" { quitAfterPlay = quit, soundId = soundName } soundMessageEncoder)
             ]
 
         maxTime =
@@ -651,9 +639,8 @@ processExternalRustMessage pomodoroState model =
 
         currentState =
             { color = currentColor
+            , paused = pomodoroState.currentSession.status == Paused
             , percentage = percent
-            , paused =
-                pomodoroState.currentSession.status == Paused
             , sessionStatus = pomodoroState.currentSession.status
             }
 
@@ -727,11 +714,11 @@ processExternalSoundFilePathMessage sessionType path config =
                 Focus ->
                     { config | focusAudio = Just path }
 
-                ShortBreak ->
-                    { config | shortBreakAudio = Just path }
-
                 LongBreak ->
                     { config | longBreakAudio = Just path }
+
+                ShortBreak ->
+                    { config | shortBreakAudio = Just path }
     in
     ( newConfig
     , sendMessageFromElm (elmMessageBuilder "update_config" newConfig configEncoder)
@@ -751,18 +738,17 @@ togglePlayStatus model =
 
                             currentState =
                                 { color =
-                                    computeCurrentColor
-                                        state.currentSession.currentTime
+                                    computeCurrentColor state.currentSession.currentTime
                                         (getCurrentMaxTime model.config state.currentSession)
                                         state.currentSession.sessionType
                                         model.theme.colors
+                                , paused = True
                                 , percentage =
                                     if maxTime /= 0 then
                                         toFloat (maxTime - state.currentSession.currentTime) / toFloat maxTime
 
                                     else
                                         1
-                                , paused = True
                                 , sessionStatus = Paused
                                 }
                         in
@@ -784,13 +770,13 @@ togglePlayStatus model =
                                         (getCurrentMaxTime model.config state.currentSession)
                                         state.currentSession.sessionType
                                         model.theme.colors
+                                , paused = False
                                 , percentage =
                                     if maxTime /= 0 then
                                         toFloat (maxTime - state.currentSession.currentTime) / toFloat maxTime
 
                                     else
                                         1
-                                , paused = False
                                 , sessionStatus = status
                                 }
                         in
@@ -835,31 +821,31 @@ view : Model -> Html Msg
 view model =
     div [ id "app" ]
         [ View.Nav.navView
-            { onWindowMinimize = MinimizeWindow
-            , onDrawerToggle = ToggleDrawer
+            { onDrawerToggle = ToggleDrawer
             , onWindowClose = CloseWindow
+            , onWindowMinimize = MinimizeWindow
             }
             model.drawerOpen
         , if model.drawerOpen then
             View.Drawer.view
-                { onSettingUpdate = UpdateSetting
-                , onSettingsReset = ResetSettings
-                , onChangeSettingTab = ChangeSettingTab
+                { onAudioFileRequested = AudioFileRequested
                 , onAudioFileReset = ResetAudioFile
-                , onAudioFileRequested = AudioFileRequested
+                , onChangeSettingTab = ChangeSettingTab
+                , onSettingUpdate = UpdateSetting
+                , onSettingsReset = ResetSettings
                 , onThemeChange = ChangeTheme
                 }
                 model
 
           else
             View.Timer.view
-                { onReset = Reset
-                , onCurrentRoundSkip = SkipCurrentRound
+                { onCurrentRoundSkip = SkipCurrentRound
+                , onReset = Reset
                 , onSetVolumeBarVisibility = SetVolumeBarVisibility
-                , onVolumeUpdate = UpdateVolume
                 , onToggleMute = ToggleMute
-                , onUpdateLabel = UpdateLabel
                 , onTogglePlayStatus = TogglePlayStatus
+                , onUpdateLabel = UpdateLabel
+                , onVolumeUpdate = UpdateVolume
                 }
                 model
         , errorView model.error
@@ -869,18 +855,18 @@ view model =
 pomodorolmTheme : Theme
 pomodorolmTheme =
     { colors =
-        { longRound = Color.fromCSSHex "#0bbddb"
-        , shortRound = Color.fromCSSHex "#ff4e4d"
-        , focusRound = Color.fromCSSHex "#05ec8c"
-        , focusRoundMiddle = Color.fromCSSHex "#ff7f0e"
-        , focusRoundEnd = Color.fromCSSHex "#ff4e4d"
+        { accent = Color.fromCSSHex "#05ec8c"
         , background = Color.fromCSSHex "#2f384b"
         , backgroundLight = Color.fromCSSHex "#3d4457"
         , backgroundLightest = Color.fromCSSHex "#858c99"
+        , focusRound = Color.fromCSSHex "#05ec8c"
+        , focusRoundEnd = Color.fromCSSHex "#ff4e4d"
+        , focusRoundMiddle = Color.fromCSSHex "#ff7f0e"
         , foreground = Color.fromCSSHex "#f6f2eb"
         , foregroundDarker = Color.fromCSSHex "#c0c9da"
         , foregroundDarkest = Color.fromCSSHex "#dbe1ef"
-        , accent = Color.fromCSSHex "#05ec8c"
+        , longRound = Color.fromCSSHex "#0bbddb"
+        , shortRound = Color.fromCSSHex "#ff4e4d"
         }
     , name = "Pomodorolm"
     }
@@ -925,13 +911,7 @@ port hideWindow : () -> Cmd msg
 
 
 type alias Notification =
-    { body : String
-    , title : String
-    , name : String
-    , red : Int
-    , green : Int
-    , blue : Int
-    }
+    { blue : Int, body : String, green : Int, name : String, red : Int, title : String }
 
 
 port notify : Notification -> Cmd msg

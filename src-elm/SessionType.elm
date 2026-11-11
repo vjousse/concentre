@@ -7,8 +7,8 @@ module SessionType exposing
 
 type SessionType
     = Focus
-    | ShortBreak
     | LongBreak
+    | ShortBreak
 
 
 toString : SessionType -> String
@@ -17,11 +17,11 @@ toString sessionType =
         Focus ->
             "Focus"
 
-        ShortBreak ->
-            "ShortBreak"
-
         LongBreak ->
             "LongBreak"
+
+        ShortBreak ->
+            "ShortBreak"
 
 
 fromString : String -> Maybe SessionType

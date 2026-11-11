@@ -13,25 +13,12 @@ import Types exposing (Setting(..), SettingTab(..), SettingType(..))
 
 
 type alias EventHandlers msg =
-    { onSettingUpdate : SettingType -> msg
-    , onSettingsReset : msg
-    , onChangeSettingTab : SettingTab -> msg
-    , onAudioFileReset : SessionType -> msg
-    , onAudioFileRequested : SessionType -> msg
-    , onThemeChange : Theme -> msg
-    }
+    { onAudioFileRequested : SessionType -> msg, onAudioFileReset : SessionType -> msg, onChangeSettingTab : SettingTab -> msg, onSettingUpdate : SettingType -> msg, onSettingsReset : msg, onThemeChange : Theme -> msg }
 
 
 view :
     EventHandlers msg
-    ->
-        { model
-            | settingTab : SettingTab
-            , appVersion : String
-            , config : Config
-            , themes : List Theme
-            , theme : Theme
-        }
+    -> { model | appVersion : String, config : Config, settingTab : SettingTab, theme : Theme, themes : List Theme }
     -> Html msg
 view eventHandlers model =
     div
@@ -310,15 +297,12 @@ settingWrapperToggle title msg settingActive =
 
 
 audioFileWrapper :
-    { eventHandlers
-        | onAudioFileReset : SessionType -> msg
-        , onAudioFileRequested : SessionType -> msg
-    }
+    { eventHandlers | onAudioFileRequested : SessionType -> msg, onAudioFileReset : SessionType -> msg }
     -> Maybe String
     -> SessionType
     -> String
     -> Html msg
-audioFileWrapper { onAudioFileReset, onAudioFileRequested } audioFile sessionType soundTitle =
+audioFileWrapper { onAudioFileRequested, onAudioFileReset } audioFile sessionType soundTitle =
     div [ class "setting-wrapper-multi" ]
         [ div
             [ class "setting-wrapper"

@@ -17,20 +17,16 @@ type ResetType
 
 
 type alias CurrentState =
-    { color : RGB
-    , percentage : Float
-    , paused : Bool
-    , sessionStatus : SessionStatus
-    }
+    { color : RGB, paused : Bool, percentage : Float, sessionStatus : SessionStatus }
 
 
 type SettingTab
-    = TimerTab
-    | ThemeTab
+    = AboutTab
     | SettingsTab
     | SoundsTab
     | TextTab
-    | AboutTab
+    | ThemeTab
+    | TimerTab
 
 
 type Setting
@@ -43,8 +39,8 @@ type Setting
     | MinimizeToTrayOnClose
     | StartMinimized
     | SystemStartupAutoStart
-    | TickSoundsDuringWork
     | TickSoundsDuringBreak
+    | TickSoundsDuringWork
 
 
 type SettingType

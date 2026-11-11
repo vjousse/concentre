@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "review": "elm-review",
+    "review:fix": "npm run review -- --fix",
     "tauri": "tauri",
     "setup": "elm-tooling install",
     "test:elm": "elm-test-rs",

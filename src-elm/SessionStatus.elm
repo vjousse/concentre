@@ -13,11 +13,11 @@ type SessionStatus
 toString : SessionStatus -> String
 toString sessionStatus =
     case sessionStatus of
+        NotStarted ->
+            "not_started"
+
         Paused ->
             "paused"
 
         Running ->
             "running"
-
-        NotStarted ->
-            "not_started"
