@@ -1,0 +1,33 @@
+{% extends "page.html" %}
+
+{% block title %}{{ page.title }} | Concentré{% endblock title %}
+
+{# Per-post preview when the link is shared (Mastodon, chat apps). #}
+{% block favicon %}
+<link rel="icon" type="image/png" href="{{ get_url(path="favicon.png") }}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:image" content="{{ get_url(path="og.png") }}">
+<meta name="twitter:card" content="summary_large_image">
+{% endblock favicon %}
+
+{% block head %}
+{{ super() }}
+{% include "_news_head.html" %}
+{% endblock head %}
+
+{% block content %}
+<div class="heading-text">{{ page.title }}</div>
+<p class="news-meta">
+    <time datetime="{{ page.date }}">{{ page.date | date(format="%B %-d, %Y") }}</time>
+    {% if page.extra.version %} · Version {{ page.extra.version }}{% endif %}
+</p>
+{{ page.content | safe }}
+{% include "_support.html" %}
+<p class="news-back"><a href="{{ get_url(path="@/news/_index.md") }}">← All news</a></p>
+{% endblock content %}
+
+{# News posts are short: no table of contents. #}
+{% block toc %}
+{% endblock toc %}

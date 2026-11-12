@@ -11,6 +11,8 @@
 {% endblock favicon %}
 
 {% block head %}
+{# Lets browsers and feed readers find the news feed from any page. #}
+<link rel="alternate" type="application/atom+xml" title="Concentré news" href="{{ get_url(path="news/atom.xml") }}">
 <script src="https://s.jousse.org/js/pl.js" defer="true" data-domain="concentre.org" data-turbolinks-track="reload" ></script>
 <style>
     .download {
@@ -122,6 +124,7 @@
     <small class="subtext">
         Concentré (formerly Pomodorolm) is free software by <a href="https://vincent.jousse.org">Vincent Jousse</a> ·
         <a href="https://ko-fi.com/vjousse">Support it on Ko-fi</a> ·
+        <a href="{{ get_url(path="news/atom.xml") }}">News feed (RSS)</a> ·
         Site built with <a href="https://www.getzola.org">Zola</a> and the
         <a href="https://github.com/huhu/juice">Juice</a> theme
         <br>

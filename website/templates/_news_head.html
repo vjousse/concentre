@@ -1,0 +1,56 @@
+{# Shared by news.html (list) and news-page.html (post).
+   The feed <link rel="alternate"> comes from templates/index.html. #}
+<style>
+    /* The theme sets no line-height on headings: long post titles wrap on small screens. */
+    .content .heading-text {
+        line-height: 1.2;
+    }
+
+    .news-meta {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin: 0;
+    }
+
+    .news-item {
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--shadow-color);
+    }
+
+    .news-item h2 {
+        margin: 0.3rem 0;
+    }
+
+    .news-item p {
+        margin: 0;
+    }
+
+    .news-feed {
+        font-size: 0.9rem;
+        margin-top: 2rem;
+    }
+
+    .support {
+        margin: 3rem 0 1rem;
+        padding: 1.5rem;
+        border: 2px solid var(--pomo-focus);
+        border-radius: 12px;
+    }
+
+    .support p {
+        margin: 0 0 1.2rem;
+    }
+
+    .content a.support-button {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        border-radius: 999px;
+        font-weight: 600;
+        color: #2f384b;
+        background: var(--pomo-focus);
+    }
+
+    .news-back {
+        font-size: 0.9rem;
+    }
+</style>

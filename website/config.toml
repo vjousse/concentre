@@ -3,6 +3,8 @@ base_url = "https://concentre.org"
 title = "Concentré, a simple yet powerful focus timer for Linux, Windows and macOS"
 description = "Free and open source focus timer. Customizable rounds, themes, tray icon, notifications. Under 4 MB, no Electron."
 default_language = "en"
+# Author name in the news feed entries.
+author = "Vincent Jousse"
 
 theme = "juice"
 
@@ -19,11 +21,14 @@ dark_theme = "github-dark"
 juice_logo_name = "Concentré"
 juice_logo_path = "logo.png"
 juice_extra_menu = [
+    { title = "News", link = "/news/" },
     { title = "GitHub", link = "https://github.com/vjousse/concentre" },
     { title = "Support ❤", link = "https://ko-fi.com/vjousse" },
 ]
 juice_exclude_menu = []
 repository_url = "https://github.com/vjousse/concentre"
+# Used by the support block at the bottom of news posts (templates/_support.html).
+support_url = "https://ko-fi.com/vjousse"
 
 # Bump on each release: used to build direct download links.
 version = "0.10.1"

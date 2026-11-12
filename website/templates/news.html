@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+
+{% block title %}{{ section.title }} | Concentré{% endblock title %}
+
+{% block head %}
+{{ super() }}
+{% include "_news_head.html" %}
+{% endblock head %}
+
+{% block header %}
+<header class="box-shadow">
+    {{ <render_header /> }}
+</header>
+{% endblock header %}
+
+{% block content %}
+<div class="heading-text">{{ section.title }}</div>
+{% for page in section.pages %}
+<article class="news-item">
+    <p class="news-meta">
+        <time datetime="{{ page.date }}">{{ page.date | date(format="%B %-d, %Y") }}</time>
+        {% if page.extra.version %} · Version {{ page.extra.version }}{% endif %}
+    </p>
+    <h2><a href="{{ page.permalink | safe }}">{{ page.title }}</a></h2>
+    <p>{{ page.description }}</p>
+</article>
+{% endfor %}
+<p class="news-feed">
+    Follow new releases with the <a href="{{ get_url(path="news/atom.xml") }}">Atom feed</a>.
+</p>
+{% endblock content %}
