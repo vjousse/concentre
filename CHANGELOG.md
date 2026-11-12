@@ -2,12 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
-## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-11
+## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-12
 
 ### 🚀 Features
 
 - Add frontend error handling ([#367](https://github.com/vjousse/concentre/issues/367))
 - Scale the interface with the window size ([#369](https://github.com/vjousse/concentre/issues/369))
+
+### 🐛 Bug Fixes
+
+- Better sound sync ([#374](https://github.com/vjousse/concentre/issues/374))
 
 ### 🚜 Refactor
 
@@ -21,6 +25,8 @@ All notable changes to this project will be documented in this file.
 
 - Fix release script ([#371](https://github.com/vjousse/concentre/issues/371))
 - Prepare 1.0 ([#372](https://github.com/vjousse/concentre/issues/372))
+- Optimize icon drawing ([#375](https://github.com/vjousse/concentre/issues/375))
+- Bump to 1.0
 
 ## [[app-v0.10.1](https://github.com/vjousse/concentre/releases/tag/app-v0.10.1)] - 2026-11-02
 
