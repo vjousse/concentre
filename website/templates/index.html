@@ -11,6 +11,8 @@
 {% endblock favicon %}
 
 {% block head %}
+{# Lets browsers and feed readers find the news feed from any page. #}
+<link rel="alternate" type="application/atom+xml" title="Concentré news" href="{{ get_url(path="news/atom.xml") }}">
 <script src="https://s.jousse.org/js/pl.js" defer="true" data-domain="concentre.org" data-turbolinks-track="reload" ></script>
 <style>
     .download {
@@ -117,11 +119,78 @@
 </style>
 {% endblock hero %}
 
+{# Home page content: latest news first, then the features from content/_index.md. #}
+{% block content %}
+{% set news = get_section(path="news/_index.md") %}
+{% if news.pages %}
+<aside class="latest-news">
+    <div class="latest-news-title">Latest news</div>
+    <ul>
+        {% for page in news.pages %}
+        {% if loop.index <= 3 %}
+        <li>
+            <time datetime="{{ page.date }}">{{ page.date | date(format="%B %-d, %Y") }}</time>
+            <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    <a class="latest-news-all" href="{{ news.permalink | safe }}">All news</a> ·
+    <a class="latest-news-all" href="{{ get_url(path="news/atom.xml") }}">RSS</a>
+</aside>
+<style>
+    .latest-news {
+        margin: 0 0 2.5rem;
+        padding: 1.2rem 1.5rem;
+        border: 2px solid var(--pomo-focus);
+        border-radius: 12px;
+        font-size: 1rem;
+    }
+
+    .latest-news-title {
+        font-family: var(--header-font-family);
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .latest-news ul {
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0 0.8rem;
+    }
+
+    .latest-news li {
+        padding: 0.2rem 0;
+    }
+
+    .latest-news time {
+        display: inline-block;
+        min-width: 9.5rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    @media screen and (max-width: 768px) {
+        .latest-news time {
+            display: block;
+        }
+    }
+
+    .latest-news-all {
+        font-size: 0.9rem;
+    }
+</style>
+{% endif %}
+<div id="features" class="heading-text">Overview</div>
+{{ section.content | safe }}
+{% endblock content %}
+
 {% block footer %}
 <footer>
     <small class="subtext">
         Concentré (formerly Pomodorolm) is free software by <a href="https://vincent.jousse.org">Vincent Jousse</a> ·
         <a href="https://ko-fi.com/vjousse">Support it on Ko-fi</a> ·
+        <a href="{{ get_url(path="news/atom.xml") }}">News feed (RSS)</a> ·
         Site built with <a href="https://www.getzola.org">Zola</a> and the
         <a href="https://github.com/huhu/juice">Juice</a> theme
         <br>
