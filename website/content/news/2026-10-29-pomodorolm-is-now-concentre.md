@@ -12,6 +12,12 @@ Starting with version 0.10, Pomodorolm is called **Concentré**.
 
 The old name was built on “Pomodoro”, which is a registered trademark. Concentré is a name of its own: it’s French for “focused”, which is what the app is for.
 
+# Same app, new look
+
+The app itself works as before: focus rounds, short and long breaks, a tray icon that empties as time runs out. The icon and screens now carry the new name.
+
+{{ <screenshots /> }}
+
 # What changes for you
 
 Nothing. Your settings are kept, and updates keep coming through the channel you installed the app from.

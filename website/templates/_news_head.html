@@ -50,6 +50,35 @@
         background: var(--pomo-focus);
     }
 
+    .screenshots {
+        display: grid;
+        /* Four in a row on desktop, two on small screens: never a lone orphan. */
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+
+    @media screen and (max-width: 768px) {
+        .screenshots {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    .screenshots figure {
+        margin: 0;
+        text-align: center;
+    }
+
+    .screenshots img {
+        width: 100%;
+        height: auto;
+    }
+
+    .screenshots figcaption {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
     .news-back {
         font-size: 0.9rem;
     }

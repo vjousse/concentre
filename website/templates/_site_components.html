@@ -1,0 +1,18 @@
+{# Site-specific Tera components, usable in templates and in Markdown content. #}
+
+{# Grid of app screenshots, for news posts: {{ <screenshots /> }}
+   Images live in static/screenshots/ (also used for the stores). #}
+{% component screenshots(@config) %}
+{% set shots = [
+    ["1-timer.png", "The timer, ready to start"],
+    ["2-running.png", "A focus round in progress"],
+    ["3-settings-timer.png", "Timer settings"],
+    ["4-settings-general.png", "General settings"],
+] %}
+{#- Output is inserted into Markdown: keep it unindented, or it becomes a code block. -#}
+<div class="screenshots">
+{%- for shot in shots %}
+<figure><a href="{{ get_url(path="screenshots/" ~ shot[0]) }}"><img src="{{ get_url(path="screenshots/" ~ shot[0]) }}" alt="{{ shot[1] }}" width="848" height="1084" loading="lazy"></a><figcaption>{{ shot[1] }}</figcaption></figure>
+{%- endfor %}
+</div>
+{% endcomponent %}
