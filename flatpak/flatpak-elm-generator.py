@@ -26,10 +26,13 @@ sources = []
 
 with open(args.elm_json, "r") as file:
     elm_json_content = json.load(file)
-    dependencies = elm_json_content.get("dependencies", {})
-    direct_dependencies = dependencies.get("direct", {})
-    indirect_dependencies = dependencies.get("indirect", {})
-    dependencies = direct_dependencies | indirect_dependencies
+
+    dependencies = {}
+    # `elm make` verifies the test dependencies too, even if it doesn't build them
+    for section in ("dependencies", "test-dependencies"):
+        section_content = elm_json_content.get(section, {})
+        dependencies |= section_content.get("direct", {})
+        dependencies |= section_content.get("indirect", {})
 
     for package_name in dependencies.keys():
         version_number = dependencies[package_name]
