@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-12
+## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-16
 
 ### 🚀 Features
 
@@ -20,13 +20,17 @@ All notable changes to this project will be documented in this file.
 ### 📚 Documentation
 
 - *(website)* Use square screenshot
+- *(website)* Add news section ([#376](https://github.com/vjousse/concentre/issues/376))
 
 ### ⚙️ Miscellaneous Tasks
 
 - Fix release script ([#371](https://github.com/vjousse/concentre/issues/371))
 - Prepare 1.0 ([#372](https://github.com/vjousse/concentre/issues/372))
 - Optimize icon drawing ([#375](https://github.com/vjousse/concentre/issues/375))
+- Fix flatpak build ([#377](https://github.com/vjousse/concentre/issues/377))
+- Update deps ([#383](https://github.com/vjousse/concentre/issues/383))
 - Bump to 1.0
+- Update changelog
 
 ## [[app-v0.10.1](https://github.com/vjousse/concentre/releases/tag/app-v0.10.1)] - 2026-11-02
 
