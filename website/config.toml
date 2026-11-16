@@ -31,4 +31,4 @@ repository_url = "https://github.com/vjousse/concentre"
 support_url = "https://ko-fi.com/vjousse"
 
 # Bump on each release: used to build direct download links.
-version = "0.10.1"
+version = "1.0.0"

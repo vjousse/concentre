@@ -11,10 +11,13 @@
   <url type="bugtracker">https://github.com/vjousse/concentre/issues</url>
   <description>
     <p>
-      Concentré (formerly Pomodorolm) is a simple, good looking and configurable focus timer. Work in focused rounds, take short breaks between them, and a longer break every few rounds.
+      Concentré (formerly Pomodorolm) is a simple, good looking and configurable focus timer, inspired by the Pomodoro® Technique. Work in focused rounds, take short breaks between them, and a longer break every few rounds.
     </p>
     <p>
       The remaining time is always visible: the timer circle and the tray icon change color as time runs out. You can change its look and feel with themes, or create your own. All session durations are configurable, and you can play sounds (ticking, end of session) and display notifications.
+    </p>
+    <p>
+      Pomodoro® and Pomodoro Technique® are registered trademarks of Francesco Cirillo. Concentré is not affiliated with, associated with, or endorsed by the Pomodoro Technique® or Francesco Cirillo.
     </p>
   </description>
   <keywords>
@@ -22,6 +25,7 @@
     <keyword>timer</keyword>
     <keyword>concentration</keyword>
     <keyword>productivity</keyword>
+    <keyword>pomodoro</keyword>
     <keyword>concentre</keyword>
     <keyword>pomodorolm</keyword>
   </keywords>

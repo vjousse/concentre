@@ -45,7 +45,7 @@
     }
   },
   "productName": "pomodorolm",
-  "version": "0.10.1",
+  "version": "1.0.0",
   "identifier": "org.jousse.vincent.Pomodorolm",
   "plugins": {},
   "app": {
