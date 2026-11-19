@@ -530,30 +530,30 @@ changeTheme theme ({ config } as model) =
 processExternalInitMessage : Json.InitData -> Model -> ( Model, Cmd Msg )
 processExternalInitMessage c model =
     let
-        ( newModel, newCmd ) =
-            { model
-                | config = c.config
-                , focusLabel = c.config.defaultFocusLabel
-                , longBreakLabel = c.config.defaultLongBreakLabel
-                , shortBreakLabel = c.config.defaultShortBreakLabel
-                , themes = c.themes
-            }
-                |> processExternalRustMessage c.pomodoroState
-
         findTheme name =
             find (\t -> (t.name |> String.toLower) == name) c.themes
 
-        -- Fall back on the default theme if the configured one doesn't exist
-        -- (renamed or deleted custom theme, or "pomotroid" from old default configs)
-        currentTheme =
-            findTheme c.config.theme
-                |> Maybe.withDefault
-                    (findTheme (defaultTheme.name |> String.toLower)
-                        |> Maybe.withDefault defaultTheme
-                    )
-
         ( modelWithTheme, cmdWithTheme ) =
             let
+                ( newModel, newCmd ) =
+                    { model
+                        | config = c.config
+                        , focusLabel = c.config.defaultFocusLabel
+                        , longBreakLabel = c.config.defaultLongBreakLabel
+                        , shortBreakLabel = c.config.defaultShortBreakLabel
+                        , themes = c.themes
+                    }
+                        |> processExternalRustMessage c.pomodoroState
+
+                -- Fall back on the default theme if the configured one doesn't exist
+                -- (renamed or deleted custom theme, or "pomotroid" from old default configs)
+                currentTheme =
+                    findTheme c.config.theme
+                        |> Maybe.withDefault
+                            (findTheme (defaultTheme.name |> String.toLower)
+                                |> Maybe.withDefault defaultTheme
+                            )
+
                 ( updatedModel, updatedCmd ) =
                     changeTheme currentTheme newModel
             in
