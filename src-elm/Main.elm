@@ -540,18 +540,24 @@ processExternalInitMessage c model =
             }
                 |> processExternalRustMessage c.pomodoroState
 
+        findTheme name =
+            find (\t -> (t.name |> String.toLower) == name) c.themes
+
+        -- Fall back on the default theme if the configured one doesn't exist
+        -- (renamed or deleted custom theme, or "pomotroid" from old default configs)
+        currentTheme =
+            findTheme c.config.theme
+                |> Maybe.withDefault
+                    (findTheme (defaultTheme.name |> String.toLower)
+                        |> Maybe.withDefault defaultTheme
+                    )
+
         ( modelWithTheme, cmdWithTheme ) =
             let
-                updateTheme themeName =
-                    let
-                        ( updatedModel, updatedCmd ) =
-                            changeTheme themeName newModel
-                    in
-                    ( updatedModel, Cmd.batch [ updatedCmd, newCmd ] )
+                ( updatedModel, updatedCmd ) =
+                    changeTheme currentTheme newModel
             in
-            find (\t -> (t.name |> String.toLower) == c.config.theme) c.themes
-                |> Maybe.withDefault defaultTheme
-                |> updateTheme
+            ( updatedModel, Cmd.batch [ updatedCmd, newCmd ] )
     in
     -- Auto start if config is set
     if modelWithTheme.config.autoStartOnAppStartup then
@@ -848,7 +854,7 @@ defaultTheme =
         { accent = Color.fromCSSHex "#05ec8c"
         , background = Color.fromCSSHex "#2f384b"
         , backgroundLight = Color.fromCSSHex "#3d4457"
-        , backgroundLightest = Color.fromCSSHex "#858c99"
+        , backgroundLightest = Color.fromCSSHex "#9ca5b5"
         , focusRound = Color.fromCSSHex "#05ec8c"
         , focusRoundEnd = Color.fromCSSHex "#ff4e4d"
         , focusRoundMiddle = Color.fromCSSHex "#ff7f0e"
