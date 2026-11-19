@@ -16,6 +16,7 @@ type alias Config =
     , desktopNotifications : Bool
     , focusAudio : Maybe String
     , focusDuration : Seconds
+    , lastSeenVersion : Maybe String
     , longBreakAudio : Maybe String
     , longBreakDuration : Seconds
     , maxRoundNumber : Int
