@@ -105,6 +105,7 @@ init flags =
             , defaultLongBreakLabel = "Long break"
             , defaultShortBreakLabel = "Short break"
             , desktopNotifications = True
+            , lastSeenVersion = Nothing
             , focusAudio = Nothing
             , focusDuration = 1500
             , longBreakAudio = Nothing
