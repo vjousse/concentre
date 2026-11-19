@@ -114,9 +114,9 @@ app.ports.notify.subscribe(function (notification: Notification) {
 app.ports.sendMessageFromElm.subscribe(async function (message: Message) {
   switch (message.name) {
     case "get_init_data": {
-      const initData = await safeInvoke<[any, Array<RustThemeColors>, any]>(
-        "load_init_data"
-      );
+      const initData = await safeInvoke<
+        [unknown, Array<RustThemeColors>, unknown]
+      >("load_init_data");
 
       if (initData !== undefined) {
         const [config, themes, pomodoroState] = initData;
