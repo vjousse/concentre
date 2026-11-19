@@ -19,9 +19,9 @@ testConfig : Config
 testConfig =
     { alwaysOnTop = True
     , autoQuit = Nothing
-    , autoStartBreakTimer = True
+    , autoStartBreakTimer = False
     , autoStartOnAppStartup = True
-    , autoStartWorkTimer = True
+    , autoStartWorkTimer = False
     , defaultFocusLabel = "Focus"
     , defaultLongBreakLabel = "Long break"
     , defaultShortBreakLabel = "Short break"
@@ -32,7 +32,7 @@ testConfig =
     , longBreakDuration = 1200
     , maxRoundNumber = 4
     , maxSessionDuration = 90 * 60
-    , minimizeToTray = True
+    , minimizeToTray = False
     , minimizeToTrayOnClose = True
     , muted = False
     , shortBreakAudio = Nothing
@@ -41,7 +41,7 @@ testConfig =
     , systemStartupAutoStart = False
     , theme = "pomodorolm"
     , tickSoundsDuringBreak = True
-    , tickSoundsDuringWork = True
+    , tickSoundsDuringWork = False
     , volume = Just 100
     }
 
@@ -50,9 +50,9 @@ testConfigJson : String
 testConfigJson =
     """{
   "always_on_top": true
-  , "auto_start_break_timer": true
+  , "auto_start_break_timer": false
   , "auto_start_on_app_startup": true
-  , "auto_start_work_timer": true
+  , "auto_start_work_timer": false
   , "default_focus_label": "Focus"
   , "default_long_break_label": "Long break"
   , "default_short_break_label": "Short break"
@@ -62,7 +62,7 @@ testConfigJson =
   , "long_break_duration": 1200
   , "max_round_number": 4
   , "max_session_duration": 5400
-  , "minimize_to_tray": true
+  , "minimize_to_tray": false
   , "minimize_to_tray_on_close": true
   , "muted": false
   , "short_break_duration": 300
@@ -70,7 +70,7 @@ testConfigJson =
   , "system_startup_auto_start": false
   , "theme": "pomodorolm"
   , "tick_sounds_during_break": true
-  , "tick_sounds_during_work": true
+  , "tick_sounds_during_work": false
   , "volume": 100
 }
 """
@@ -79,7 +79,7 @@ testConfigJson =
 suite : Test
 suite =
     describe "Json parsers"
-        [ describe "should be indempotent"
+        [ describe "round trip"
             [ test "encode then decode" <|
                 \_ ->
                     configEncoder testConfig
