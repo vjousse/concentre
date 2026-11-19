@@ -54,7 +54,7 @@ fn default_short_break_label() -> String {
     "Short break".to_string()
 }
 fn default_theme() -> String {
-    "pomotroid".to_string()
+    "pomodorolm".to_string()
 }
 
 fn default_max_session_duration() -> u16 {
