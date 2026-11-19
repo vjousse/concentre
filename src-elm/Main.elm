@@ -6,7 +6,16 @@ import Config exposing (Config)
 import Html exposing (Html, button, div, p, text)
 import Html.Attributes exposing (attribute, class, id)
 import Html.Events exposing (onClick)
-import Json exposing (ExternalMessage(..), configEncoder, currentStateEncoder, elmMessageBuilder, elmMessageEncoder, externalMessageDecoder, sessionTypeDecoder, soundMessageEncoder)
+import Json
+    exposing
+        ( ExternalMessage(..)
+        , configEncoder
+        , currentStateEncoder
+        , elmMessageBuilder
+        , elmMessageEncoder
+        , externalMessageDecoder
+        , soundMessageEncoder
+        )
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Pomodoro
@@ -51,30 +60,7 @@ type alias Model =
 
 
 type alias Flags =
-    { alwaysOnTop : Bool
-    , appVersion : String
-    , autoQuit : Maybe String
-    , autoStartBreakTimer : Bool
-    , autoStartOnAppStartup : Bool
-    , autoStartWorkTimer : Bool
-    , defaultFocusLabel : String
-    , defaultLongBreakLabel : String
-    , defaultShortBreakLabel : String
-    , desktopNotifications : Bool
-    , focusDuration : Seconds
-    , longBreakDuration : Seconds
-    , maxRoundNumber : Int
-    , maxSessionDuration : Seconds
-    , minimizeToTray : Bool
-    , minimizeToTrayOnClose : Bool
-    , muted : Bool
-    , shortBreakDuration : Seconds
-    , startMinimized : Bool
-    , systemStartupAutoStart : Bool
-    , theme : String
-    , tickSoundsDuringBreak : Bool
-    , tickSoundsDuringWork : Bool
-    , volume : Maybe Int
+    { appVersion : String
     }
 
 
@@ -96,7 +82,7 @@ defaults =
 
 
 init : Flags -> ( Model, Cmd Msg )
-init flags =
+init _ =
     let
         theme =
             defaultTheme
@@ -108,44 +94,44 @@ init flags =
             , sessionStatus = NotStarted
             }
     in
-    ( { appVersion = flags.appVersion
+    ( { appVersion = "unknown"
       , config =
-            { alwaysOnTop = flags.alwaysOnTop
-            , autoQuit = flags.autoQuit |> Maybe.andThen (\v -> Decode.decodeString sessionTypeDecoder v |> Result.toMaybe)
-            , autoStartBreakTimer = flags.autoStartBreakTimer
-            , autoStartOnAppStartup = flags.autoStartOnAppStartup
-            , autoStartWorkTimer = flags.autoStartWorkTimer
-            , defaultFocusLabel = flags.defaultFocusLabel
-            , defaultLongBreakLabel = flags.defaultLongBreakLabel
-            , defaultShortBreakLabel = flags.defaultShortBreakLabel
-            , desktopNotifications = flags.desktopNotifications
+            { alwaysOnTop = True
+            , autoQuit = Nothing
+            , autoStartBreakTimer = True
+            , autoStartOnAppStartup = True
+            , autoStartWorkTimer = True
+            , defaultFocusLabel = "Focus"
+            , defaultLongBreakLabel = "Long break"
+            , defaultShortBreakLabel = "Short break"
+            , desktopNotifications = True
             , focusAudio = Nothing
-            , focusDuration = flags.focusDuration
+            , focusDuration = 1500
             , longBreakAudio = Nothing
-            , longBreakDuration = flags.longBreakDuration
-            , maxRoundNumber = flags.maxRoundNumber
-            , maxSessionDuration = flags.maxSessionDuration
-            , minimizeToTray = flags.minimizeToTray
-            , minimizeToTrayOnClose = flags.minimizeToTrayOnClose
-            , muted = flags.muted
+            , longBreakDuration = 1200
+            , maxRoundNumber = 4
+            , maxSessionDuration = 90 * 60
+            , minimizeToTray = True
+            , minimizeToTrayOnClose = True
+            , muted = False
             , shortBreakAudio = Nothing
-            , shortBreakDuration = flags.shortBreakDuration
-            , startMinimized = flags.startMinimized
-            , systemStartupAutoStart = flags.systemStartupAutoStart
-            , theme = flags.theme
-            , tickSoundsDuringBreak = flags.tickSoundsDuringBreak
-            , tickSoundsDuringWork = flags.tickSoundsDuringWork
-            , volume = flags.volume
+            , shortBreakDuration = 300
+            , startMinimized = True
+            , systemStartupAutoStart = False
+            , theme = "pomodorolm"
+            , tickSoundsDuringBreak = True
+            , tickSoundsDuringWork = True
+            , volume = Just 100
             }
       , currentColor = theme.colors.focusRound
       , currentState = currentState
       , drawerOpen = False
       , error = Nothing
-      , focusLabel = flags.defaultFocusLabel
-      , longBreakLabel = flags.defaultLongBreakLabel
+      , focusLabel = "Focus"
+      , longBreakLabel = "Long break"
       , pomodoroState = Nothing
       , settingTab = TimerTab
-      , shortBreakLabel = flags.defaultShortBreakLabel
+      , shortBreakLabel = "Short break"
       , strokeDasharray = 691.3321533203125
       , theme = theme
       , themes = []
