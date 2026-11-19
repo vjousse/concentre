@@ -82,7 +82,7 @@ defaults =
 
 
 init : Flags -> ( Model, Cmd Msg )
-init _ =
+init flags =
     let
         theme =
             defaultTheme
@@ -94,12 +94,12 @@ init _ =
             , sessionStatus = NotStarted
             }
     in
-    ( { appVersion = "unknown"
+    ( { appVersion = flags.appVersion
       , config =
             { alwaysOnTop = True
             , autoQuit = Nothing
             , autoStartBreakTimer = True
-            , autoStartOnAppStartup = True
+            , autoStartOnAppStartup = False
             , autoStartWorkTimer = True
             , defaultFocusLabel = "Focus"
             , defaultLongBreakLabel = "Long break"
@@ -116,7 +116,7 @@ init _ =
             , muted = False
             , shortBreakAudio = Nothing
             , shortBreakDuration = 300
-            , startMinimized = True
+            , startMinimized = False
             , systemStartupAutoStart = False
             , theme = "pomodorolm"
             , tickSoundsDuringBreak = True
