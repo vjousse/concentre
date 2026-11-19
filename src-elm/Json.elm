@@ -8,7 +8,6 @@ module Json exposing
     , elmMessageBuilder
     , elmMessageEncoder
     , externalMessageDecoder
-    , sessionTypeDecoder
     , soundMessageEncoder
     , themeColorsEncoder
     )
