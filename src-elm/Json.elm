@@ -3,6 +3,7 @@ module Json exposing
     , ExternalMessage(..)
     , InitData
     , SoundMessageValue
+    , configDecoder
     , configEncoder
     , currentStateEncoder
     , elmMessageBuilder
