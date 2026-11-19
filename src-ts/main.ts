@@ -31,7 +31,7 @@ type SoundMessage = {
 
 type Message = {
   name: string;
-  value: string | ElmConfig | SoundMessage | ElmState;
+  value: string | SoundMessage | ElmState;
 };
 
 type Notification = {
@@ -72,123 +72,12 @@ type ThemeColors = {
   accent: string;
 };
 
-type ElmConfig = {
-  alwaysOnTop: boolean;
-  autoQuit: string | null;
-  autoStartBreakTimer: boolean;
-  autoStartOnAppStartup: boolean;
-  autoStartWorkTimer: boolean;
-  defaultFocusLabel: string;
-  defaultLongBreakLabel: string;
-  defaultShortBreakLabel: string;
-  desktopNotifications: boolean;
-  focusAudio: string | null;
-  focusDuration: number;
-  longBreakAudio: string | null;
-  longBreakDuration: number;
-  maxRoundNumber: number;
-  maxSessionDuration: number;
-  minimizeToTray: boolean;
-  minimizeToTrayOnClose: boolean;
-  muted: boolean;
-  shortBreakAudio: string | null;
-  shortBreakDuration: number;
-  startMinimized: boolean;
-  systemStartupAutoStart: boolean;
-  theme: string;
-  tickSoundsDuringWork: boolean;
-  tickSoundsDuringBreak: boolean;
-  volume: number | null;
-};
-
-type RustConfig = {
-  always_on_top: boolean;
-  auto_quit: string | null;
-  auto_start_break_timer: boolean;
-  auto_start_on_app_startup: boolean;
-  auto_start_work_timer: boolean;
-  default_focus_label: string;
-  default_long_break_label: string;
-  default_short_break_label: string;
-  desktop_notifications: boolean;
-  focus_audio: string | null;
-  focus_duration: number;
-  long_break_audio: string | null;
-  long_break_duration: number;
-  max_round_number: number;
-  max_session_duration: number;
-  minimize_to_tray: boolean;
-  minimize_to_tray_on_close: boolean;
-  muted: boolean;
-  short_break_audio: string | null;
-  short_break_duration: number;
-  start_minimized: boolean;
-  system_startup_auto_start: boolean;
-  theme: string;
-  tick_sounds_during_work: boolean;
-  tick_sounds_during_break: boolean;
-  volume: number | null;
-};
-
 const root = document.querySelector("#app div");
-
-const rustConfig: RustConfig = {
-  always_on_top: true,
-  auto_quit: null,
-  auto_start_break_timer: true,
-  auto_start_on_app_startup: false,
-  auto_start_work_timer: true,
-  default_focus_label: "Focus",
-  default_long_break_label: "Long break",
-  default_short_break_label: "Short break",
-  desktop_notifications: true,
-  focus_audio: null,
-  focus_duration: 1500,
-  long_break_audio: null,
-  long_break_duration: 1200,
-  max_round_number: 4,
-  max_session_duration: 90 * 60,
-  minimize_to_tray: true,
-  minimize_to_tray_on_close: true,
-  muted: false,
-  short_break_audio: null,
-  short_break_duration: 300,
-  start_minimized: true,
-  system_startup_auto_start: false,
-  theme: "pomodorolm",
-  tick_sounds_during_work: true,
-  tick_sounds_during_break: true,
-  volume: 100,
-};
 
 let app = Elm.Main.init({
   node: root,
   flags: {
-    alwaysOnTop: rustConfig.always_on_top,
     appVersion: await getAppVersion(),
-    autoQuit: rustConfig.auto_quit,
-    autoStartBreakTimer: rustConfig.auto_start_break_timer,
-    autoStartOnAppStartup: rustConfig.auto_start_on_app_startup,
-    autoStartWorkTimer: rustConfig.auto_start_work_timer,
-    defaultFocusLabel: rustConfig.default_focus_label,
-    defaultLongBreakLabel: rustConfig.default_long_break_label,
-    defaultShortBreakLabel: rustConfig.default_short_break_label,
-    desktopNotifications: rustConfig.desktop_notifications,
-    focusAudio: rustConfig.focus_audio,
-    focusDuration: rustConfig.focus_duration,
-    longBreakDuration: rustConfig.long_break_duration,
-    maxRoundNumber: rustConfig.max_round_number,
-    maxSessionDuration: rustConfig.max_session_duration,
-    minimizeToTray: rustConfig.minimize_to_tray,
-    minimizeToTrayOnClose: rustConfig.minimize_to_tray_on_close,
-    muted: rustConfig.muted,
-    shortBreakDuration: rustConfig.short_break_duration,
-    startMinimized: rustConfig.start_minimized,
-    systemStartupAutoStart: rustConfig.system_startup_auto_start,
-    theme: rustConfig.theme,
-    tickSoundsDuringWork: rustConfig.tick_sounds_during_work,
-    tickSoundsDuringBreak: rustConfig.tick_sounds_during_break,
-    volume: rustConfig.volume,
   },
 });
 
@@ -226,7 +115,7 @@ app.ports.sendMessageFromElm.subscribe(async function (message: Message) {
   switch (message.name) {
     case "get_init_data": {
       const initData = await safeInvoke<
-        [RustConfig, Array<RustThemeColors>, any]
+        [unknown, Array<RustThemeColors>, unknown]
       >("load_init_data");
 
       if (initData !== undefined) {
@@ -315,37 +204,8 @@ app.ports.sendMessageFromElm.subscribe(async function (message: Message) {
     }
 
     case "update_config": {
-      const config: ElmConfig = message.value as ElmConfig;
-
       const newState = await safeInvoke("update_config", {
-        config: {
-          always_on_top: config.alwaysOnTop,
-          auto_quit: config.autoQuit,
-          auto_start_break_timer: config.autoStartBreakTimer,
-          auto_start_on_app_startup: config.autoStartOnAppStartup,
-          auto_start_work_timer: config.autoStartWorkTimer,
-          default_focus_label: config.defaultFocusLabel,
-          default_long_break_label: config.defaultLongBreakLabel,
-          default_short_break_label: config.defaultShortBreakLabel,
-          desktop_notifications: config.desktopNotifications,
-          focus_audio: config.focusAudio,
-          focus_duration: config.focusDuration,
-          long_break_audio: config.longBreakAudio,
-          long_break_duration: config.longBreakDuration,
-          max_round_number: config.maxRoundNumber,
-          max_session_duration: config.maxSessionDuration,
-          minimize_to_tray: config.minimizeToTray,
-          minimize_to_tray_on_close: config.minimizeToTrayOnClose,
-          muted: config.muted,
-          short_break_audio: config.shortBreakAudio,
-          short_break_duration: config.shortBreakDuration,
-          start_minimized: config.startMinimized,
-          system_startup_auto_start: config.systemStartupAutoStart,
-          theme: config.theme,
-          tick_sounds_during_work: config.tickSoundsDuringWork,
-          tick_sounds_during_break: config.tickSoundsDuringBreak,
-          volume: config.volume,
-        },
+        config: message.value,
       });
       if (newState !== undefined) {
         app.ports.sendMessageToElm.send(newState);

@@ -3,12 +3,12 @@ module Json exposing
     , ExternalMessage(..)
     , InitData
     , SoundMessageValue
+    , configDecoder
     , configEncoder
     , currentStateEncoder
     , elmMessageBuilder
     , elmMessageEncoder
     , externalMessageDecoder
-    , sessionTypeDecoder
     , soundMessageEncoder
     , themeColorsEncoder
     )
@@ -130,47 +130,47 @@ soundMessageEncoder soundMessageValue =
 configEncoder : Config -> Encode.Value
 configEncoder config =
     Encode.object
-        [ ( "alwaysOnTop", Encode.bool config.alwaysOnTop )
-        , ( "autoQuit"
+        [ ( "always_on_top", Encode.bool config.alwaysOnTop )
+        , ( "auto_quit"
           , config.autoQuit
                 |> Maybe.map (\c -> Encode.string (SessionType.toString c))
                 |> Maybe.withDefault Encode.null
           )
-        , ( "autoStartBreakTimer", Encode.bool config.autoStartBreakTimer )
-        , ( "autoStartOnAppStartup", Encode.bool config.autoStartOnAppStartup )
-        , ( "autoStartWorkTimer", Encode.bool config.autoStartWorkTimer )
-        , ( "defaultFocusLabel", Encode.string config.defaultFocusLabel )
-        , ( "defaultLongBreakLabel", Encode.string config.defaultLongBreakLabel )
-        , ( "defaultShortBreakLabel", Encode.string config.defaultShortBreakLabel )
-        , ( "desktopNotifications", Encode.bool config.desktopNotifications )
-        , ( "focusAudio"
+        , ( "auto_start_break_timer", Encode.bool config.autoStartBreakTimer )
+        , ( "auto_start_on_app_startup", Encode.bool config.autoStartOnAppStartup )
+        , ( "auto_start_work_timer", Encode.bool config.autoStartWorkTimer )
+        , ( "default_focus_label", Encode.string config.defaultFocusLabel )
+        , ( "default_long_break_label", Encode.string config.defaultLongBreakLabel )
+        , ( "default_short_break_label", Encode.string config.defaultShortBreakLabel )
+        , ( "desktop_notifications", Encode.bool config.desktopNotifications )
+        , ( "focus_audio"
           , config.focusAudio
                 |> Maybe.map Encode.string
                 |> Maybe.withDefault Encode.null
           )
-        , ( "focusDuration", Encode.int config.focusDuration )
-        , ( "longBreakAudio"
+        , ( "focus_duration", Encode.int config.focusDuration )
+        , ( "long_break_audio"
           , config.longBreakAudio
                 |> Maybe.map Encode.string
                 |> Maybe.withDefault Encode.null
           )
-        , ( "longBreakDuration", Encode.int config.longBreakDuration )
-        , ( "maxRoundNumber", Encode.int config.maxRoundNumber )
-        , ( "maxSessionDuration", Encode.int config.maxSessionDuration )
-        , ( "minimizeToTray", Encode.bool config.minimizeToTray )
-        , ( "minimizeToTrayOnClose", Encode.bool config.minimizeToTrayOnClose )
+        , ( "long_break_duration", Encode.int config.longBreakDuration )
+        , ( "max_round_number", Encode.int config.maxRoundNumber )
+        , ( "max_session_duration", Encode.int config.maxSessionDuration )
+        , ( "minimize_to_tray", Encode.bool config.minimizeToTray )
+        , ( "minimize_to_tray_on_close", Encode.bool config.minimizeToTrayOnClose )
         , ( "muted", Encode.bool config.muted )
-        , ( "shortBreakAudio"
+        , ( "short_break_audio"
           , config.shortBreakAudio
                 |> Maybe.map Encode.string
                 |> Maybe.withDefault Encode.null
           )
-        , ( "shortBreakDuration", Encode.int config.shortBreakDuration )
-        , ( "startMinimized", Encode.bool config.startMinimized )
-        , ( "systemStartupAutoStart", Encode.bool config.systemStartupAutoStart )
+        , ( "short_break_duration", Encode.int config.shortBreakDuration )
+        , ( "start_minimized", Encode.bool config.startMinimized )
+        , ( "system_startup_auto_start", Encode.bool config.systemStartupAutoStart )
         , ( "theme", Encode.string config.theme )
-        , ( "tickSoundsDuringBreak", Encode.bool config.tickSoundsDuringBreak )
-        , ( "tickSoundsDuringWork", Encode.bool config.tickSoundsDuringWork )
+        , ( "tick_sounds_during_break", Encode.bool config.tickSoundsDuringBreak )
+        , ( "tick_sounds_during_work", Encode.bool config.tickSoundsDuringWork )
         , ( "volume"
           , config.volume
                 |> Maybe.map Encode.int

@@ -6,7 +6,16 @@ import Config exposing (Config)
 import Html exposing (Html, button, div, p, text)
 import Html.Attributes exposing (attribute, class, id)
 import Html.Events exposing (onClick)
-import Json exposing (ExternalMessage(..), configEncoder, currentStateEncoder, elmMessageBuilder, elmMessageEncoder, externalMessageDecoder, sessionTypeDecoder, soundMessageEncoder)
+import Json
+    exposing
+        ( ExternalMessage(..)
+        , configEncoder
+        , currentStateEncoder
+        , elmMessageBuilder
+        , elmMessageEncoder
+        , externalMessageDecoder
+        , soundMessageEncoder
+        )
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Pomodoro
@@ -51,30 +60,7 @@ type alias Model =
 
 
 type alias Flags =
-    { alwaysOnTop : Bool
-    , appVersion : String
-    , autoQuit : Maybe String
-    , autoStartBreakTimer : Bool
-    , autoStartOnAppStartup : Bool
-    , autoStartWorkTimer : Bool
-    , defaultFocusLabel : String
-    , defaultLongBreakLabel : String
-    , defaultShortBreakLabel : String
-    , desktopNotifications : Bool
-    , focusDuration : Seconds
-    , longBreakDuration : Seconds
-    , maxRoundNumber : Int
-    , maxSessionDuration : Seconds
-    , minimizeToTray : Bool
-    , minimizeToTrayOnClose : Bool
-    , muted : Bool
-    , shortBreakDuration : Seconds
-    , startMinimized : Bool
-    , systemStartupAutoStart : Bool
-    , theme : String
-    , tickSoundsDuringBreak : Bool
-    , tickSoundsDuringWork : Bool
-    , volume : Maybe Int
+    { appVersion : String
     }
 
 
@@ -110,42 +96,42 @@ init flags =
     in
     ( { appVersion = flags.appVersion
       , config =
-            { alwaysOnTop = flags.alwaysOnTop
-            , autoQuit = flags.autoQuit |> Maybe.andThen (\v -> Decode.decodeString sessionTypeDecoder v |> Result.toMaybe)
-            , autoStartBreakTimer = flags.autoStartBreakTimer
-            , autoStartOnAppStartup = flags.autoStartOnAppStartup
-            , autoStartWorkTimer = flags.autoStartWorkTimer
-            , defaultFocusLabel = flags.defaultFocusLabel
-            , defaultLongBreakLabel = flags.defaultLongBreakLabel
-            , defaultShortBreakLabel = flags.defaultShortBreakLabel
-            , desktopNotifications = flags.desktopNotifications
+            { alwaysOnTop = True
+            , autoQuit = Nothing
+            , autoStartBreakTimer = True
+            , autoStartOnAppStartup = False
+            , autoStartWorkTimer = True
+            , defaultFocusLabel = "Focus"
+            , defaultLongBreakLabel = "Long break"
+            , defaultShortBreakLabel = "Short break"
+            , desktopNotifications = True
             , focusAudio = Nothing
-            , focusDuration = flags.focusDuration
+            , focusDuration = 1500
             , longBreakAudio = Nothing
-            , longBreakDuration = flags.longBreakDuration
-            , maxRoundNumber = flags.maxRoundNumber
-            , maxSessionDuration = flags.maxSessionDuration
-            , minimizeToTray = flags.minimizeToTray
-            , minimizeToTrayOnClose = flags.minimizeToTrayOnClose
-            , muted = flags.muted
+            , longBreakDuration = 1200
+            , maxRoundNumber = 4
+            , maxSessionDuration = 90 * 60
+            , minimizeToTray = True
+            , minimizeToTrayOnClose = True
+            , muted = False
             , shortBreakAudio = Nothing
-            , shortBreakDuration = flags.shortBreakDuration
-            , startMinimized = flags.startMinimized
-            , systemStartupAutoStart = flags.systemStartupAutoStart
-            , theme = flags.theme
-            , tickSoundsDuringBreak = flags.tickSoundsDuringBreak
-            , tickSoundsDuringWork = flags.tickSoundsDuringWork
-            , volume = flags.volume
+            , shortBreakDuration = 300
+            , startMinimized = False
+            , systemStartupAutoStart = False
+            , theme = "pomodorolm"
+            , tickSoundsDuringBreak = True
+            , tickSoundsDuringWork = True
+            , volume = Just 100
             }
       , currentColor = theme.colors.focusRound
       , currentState = currentState
       , drawerOpen = False
       , error = Nothing
-      , focusLabel = flags.defaultFocusLabel
-      , longBreakLabel = flags.defaultLongBreakLabel
+      , focusLabel = "Focus"
+      , longBreakLabel = "Long break"
       , pomodoroState = Nothing
       , settingTab = TimerTab
-      , shortBreakLabel = flags.defaultShortBreakLabel
+      , shortBreakLabel = "Short break"
       , strokeDasharray = 691.3321533203125
       , theme = theme
       , themes = []
@@ -544,27 +530,34 @@ changeTheme theme ({ config } as model) =
 processExternalInitMessage : Json.InitData -> Model -> ( Model, Cmd Msg )
 processExternalInitMessage c model =
     let
-        ( newModel, newCmd ) =
-            { model
-                | config = c.config
-                , focusLabel = c.config.defaultFocusLabel
-                , longBreakLabel = c.config.defaultLongBreakLabel
-                , shortBreakLabel = c.config.defaultShortBreakLabel
-                , themes = c.themes
-            }
-                |> processExternalRustMessage c.pomodoroState
+        findTheme name =
+            find (\t -> (t.name |> String.toLower) == name) c.themes
 
         ( modelWithTheme, cmdWithTheme ) =
-            case find (\t -> (t.name |> String.toLower) == c.config.theme) c.themes of
-                Just currentTheme ->
-                    let
-                        ( updatedModel, updatedCmd ) =
-                            changeTheme currentTheme newModel
-                    in
-                    ( updatedModel, Cmd.batch [ updatedCmd, newCmd ] )
+            let
+                ( newModel, newCmd ) =
+                    { model
+                        | config = c.config
+                        , focusLabel = c.config.defaultFocusLabel
+                        , longBreakLabel = c.config.defaultLongBreakLabel
+                        , shortBreakLabel = c.config.defaultShortBreakLabel
+                        , themes = c.themes
+                    }
+                        |> processExternalRustMessage c.pomodoroState
 
-                Nothing ->
-                    ( newModel, newCmd )
+                -- Fall back on the default theme if the configured one doesn't exist
+                -- (renamed or deleted custom theme, or "pomotroid" from old default configs)
+                currentTheme =
+                    findTheme c.config.theme
+                        |> Maybe.withDefault
+                            (findTheme (defaultTheme.name |> String.toLower)
+                                |> Maybe.withDefault defaultTheme
+                            )
+
+                ( updatedModel, updatedCmd ) =
+                    changeTheme currentTheme newModel
+            in
+            ( updatedModel, Cmd.batch [ updatedCmd, newCmd ] )
     in
     -- Auto start if config is set
     if modelWithTheme.config.autoStartOnAppStartup then
@@ -861,7 +854,7 @@ defaultTheme =
         { accent = Color.fromCSSHex "#05ec8c"
         , background = Color.fromCSSHex "#2f384b"
         , backgroundLight = Color.fromCSSHex "#3d4457"
-        , backgroundLightest = Color.fromCSSHex "#858c99"
+        , backgroundLightest = Color.fromCSSHex "#9ca5b5"
         , focusRound = Color.fromCSSHex "#05ec8c"
         , focusRoundEnd = Color.fromCSSHex "#ff4e4d"
         , focusRoundMiddle = Color.fromCSSHex "#ff7f0e"
