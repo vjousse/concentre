@@ -541,16 +541,17 @@ processExternalInitMessage c model =
                 |> processExternalRustMessage c.pomodoroState
 
         ( modelWithTheme, cmdWithTheme ) =
-            case find (\t -> (t.name |> String.toLower) == c.config.theme) c.themes of
-                Just currentTheme ->
+            let
+                updateTheme themeName =
                     let
                         ( updatedModel, updatedCmd ) =
-                            changeTheme currentTheme newModel
+                            changeTheme themeName newModel
                     in
                     ( updatedModel, Cmd.batch [ updatedCmd, newCmd ] )
-
-                Nothing ->
-                    ( newModel, newCmd )
+            in
+            find (\t -> (t.name |> String.toLower) == c.config.theme) c.themes
+                |> Maybe.withDefault defaultTheme
+                |> updateTheme
     in
     -- Auto start if config is set
     if modelWithTheme.config.autoStartOnAppStartup then
