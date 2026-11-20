@@ -107,6 +107,7 @@ init flags =
             , desktopNotifications = True
             , focusAudio = Nothing
             , focusDuration = 1500
+            , lastSeenVersion = Nothing
             , longBreakAudio = Nothing
             , longBreakDuration = 1200
             , maxRoundNumber = 4

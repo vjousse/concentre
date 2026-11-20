@@ -22,6 +22,9 @@ pub struct Config {
     pub focus_audio: Option<String>,
     #[serde(alias = "pomodoro_duration")]
     pub focus_duration: u16,
+    /// Last app version for which the user opened the release news.
+    #[serde(default)]
+    pub last_seen_version: Option<String>,
     pub long_break_audio: Option<String>,
     pub long_break_duration: u16,
     pub max_round_number: u16,
@@ -109,6 +112,7 @@ impl Default for Config {
             desktop_notifications: true,
             focus_audio: None,
             focus_duration: 25 * 60,
+            last_seen_version: None,
             long_break_audio: None,
             long_break_duration: 20 * 60,
             max_round_number: 4u16,
@@ -151,5 +155,34 @@ mod tests {
 
         assert_eq!(config.focus_duration, Config::default().focus_duration);
         assert!(Config::get_config_file_path(dir.path(), None).exists());
+    }
+
+    #[test]
+    fn config_without_last_seen_version_still_loads() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = Config::get_config_file_path(dir.path(), None);
+        // A 0.10.x config: every field except `last_seen_version`
+        let old_config = toml::to_string(&Config::default()).unwrap();
+        assert!(!old_config.contains("last_seen_version"));
+        std::fs::write(&path, old_config).unwrap();
+
+        let config = Config::get_or_create_from_disk(dir.path(), None).unwrap();
+
+        assert_eq!(config.last_seen_version, None);
+    }
+
+    #[test]
+    fn last_seen_version_is_saved_and_reloaded() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = Config::get_config_file_path(dir.path(), None);
+        let config = Config {
+            last_seen_version: Some("1.0.0".to_string()),
+            ..Config::default()
+        };
+        std::fs::write(&path, toml::to_string(&config).unwrap()).unwrap();
+
+        let reloaded = Config::get_or_create_from_disk(dir.path(), None).unwrap();
+
+        assert_eq!(reloaded.last_seen_version.as_deref(), Some("1.0.0"));
     }
 }

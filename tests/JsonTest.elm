@@ -28,6 +28,7 @@ testConfig =
     , desktopNotifications = True
     , focusAudio = Just "audio_test.mp3"
     , focusDuration = 1500
+    , lastSeenVersion = Just "1.0.0"
     , longBreakAudio = Nothing
     , longBreakDuration = 1200
     , maxRoundNumber = 4
@@ -59,6 +60,7 @@ testConfigJson =
   , "desktop_notifications": true
   , "focus_audio": "audio_test.mp3"
   , "focus_duration": 1500
+  , "last_seen_version": "1.0.0"
   , "long_break_duration": 1200
   , "max_round_number": 4
   , "max_session_duration": 5400
