@@ -753,3 +753,21 @@ select {
 .icon--close {
   height: calc(4.2 * var(--u));
 }
+
+.kofi-link {
+  position: relative;
+  display: inline-block;
+}
+
+.news-badge {
+  position: absolute;
+  top: calc(0.4 * var(--u));
+  right: calc(-1.2 * var(--u));
+  width: calc(2.8 * var(--u));
+  height: calc(2.8 * var(--u));
+  box-sizing: border-box;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  border: calc(0.5 * var(--u)) solid var(--color-background);
+  pointer-events: none;
+}

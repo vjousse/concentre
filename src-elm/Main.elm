@@ -813,11 +813,18 @@ errorView maybeError =
 
 view : Model -> Html Msg
 view model =
+    let
+        showNewsBadge =
+            model.appVersion
+                /= (model.config.lastSeenVersion |> Maybe.withDefault "unknown")
+                && (model.pomodoroState |> Maybe.map (\p -> p.currentSession.status /= Running) |> Maybe.withDefault False)
+    in
     div [ id "app" ]
         [ View.Nav.navView
             { onDrawerToggle = ToggleDrawer
             , onWindowClose = CloseWindow
             , onWindowMinimize = MinimizeWindow
+            , showNewsBadge = showNewsBadge
             }
             model.drawerOpen
         , if model.drawerOpen then
