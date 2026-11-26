@@ -16,8 +16,8 @@ newsBadge visible =
         text ""
 
 
-navView : { drawerOpen : Bool, onDrawerToggle : msg, onNewsBadgeClick : msg, onWindowClose : msg, onWindowMinimize : msg, newsUrl : String, showNewsBadge : Bool } -> Html msg
-navView { drawerOpen, onDrawerToggle, onNewsBadgeClick, onWindowClose, onWindowMinimize, newsUrl, showNewsBadge } =
+navView : { drawerOpen : Bool, newsUrl : String, onDrawerToggle : msg, onNewsBadgeClick : msg, onWindowClose : msg, onWindowMinimize : msg, showNewsBadge : Bool } -> Html msg
+navView { drawerOpen, newsUrl, onDrawerToggle, onNewsBadgeClick, onWindowClose, onWindowMinimize, showNewsBadge } =
     nav [ class "titlebar" ]
         [ div [ class "icon-group" ]
             [ div [ title "Settings", class "icon-wrapper", class "icon-wrapper--titlebar", class "icon-wrapper--single", onClick onDrawerToggle ]

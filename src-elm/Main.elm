@@ -152,8 +152,8 @@ type Msg
     | ChangeTheme Theme
     | CloseWindow
     | DismissError
-    | NewsBadgeClick
     | MinimizeWindow
+    | NewsBadgeClick
     | ProcessExternalMessage Decode.Value
     | Reset ResetType
     | ResetAudioFile SessionType
@@ -832,11 +832,11 @@ view model =
     div [ id "app" ]
         [ View.Nav.navView
             { drawerOpen = model.drawerOpen
+            , newsUrl = "https://concentre.org/news/" ++ model.appVersion ++ "/"
             , onDrawerToggle = ToggleDrawer
             , onNewsBadgeClick = NewsBadgeClick
             , onWindowClose = CloseWindow
             , onWindowMinimize = MinimizeWindow
-            , newsUrl = "https://concentre.org/news/" ++ model.appVersion ++ "/"
             , showNewsBadge = showNewsBadge
             }
         , if model.drawerOpen then
