@@ -16,8 +16,8 @@ newsBadge visible =
         text ""
 
 
-navView : { onDrawerToggle : msg, onWindowClose : msg, onWindowMinimize : msg, showNewsBadge : Bool } -> Bool -> Html msg
-navView { onDrawerToggle, onWindowClose, onWindowMinimize, showNewsBadge } drawerOpen =
+navView : { drawerOpen : Bool, onDrawerToggle : msg, onNewsBadgeClick : msg, onWindowClose : msg, onWindowMinimize : msg, newsUrl : String, showNewsBadge : Bool } -> Html msg
+navView { drawerOpen, onDrawerToggle, onNewsBadgeClick, onWindowClose, onWindowMinimize, newsUrl, showNewsBadge } =
     nav [ class "titlebar" ]
         [ div [ class "icon-group" ]
             [ div [ title "Settings", class "icon-wrapper", class "icon-wrapper--titlebar", class "icon-wrapper--single", onClick onDrawerToggle ]
@@ -37,12 +37,19 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize, showNewsBadge } drawe
                 ]
             , div [ class "icon-wrapper icon-wrapper--titlebar" ]
                 [ a
-                    [ class "kofi-link"
-                    , target "_blank"
-                    , style "padding-top" "calc(1 * var(--u))"
-                    , href "https://ko-fi.com/vjousse"
-                    , title "Support development"
-                    ]
+                    ([ class "kofi-link"
+                     , target "_blank"
+                     , style "padding-top" "calc(1 * var(--u))"
+                     , href newsUrl
+                     , title "Get latest news"
+                     ]
+                        ++ (if showNewsBadge then
+                                [ onClick onNewsBadgeClick ]
+
+                            else
+                                []
+                           )
+                    )
                     [ svg
                         [ SvgAttr.viewBox "0 0 24 24"
                         , SvgAttr.class "icon--kofi"

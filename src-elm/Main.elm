@@ -152,6 +152,7 @@ type Msg
     | ChangeTheme Theme
     | CloseWindow
     | DismissError
+    | NewsBadgeClick
     | MinimizeWindow
     | ProcessExternalMessage Decode.Value
     | Reset ResetType
@@ -205,6 +206,15 @@ update msg ({ config } as model) =
 
               else
                 minimizeWindow ()
+            )
+
+        NewsBadgeClick ->
+            let
+                updatedConfig =
+                    { config | lastSeenVersion = Just model.appVersion }
+            in
+            ( { model | config = updatedConfig }
+            , sendMessageFromElm (elmMessageBuilder "update_config" updatedConfig configEncoder)
             )
 
         ProcessExternalMessage externalMessage ->
@@ -821,12 +831,14 @@ view model =
     in
     div [ id "app" ]
         [ View.Nav.navView
-            { onDrawerToggle = ToggleDrawer
+            { drawerOpen = model.drawerOpen
+            , onDrawerToggle = ToggleDrawer
+            , onNewsBadgeClick = NewsBadgeClick
             , onWindowClose = CloseWindow
             , onWindowMinimize = MinimizeWindow
+            , newsUrl = "https://concentre.org/news/" ++ model.appVersion ++ "/"
             , showNewsBadge = showNewsBadge
             }
-            model.drawerOpen
         , if model.drawerOpen then
             View.Drawer.view
                 { onAudioFileRequested = AudioFileRequested
