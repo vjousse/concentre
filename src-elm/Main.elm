@@ -18,6 +18,7 @@ import Json
         )
 import Json.Decode as Decode
 import Json.Encode as Encode
+import News
 import Pomodoro
 import Seconds exposing (Seconds)
 import SessionStatus exposing (SessionStatus(..))
@@ -825,9 +826,11 @@ view : Model -> Html Msg
 view model =
     let
         showNewsBadge =
-            model.appVersion
-                /= (model.config.lastSeenVersion |> Maybe.withDefault "unknown")
-                && (model.pomodoroState |> Maybe.map (\p -> p.currentSession.status /= Running) |> Maybe.withDefault False)
+            News.shouldShowBadge
+                { appVersion = model.appVersion
+                , lastSeenVersion = model.config.lastSeenVersion
+                , sessionStatus = model.pomodoroState |> Maybe.map (\p -> p.currentSession.status)
+                }
     in
     div [ id "app" ]
         [ View.Nav.navView
