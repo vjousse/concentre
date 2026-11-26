@@ -40,7 +40,12 @@ navView { drawerOpen, newsUrl, onDrawerToggle, onNewsBadgeClick, onWindowClose, 
                     ([ class "kofi-link"
                      , target "_blank"
                      , style "padding-top" "calc(1 * var(--u))"
-                     , href newsUrl
+                     , href <|
+                        if showNewsBadge then
+                            newsUrl
+
+                        else
+                            "https://ko-fi.com/vjousse"
                      , title "Get latest news"
                      ]
                         ++ (if showNewsBadge then
