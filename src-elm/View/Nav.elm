@@ -46,7 +46,12 @@ navView { drawerOpen, newsUrl, onDrawerToggle, onNewsBadgeClick, onWindowClose, 
 
                         else
                             "https://ko-fi.com/vjousse"
-                     , title "Get latest news"
+                     , title <|
+                        if showNewsBadge then
+                            "Get latest news"
+
+                        else
+                            "Support development"
                      ]
                         ++ (if showNewsBadge then
                                 [ onClick onNewsBadgeClick ]
