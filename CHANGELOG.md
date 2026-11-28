@@ -2,12 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-17
+## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-28
 
 ### 🚀 Features
 
 - Add frontend error handling ([#367](https://github.com/vjousse/concentre/issues/367))
 - Scale the interface with the window size ([#369](https://github.com/vjousse/concentre/issues/369))
+- Display latest news notification ([#385](https://github.com/vjousse/concentre/issues/385))
 
 ### 🐛 Bug Fixes
 
@@ -16,6 +17,7 @@ All notable changes to this project will be documented in this file.
 ### 🚜 Refactor
 
 - Add elm-review sort rule ([#368](https://github.com/vjousse/concentre/issues/368))
+- Simplify config message passing ([#384](https://github.com/vjousse/concentre/issues/384))
 
 ### 📚 Documentation
 
@@ -29,8 +31,10 @@ All notable changes to this project will be documented in this file.
 - Optimize icon drawing ([#375](https://github.com/vjousse/concentre/issues/375))
 - Fix flatpak build ([#377](https://github.com/vjousse/concentre/issues/377))
 - Update deps ([#383](https://github.com/vjousse/concentre/issues/383))
+- Update npm and tauri deps ([#389](https://github.com/vjousse/concentre/issues/389))
 - Add back pomodoro keyword to flathub
 - Add pomodoro mention in description
+- Avoid noise in CHANGELOG
 
 ## [[app-v0.10.1](https://github.com/vjousse/concentre/releases/tag/app-v0.10.1)] - 2026-11-02
 

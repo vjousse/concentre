@@ -19,7 +19,7 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "2", features = [ "devtools", "tray-icon", "image-png"] }
 image = { version = "0.25", features = ["png"] }
 tempfile = "3.27.0"
-toml = "1.2.2"
+toml = "1.2.3"
 tokio = { version = "1", features = ["full"] }
 futures = "0.3.34"
 tauri-plugin-shell = "2"
@@ -31,7 +31,7 @@ hex_color = "3.0.0"
 hyper-tls = "0.6.0"
 rustls-pemfile = "2.2.0"
 rodio = "0.23.0"
-clap = { version = "4.6.9", features = ["derive"] }
+clap = { version = "4.6.10", features = ["derive"] }
 dirs = "7.0.0"
 anyhow = "1.0.105"
 
