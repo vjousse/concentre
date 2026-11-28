@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file.
 
+## [[app-v1.0.0](https://github.com/vjousse/concentre/releases/tag/app-v1.0.0)] - 2026-11-28
+
+### 🚀 Features
+
+- Add frontend error handling ([#367](https://github.com/vjousse/concentre/issues/367))
+- Scale the interface with the window size ([#369](https://github.com/vjousse/concentre/issues/369))
+- Display latest news notification ([#385](https://github.com/vjousse/concentre/issues/385))
+
+### 🐛 Bug Fixes
+
+- Better sound sync ([#374](https://github.com/vjousse/concentre/issues/374))
+
+### 🚜 Refactor
+
+- Add elm-review sort rule ([#368](https://github.com/vjousse/concentre/issues/368))
+- Simplify config message passing ([#384](https://github.com/vjousse/concentre/issues/384))
+
+### 📚 Documentation
+
+- *(website)* Use square screenshot
+- *(website)* Add news section ([#376](https://github.com/vjousse/concentre/issues/376))
+
+### ⚙️ Miscellaneous Tasks
+
+- Fix release script ([#371](https://github.com/vjousse/concentre/issues/371))
+- Prepare 1.0 ([#372](https://github.com/vjousse/concentre/issues/372))
+- Optimize icon drawing ([#375](https://github.com/vjousse/concentre/issues/375))
+- Fix flatpak build ([#377](https://github.com/vjousse/concentre/issues/377))
+- Update deps ([#383](https://github.com/vjousse/concentre/issues/383))
+- Update npm and tauri deps ([#389](https://github.com/vjousse/concentre/issues/389))
+- Add back pomodoro keyword to flathub
+- Add pomodoro mention in description
+- Avoid noise in CHANGELOG
+
 ## [[app-v0.10.1](https://github.com/vjousse/concentre/releases/tag/app-v0.10.1)] - 2026-11-02
 
 ### 📚 Documentation
@@ -38,8 +72,6 @@ All notable changes to this project will be documented in this file.
 - Update deps ([#355](https://github.com/vjousse/concentre/issues/355))
 - Always register binary name ([#356](https://github.com/vjousse/concentre/issues/356))
 - Rename AUR package name ([#357](https://github.com/vjousse/concentre/issues/357))
-- Bump to 0.10.0
-- Update AUR checksum
 
 ## [[app-v0.9.3](https://github.com/vjousse/concentre/releases/tag/app-v0.9.3)] - 2026-10-21
 
@@ -56,9 +88,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Fix python import
-- Update AUR checksum
 - Update flatpak runtime to 51 ([#337](https://github.com/vjousse/concentre/issues/337))
-- Bump to 0.9.3
 
 ## [[app-v0.9.2](https://github.com/vjousse/concentre/releases/tag/app-v0.9.2)] - 2026-10-15
 
@@ -68,7 +98,6 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Update AUR checksum
 - Update deps ([#249](https://github.com/vjousse/concentre/issues/249))
 - Update deps ([#265](https://github.com/vjousse/concentre/issues/265))
 - Update node and cargo deps ([#292](https://github.com/vjousse/concentre/issues/292))
@@ -80,7 +109,6 @@ All notable changes to this project will be documented in this file.
 - Add ko-fi to funding ([#330](https://github.com/vjousse/concentre/issues/330))
 - Add donation links ([#334](https://github.com/vjousse/concentre/issues/334))
 - Update deps ([#336](https://github.com/vjousse/concentre/issues/336))
-- Bump to 0.9.2
 
 ## [[app-v0.9.1](https://github.com/vjousse/concentre/releases/tag/app-v0.9.1)] - 2026-04-19
 
@@ -92,7 +120,6 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Create dependabot.yml ([#232](https://github.com/vjousse/concentre/issues/232))
-- Bump to 0.9.1
 
 ## [[app-v0.9.0](https://github.com/vjousse/concentre/releases/tag/app-v0.9.0)] - 2026-04-07
 
@@ -108,7 +135,6 @@ All notable changes to this project will be documented in this file.
 
 - Not spawn play_sound_file if playing is muted ([#217](https://github.com/vjousse/concentre/issues/217))
 - Small optimization and refactor of create_icon  ([#221](https://github.com/vjousse/concentre/issues/221))
-- Bump to 0.9.0
 
 ## [[app-v0.8.0](https://github.com/vjousse/concentre/releases/tag/app-v0.8.0)] - 2026-01-23
 
@@ -129,7 +155,6 @@ All notable changes to this project will be documented in this file.
 
 - Add winget release action ([#211](https://github.com/vjousse/concentre/issues/211))
 - Update bump script to avoid parsing warnings
-- Bump to 0.8.0
 
 ## [[app-v0.7.0](https://github.com/vjousse/concentre/releases/tag/app-v0.7.0)] - 2025-11-28
 
@@ -140,9 +165,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Update AUR checksum
 - Update deps ([#201](https://github.com/vjousse/concentre/issues/201))
-- Bump to 0.7.0
 
 ## [[app-v0.6.2](https://github.com/vjousse/concentre/releases/tag/app-v0.6.2)] - 2025-11-21
 
@@ -155,7 +178,6 @@ All notable changes to this project will be documented in this file.
 
 - Update aur package
 - Update to latest deps and tauri 2.8 ([#191](https://github.com/vjousse/concentre/issues/191))
-- Bump to 0.6.2
 
 ## [[app-v0.6.1](https://github.com/vjousse/concentre/releases/tag/app-v0.6.1)] - 2025-10-01
 
@@ -163,10 +185,6 @@ All notable changes to this project will be documented in this file.
 
 - App crash if duration is 0 ([#188](https://github.com/vjousse/concentre/issues/188))
 - No icon on windows 11 ([#189](https://github.com/vjousse/concentre/issues/189))
-
-### ⚙️ Miscellaneous Tasks
-
-- Bump to 0.6.1
 
 ## [[app-v0.6.0](https://github.com/vjousse/concentre/releases/tag/app-v0.6.0)] - 2025-08-08
 
@@ -179,21 +197,12 @@ All notable changes to this project will be documented in this file.
 
 - Play all custom sounds ([#183](https://github.com/vjousse/concentre/issues/183))
 
-### ⚙️ Miscellaneous Tasks
-
-- Bump to 0.6.0
-
 ## [[app-v0.5.0](https://github.com/vjousse/concentre/releases/tag/app-v0.5.0)] - 2025-05-23
 
 ### 🚀 Features
 
 - Ensure only one instance is running ([#171](https://github.com/vjousse/concentre/issues/171))
 - Add minimal CLI version ([#146](https://github.com/vjousse/concentre/issues/146))
-
-### ⚙️ Miscellaneous Tasks
-
-- Update AUR checksum for 0.4.0
-- Bump to 0.5.0
 
 ## [[app-v0.4.0](https://github.com/vjousse/concentre/releases/tag/app-v0.4.0)] - 2025-05-11
 
@@ -202,16 +211,11 @@ All notable changes to this project will be documented in this file.
 - Add system auto start ([#168](https://github.com/vjousse/concentre/issues/168))
 - Add start minimized to tray option ([#169](https://github.com/vjousse/concentre/issues/169))
 
-### ⚙️ Miscellaneous Tasks
-
-- Bump to 0.4.0
-
 ## [[app-v0.3.6](https://github.com/vjousse/concentre/releases/tag/app-v0.3.6)] - 2025-04-18
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update deps ([#164](https://github.com/vjousse/concentre/issues/164))
-- Bump to 0.3.6
 
 ## [[app-v0.3.5](https://github.com/vjousse/concentre/releases/tag/app-v0.3.5)] - 2025-03-14
 
@@ -224,27 +228,17 @@ All notable changes to this project will be documented in this file.
 
 - Add macOS troubleshooting section ([#153](https://github.com/vjousse/concentre/issues/153))
 
-### ⚙️ Miscellaneous Tasks
-
-- Bump 0.3.5
-
 ## [[app-v0.3.4](https://github.com/vjousse/concentre/releases/tag/app-v0.3.4)] - 2025-01-22
 
 ### ⚙️ Miscellaneous Tasks
 
-- Update AUR checksum
 - Update to latest Tauri ([#150](https://github.com/vjousse/concentre/issues/150))
-- Bump version to 0.3.4
 
 ## [[app-v0.3.3](https://github.com/vjousse/concentre/releases/tag/app-v0.3.3)] - 2025-01-11
 
 ### 🐛 Bug Fixes
 
 - Bad pause icon rendering ([#144](https://github.com/vjousse/concentre/issues/144))
-
-### ⚙️ Miscellaneous Tasks
-
-- Bump version to 0.3.3
 
 ## [[app-v0.3.2](https://github.com/vjousse/concentre/releases/tag/app-v0.3.2)] - 2025-01-11
 
@@ -262,7 +256,6 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Upgrade gh workflow ([#142](https://github.com/vjousse/concentre/issues/142))
-- Bump version number to 0.3.2
 
 ## [[app-v0.3.1](https://github.com/vjousse/concentre/releases/tag/app-v0.3.1)] - 2024-11-07
 
@@ -270,11 +263,6 @@ All notable changes to this project will be documented in this file.
 
 - LibOSSlib.so not found in snap ([#130](https://github.com/vjousse/concentre/issues/130))
 - Mac osx hide behavior ([#132](https://github.com/vjousse/concentre/issues/132))
-
-### ⚙️ Miscellaneous Tasks
-
-- Update AUR checksum
-- Bump version to 0.3.1
 
 ## [[app-v0.3.0](https://github.com/vjousse/concentre/releases/tag/app-v0.3.0)] - 2024-11-06
 
@@ -297,7 +285,6 @@ All notable changes to this project will be documented in this file.
 - Update to stable Tauri v2 ([#116](https://github.com/vjousse/concentre/issues/116))
 - Create issue template ([#124](https://github.com/vjousse/concentre/issues/124))
 - Update to Tauri stable ([#128](https://github.com/vjousse/concentre/issues/128))
-- Bump to 0.3.0
 
 ## [[app-v0.2.2](https://github.com/vjousse/concentre/releases/tag/app-v0.2.2)] - 2024-10-16
 
@@ -311,10 +298,6 @@ All notable changes to this project will be documented in this file.
 
 - Load themes and config synchronously ([#110](https://github.com/vjousse/concentre/issues/110))
 - Aur sha computation
-
-### ⚙️ Miscellaneous Tasks
-
-- Bump version to 0.2.1
 
 ## [[app-v0.2.0](https://github.com/vjousse/concentre/releases/tag/app-v0.2.0)] - 2024-09-27
 
@@ -354,7 +337,6 @@ All notable changes to this project will be documented in this file.
 - Add pre-commit ([#102](https://github.com/vjousse/concentre/issues/102))
 - Add elm-review ([#104](https://github.com/vjousse/concentre/issues/104))
 - Fix snapcraft build ([#105](https://github.com/vjousse/concentre/issues/105))
-- Bump version to 0.2.0
 - Fix check-versions workflow
 - Add missing git-cliff
 - Install git-cliff using cargo
@@ -372,14 +354,12 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Flathub build on aarch64 ([#86](https://github.com/vjousse/concentre/issues/86))
-- Bump version number to 0.1.11
 
 ## [[app-v0.1.10](https://github.com/vjousse/concentre/releases/tag/app-v0.1.10)] - 2024-09-11
 
 ### ⚙️ Miscellaneous Tasks
 
 - Offline flatpak build ([#84](https://github.com/vjousse/concentre/issues/84))
-- Bump version number to 0.1.10
 
 ## [[app-v0.1.9](https://github.com/vjousse/concentre/releases/tag/app-v0.1.9)] - 2024-09-09
 
@@ -394,7 +374,6 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Build app directly in flatpak ([#83](https://github.com/vjousse/concentre/issues/83))
-- Bump version to 0.1.9
 
 ## [[app-v0.1.8](https://github.com/vjousse/concentre/releases/tag/app-v0.1.8)] - 2024-09-06
 
@@ -410,7 +389,6 @@ All notable changes to this project will be documented in this file.
 
 - Change LICENSE to AGPL
 - Add flatpak build ([#78](https://github.com/vjousse/concentre/issues/78))
-- Bump version to 0.1.8
 
 ## [[app-v0.1.7](https://github.com/vjousse/concentre/releases/tag/app-v0.1.7)] - 2024-08-30
 
@@ -457,17 +435,12 @@ All notable changes to this project will be documented in this file.
 - Add troubleshooting section ([#64](https://github.com/vjousse/concentre/issues/64))
 - Remove useless backticks
 
-### ⚙️ Miscellaneous Tasks
-
-- Bump version number
-
 ## [[app-v0.1.4](https://github.com/vjousse/concentre/releases/tag/app-v0.1.4)] - 2024-07-26
 
 ### ⚙️ Miscellaneous Tasks
 
 - Split code into separate files ([#61](https://github.com/vjousse/concentre/issues/61))
 - Update to latest tauri beta-24 ([#63](https://github.com/vjousse/concentre/issues/63))
-- Bump version number
 
 ## [[app-v0.0.6](https://github.com/vjousse/concentre/releases/tag/app-v0.0.6)] - 2024-05-23
 
@@ -480,10 +453,6 @@ All notable changes to this project will be documented in this file.
 ### 🐛 Bug Fixes
 
 - Play notification at the end of the round ([#34](https://github.com/vjousse/concentre/issues/34))
-
-### ⚙️ Miscellaneous Tasks
-
-- Bump version to 0.0.5
 
 ## [[app-v0.0.4](https://github.com/vjousse/concentre/releases/tag/app-v0.0.4)] - 2024-05-21
 
@@ -499,7 +468,6 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update arch PKGBUILD
-- Bump version number
 
 ## [[app-v0.0.3](https://github.com/vjousse/concentre/releases/tag/app-v0.0.3)] - 2024-05-16
 
