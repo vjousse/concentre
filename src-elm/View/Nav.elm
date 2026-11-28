@@ -1,14 +1,23 @@
 module View.Nav exposing (navView)
 
-import Html exposing (Html, a, div, h1, nav, text)
+import Html exposing (Html, a, div, h1, nav, span, text)
 import Html.Attributes exposing (attribute, class, href, style, target, title)
 import Html.Events exposing (onClick)
 import Svg exposing (svg)
 import Svg.Attributes as SvgAttr
 
 
-navView : { onDrawerToggle : msg, onWindowClose : msg, onWindowMinimize : msg } -> Bool -> Html msg
-navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
+newsBadge : Bool -> Html msg
+newsBadge visible =
+    if visible then
+        span [ class "news-badge", attribute "aria-hidden" "true" ] []
+
+    else
+        text ""
+
+
+navView : { drawerOpen : Bool, newsUrl : String, onDrawerToggle : msg, onNewsBadgeClick : msg, onWindowClose : msg, onWindowMinimize : msg, showNewsBadge : Bool } -> Html msg
+navView { drawerOpen, newsUrl, onDrawerToggle, onNewsBadgeClick, onWindowClose, onWindowMinimize, showNewsBadge } =
     nav [ class "titlebar" ]
         [ div [ class "icon-group" ]
             [ div [ title "Settings", class "icon-wrapper", class "icon-wrapper--titlebar", class "icon-wrapper--single", onClick onDrawerToggle ]
@@ -28,11 +37,29 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
                 ]
             , div [ class "icon-wrapper icon-wrapper--titlebar" ]
                 [ a
-                    [ target "_blank"
-                    , style "padding-top" "calc(1 * var(--u))"
-                    , href "https://ko-fi.com/vjousse"
-                    , title "Support development"
-                    ]
+                    ([ class "kofi-link"
+                     , target "_blank"
+                     , style "padding-top" "calc(1 * var(--u))"
+                     , href <|
+                        if showNewsBadge then
+                            newsUrl
+
+                        else
+                            "https://ko-fi.com/vjousse"
+                     , title <|
+                        if showNewsBadge then
+                            "Get latest news"
+
+                        else
+                            "Support development"
+                     ]
+                        ++ (if showNewsBadge then
+                                [ onClick onNewsBadgeClick ]
+
+                            else
+                                []
+                           )
+                    )
                     [ svg
                         [ SvgAttr.viewBox "0 0 24 24"
                         , SvgAttr.class "icon--kofi"
@@ -48,6 +75,7 @@ navView { onDrawerToggle, onWindowClose, onWindowMinimize } drawerOpen =
                                 []
                             ]
                         ]
+                    , newsBadge showNewsBadge
                     ]
                 ]
             ]

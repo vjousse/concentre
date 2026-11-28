@@ -18,6 +18,7 @@ import Json
         )
 import Json.Decode as Decode
 import Json.Encode as Encode
+import News
 import Pomodoro
 import Seconds exposing (Seconds)
 import SessionStatus exposing (SessionStatus(..))
@@ -107,6 +108,7 @@ init flags =
             , desktopNotifications = True
             , focusAudio = Nothing
             , focusDuration = 1500
+            , lastSeenVersion = Nothing
             , longBreakAudio = Nothing
             , longBreakDuration = 1200
             , maxRoundNumber = 4
@@ -152,6 +154,7 @@ type Msg
     | CloseWindow
     | DismissError
     | MinimizeWindow
+    | NewsBadgeClick
     | ProcessExternalMessage Decode.Value
     | Reset ResetType
     | ResetAudioFile SessionType
@@ -204,6 +207,15 @@ update msg ({ config } as model) =
 
               else
                 minimizeWindow ()
+            )
+
+        NewsBadgeClick ->
+            let
+                updatedConfig =
+                    { config | lastSeenVersion = Just model.appVersion }
+            in
+            ( { model | config = updatedConfig }
+            , sendMessageFromElm (elmMessageBuilder "update_config" updatedConfig configEncoder)
             )
 
         ProcessExternalMessage externalMessage ->
@@ -812,13 +824,24 @@ errorView maybeError =
 
 view : Model -> Html Msg
 view model =
+    let
+        showNewsBadge =
+            News.shouldShowBadge
+                { appVersion = model.appVersion
+                , lastSeenVersion = model.config.lastSeenVersion
+                , sessionStatus = model.pomodoroState |> Maybe.map (\p -> p.currentSession.status)
+                }
+    in
     div [ id "app" ]
         [ View.Nav.navView
-            { onDrawerToggle = ToggleDrawer
+            { drawerOpen = model.drawerOpen
+            , newsUrl = "https://concentre.org/news/" ++ model.appVersion ++ "/"
+            , onDrawerToggle = ToggleDrawer
+            , onNewsBadgeClick = NewsBadgeClick
             , onWindowClose = CloseWindow
             , onWindowMinimize = MinimizeWindow
+            , showNewsBadge = showNewsBadge
             }
-            model.drawerOpen
         , if model.drawerOpen then
             View.Drawer.view
                 { onAudioFileRequested = AudioFileRequested

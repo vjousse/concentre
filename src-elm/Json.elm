@@ -149,6 +149,11 @@ configEncoder config =
                 |> Maybe.withDefault Encode.null
           )
         , ( "focus_duration", Encode.int config.focusDuration )
+        , ( "last_seen_version"
+          , config.lastSeenVersion
+                |> Maybe.map Encode.string
+                |> Maybe.withDefault Encode.null
+          )
         , ( "long_break_audio"
           , config.longBreakAudio
                 |> Maybe.map Encode.string
@@ -193,6 +198,7 @@ configDecoder =
         |> Pipe.required "desktop_notifications" Decode.bool
         |> Pipe.optional "focus_audio" (Decode.maybe Decode.string) Nothing
         |> Pipe.required "focus_duration" Decode.int
+        |> Pipe.optional "last_seen_version" (Decode.maybe Decode.string) Nothing
         |> Pipe.optional "long_break_audio" (Decode.maybe Decode.string) Nothing
         |> Pipe.required "long_break_duration" Decode.int
         |> Pipe.required "max_round_number" Decode.int
